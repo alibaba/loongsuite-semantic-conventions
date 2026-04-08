@@ -37,8 +37,6 @@ When `gen_ai.workflow.name` is not available, it SHOULD be `invoke_workflow`.
 | `gen_ai.provider.name` | string | The Generative AI provider name | Required |
 | `gen_ai.operation.name` | string | The name of the operation (`invoke_workflow`) | Required |
 | `gen_ai.workflow.name` | string | The name of the GenAI workflow being invoked | Required |
-| `server.address` | string | GenAI server address | Recommended |
-| `server.port` | int | GenAI server port | Conditionally Required: if `server.address` is set |
 | `gen_ai.input.messages` | string | Input messages passed to the workflow | Opt-in |
 | `gen_ai.output.messages` | string | Output messages from the workflow | Opt-in |
 | `error.type` | string | Error type if the operation ended in an error | Conditionally Required: if error |
@@ -58,10 +56,6 @@ This metric represents the duration of GenAI workflow invocations.
 | `gen_ai.provider.name` | Required |
 | `gen_ai.operation.name` | Required |
 | `gen_ai.workflow.name` | Required |
-| `gen_ai.request.model` | Conditionally Required: if available |
-| `gen_ai.response.model` | Recommended |
-| `server.address` | Recommended |
-| `server.port` | Conditionally Required: if `server.address` is set |
 | `error.type` | Conditionally Required: if error |
 
 [DocumentStatus]: https://github.com/open-telemetry/opentelemetry-specification/blob/v1.37.0/specification/document-status.md
