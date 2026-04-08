@@ -1,0 +1,33 @@
+groups:
+  - id: span.alibaba.gen_ai.a2a.client
+    type: span
+    stability: development
+    span_kind: client
+    brief: >
+      Alibaba-specific extension for Agent-to-Agent (A2A) protocol spans.
+      Extends the standard gen_ai A2A span with Alibaba infrastructure attributes.
+    note: |
+      The `gen_ai.operation.name` SHOULD match the A2A operation being performed
+      (e.g., `invoke_agent` for message/send, or use `gen_ai.a2a.rpc.method` as operation name).
+
+      **Span name** SHOULD be `{gen_ai.a2a.rpc.method}` (e.g., `message/send`, `tasks/get`).
+
+      A2A is a JSON-RPC based protocol for agent-to-agent communication.
+      See https://github.com/google/A2A for protocol specification.
+    extends: span.gen_ai.a2a.client
+    attributes:
+      - ref: alibaba.base.env
+        requirement_level: recommended
+      - ref: alibaba.base.idc
+        requirement_level: recommended
+      - ref: alibaba.user.data
+        requirement_level: opt_in
+      - ref: alibaba.experiment.id
+        requirement_level:
+          conditionally_required: if applicable for RL-based agent interactions.
+      - ref: alibaba.group.id
+        requirement_level:
+          conditionally_required: if applicable for RL-based agent interactions.
+      - ref: alibaba.instance.id
+        requirement_level:
+          conditionally_required: if applicable for RL-based agent interactions.
