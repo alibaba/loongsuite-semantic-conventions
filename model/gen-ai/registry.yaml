@@ -228,6 +228,31 @@ groups:
         type: string
         brief: Free-form description of the GenAI agent provided by the application.
         examples: ["Helps with math problems", "Generates fiction stories"]
+      - id: gen_ai.workflow.name
+        stability: development
+        type: string
+        brief: The name of the GenAI workflow being invoked.
+        examples: ["customer_support_flow", "multi_agent_rag"]
+      - id: gen_ai.skill.id
+        stability: development
+        type: string
+        brief: The unique identifier of the GenAI skill being invoked.
+        examples: ["skill_29bbe8a7"]
+      - id: gen_ai.skill.name
+        stability: development
+        type: string
+        brief: The name of the GenAI skill being invoked.
+        examples: ["code_review", "change_workitem"]
+      - id: gen_ai.skill.version
+        stability: development
+        type: string
+        brief: The version of the GenAI skill being invoked.
+        examples: ["0.2.0", "v2.1.0"]
+      - id: gen_ai.skill.description
+        stability: development
+        type: string
+        brief: Free-form description of the GenAI skill provided by the application.
+        examples: ["Execute code review on GitHub repositories"]
       - id: gen_ai.tool.name
         stability: development
         type: string
