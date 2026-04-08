@@ -228,6 +228,11 @@ groups:
         type: string
         brief: Free-form description of the GenAI agent provided by the application.
         examples: ["Helps with math problems", "Generates fiction stories"]
+      - id: gen_ai.workflow.name
+        stability: development
+        type: string
+        brief: The name of the GenAI workflow being invoked.
+        examples: ["customer_support_flow", "multi_agent_rag"]
       - id: gen_ai.tool.name
         stability: development
         type: string
@@ -385,6 +390,10 @@ groups:
             - id: execute_tool
               value: "execute_tool"
               brief: 'Execute a tool'
+              stability: development
+            - id: invoke_workflow
+              value: "invoke_workflow"
+              brief: 'Invoke a GenAI workflow'
               stability: development
         brief: The name of the operation being performed.
         note: >
