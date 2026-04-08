@@ -426,10 +426,10 @@ attribute use the same system name (`azure.cosmosdb`).
 ### Known exceptions
 
 - Operational system and process-related attributes and metrics [follow a
-  pattern](/docs/system/system-metrics.md#systemmemoryos---os-specific-system-memory-metrics)
+  pattern](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/system/system-metrics.md#systemmemoryos---os-specific-system-memory-metrics)
   of `system.{os}` and `process.{os}`. <!-- TODO: document why-->
 
-- [RPC](/docs/rpc/README.md) and [messaging](/docs/messaging/README.md) semantic
+- [RPC](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/rpc/README.md) and [messaging](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/messaging/README.md) semantic
   conventions don't follow the system-specific naming guidance yet, and will be
   updated one-by-one.
 

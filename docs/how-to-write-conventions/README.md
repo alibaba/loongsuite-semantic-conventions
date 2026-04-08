@@ -59,7 +59,7 @@ It is strongly recommended to prototype proposed conventions in one or more inst
 #### Defining attributes
 
 Reuse existing attributes when possible. Look through [existing conventions](/docs/registry/attributes/) for similar areas,
-check out [common attributes](/docs/general/attributes.md).
+check out [common attributes](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/general/attributes.md).
 Semantic conventions authors are encouraged to use attributes from different namespaces.
 
 Consider adding a new attribute if all of the following apply:
@@ -170,7 +170,7 @@ For example, `db.system.name` contains database names like `mongodb` or `mysql`.
 System identifier enums help differentiate telemetry signals. MongoDB and MySQL
 both follow general database conventions, but populate attributes like `db.collection.name` differently and have system-specific attributes. Each system has its own span
 definitions and documentation.
-See [MongoDB](/docs/db/mongodb.md) and [MySQL](/docs/db/mysql.md) as examples
+See [MongoDB](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/db/mongodb.md) and [MySQL](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/db/mysql.md) as examples
 and check out [system-specific naming](../general/naming.md#system-specific-attributes)
 for naming guidance.
 

@@ -84,7 +84,7 @@ include it if the operation succeeded.
 ## Recording exceptions
 
 When an instrumented operation fails with an exception, instrumentation SHOULD record
-this exception as a [span event](/docs/exceptions/exceptions-spans.md) or a [log record](/docs/exceptions/exceptions-logs.md).
+this exception as a [span event](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/exceptions/exceptions-spans.md) or a [log record](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/exceptions/exceptions-logs.md).
 
 It's RECOMMENDED to use the `Span.recordException` API or logging library API that takes exception instance
 instead of providing individual attributes. This enables the OpenTelemetry SDK to
