@@ -1,11 +1,10 @@
 groups:
-  - id: span.alibaba.gen_ai.invoke_skill.client
+  - id: span.gen_ai.invoke_skill.client
     type: span
     stability: development
     span_kind: client
     brief: >
-      Alibaba-specific extension for GenAI skill invocation spans.
-      Extends the standard gen_ai skill span with Alibaba infrastructure attributes.
+      Describes GenAI skill invocation.
     note: |
       The `gen_ai.operation.name` SHOULD be `invoke_skill`.
 
@@ -17,34 +16,38 @@ groups:
       This span type is optional. For the common pattern where skills are loaded
       through tool execution, instrumentations SHOULD use `execute_tool` span with
       `gen_ai.skill.*` attributes instead.
-    extends: span.gen_ai.invoke_skill.client
+    extends: attributes.gen_ai.common.client
     attributes:
-      - ref: alibaba.base.env
+      - ref: gen_ai.provider.name
+        requirement_level: required
+        sampling_relevant: true
+      - ref: gen_ai.operation.name
+        sampling_relevant: true
+      - ref: gen_ai.skill.id
+        requirement_level:
+          conditionally_required: if applicable.
+      - ref: gen_ai.skill.name
+        requirement_level:
+          conditionally_required: when available.
+      - ref: gen_ai.skill.version
         requirement_level: recommended
-      - ref: alibaba.base.idc
+      - ref: gen_ai.skill.description
         requirement_level: recommended
-      - ref: alibaba.user.data
+      - ref: gen_ai.input.messages
         requirement_level: opt_in
-      - ref: alibaba.experiment.id
+      - ref: gen_ai.output.messages
+        requirement_level: opt_in
+      - ref: error.type
         requirement_level:
-          conditionally_required: if applicable for RL-trained skills.
-      - ref: alibaba.group.id
-        requirement_level:
-          conditionally_required: if applicable for RL-trained skills.
-      - ref: alibaba.job.id
-        requirement_level:
-          conditionally_required: if applicable for RL-trained skills.
-      - ref: alibaba.instance.id
-        requirement_level:
-          conditionally_required: if applicable for RL-trained skills.
+          conditionally_required: "if the operation ended in an error"
 
-  - id: metric.alibaba.gen_ai.skill.duration
+  - id: metric.gen_ai.skill.duration
     type: metric
     metric_name: gen_ai.skill.duration
     annotations:
       code_generation:
         metric_value_type: double
-    brief: 'GenAI skill execution duration with Alibaba infrastructure context.'
+    brief: 'GenAI skill execution duration.'
     instrument: histogram
     unit: "ms"
     stability: development
@@ -55,7 +58,3 @@ groups:
       - ref: error.type
         requirement_level:
           conditionally_required: "if the operation ended in an error"
-      - ref: alibaba.base.env
-        requirement_level: recommended
-      - ref: alibaba.base.idc
-        requirement_level: recommended
