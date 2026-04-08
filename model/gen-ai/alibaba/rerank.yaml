@@ -1,0 +1,24 @@
+groups:
+  - id: span.alibaba.gen_ai.rerank.client
+    type: span
+    stability: development
+    span_kind: client
+    brief: >
+      Alibaba-specific extension for GenAI reranking operation spans.
+      Extends the standard gen_ai rerank span with Alibaba infrastructure attributes.
+    note: |
+      The `gen_ai.operation.name` SHOULD be `rerank`.
+
+      **Span name** SHOULD be `rerank {gen_ai.request.model}` if model is available,
+      otherwise `rerank`.
+
+      GenAI rerank represents a request to a Generative AI service that reorders
+      documents based on relevance to a query, commonly used in RAG pipelines.
+    extends: span.gen_ai.rerank.client
+    attributes:
+      - ref: alibaba.base.env
+        requirement_level: recommended
+      - ref: alibaba.base.idc
+        requirement_level: recommended
+      - ref: alibaba.user.data
+        requirement_level: opt_in
