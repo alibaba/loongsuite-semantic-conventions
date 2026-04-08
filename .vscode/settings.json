@@ -1,0 +1,13 @@
+{
+    "editor.rulers": [80],
+    "yaml.schemas": {
+        "https://raw.githubusercontent.com/open-telemetry/weaver/v0.17.0/schemas/semconv.schema.json": [
+            "model/**/*.yaml"
+        ],
+        "./sigs-schema.json": [
+            "sigs.yaml"
+        ]
+    },
+    "json.schemaDownload.enable": true,
+    "markdown.extension.toc.levels": "2..6"
+}

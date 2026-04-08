@@ -30,7 +30,8 @@ internal/tools/bin
 node_modules/
 
 # Visual Studio Code
-.vscode
+.vscode/*
+!.vscode/settings.json
 
 # Visual Studio
 .vs/
