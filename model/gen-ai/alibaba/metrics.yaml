@@ -1,0 +1,121 @@
+groups:
+  - id: metric_attributes.alibaba.gen_ai
+    type: attribute_group
+    brief: 'Alibaba-specific attributes for GenAI client metrics'
+    extends: metric_attributes.gen_ai
+    attributes:
+      - ref: alibaba.base.env
+        requirement_level: recommended
+      - ref: alibaba.base.idc
+        requirement_level: recommended
+
+  - id: metric_attributes.alibaba.gen_ai.server
+    type: attribute_group
+    brief: 'Alibaba-specific attributes for GenAI server/operation metrics'
+    extends: metric_attributes.gen_ai.server
+    attributes:
+      - ref: alibaba.base.env
+        requirement_level: recommended
+      - ref: alibaba.base.idc
+        requirement_level: recommended
+      - ref: alibaba.experiment.id
+        requirement_level: opt_in
+      - ref: alibaba.group.id
+        requirement_level: opt_in
+      - ref: alibaba.job.id
+        requirement_level: opt_in
+
+  - id: metric.alibaba.gen_ai.client.token.usage
+    type: metric
+    metric_name: gen_ai.client.token.usage
+    annotations:
+      code_generation:
+        metric_value_type: int
+    brief: 'Number of input and output tokens used, with Alibaba infrastructure context.'
+    instrument: histogram
+    unit: "{token}"
+    stability: development
+    extends: metric_attributes.alibaba.gen_ai
+    attributes:
+      - ref: gen_ai.token.type
+        requirement_level: required
+
+  - id: metric.alibaba.gen_ai.client.operation.duration
+    type: metric
+    metric_name: gen_ai.client.operation.duration
+    annotations:
+      code_generation:
+        metric_value_type: double
+    brief: 'GenAI operation duration with Alibaba infrastructure context.'
+    instrument: histogram
+    unit: "s"
+    stability: development
+    extends: metric_attributes.alibaba.gen_ai.server
+
+  - id: metric.alibaba.gen_ai.client.time_to_first_token
+    type: metric
+    metric_name: gen_ai.client.time_to_first_token
+    annotations:
+      code_generation:
+        metric_value_type: int
+    brief: 'Time to generate the first token from the client perspective on Alibaba infrastructure.'
+    instrument: histogram
+    unit: "ms"
+    stability: development
+    extends: metric_attributes.alibaba.gen_ai
+    attributes:
+      - ref: error.type
+        requirement_level:
+          conditionally_required: "if the operation ended in an error"
+
+  - id: metric.alibaba.gen_ai.client.time_per_output_token
+    type: metric
+    metric_name: gen_ai.client.time_per_output_token
+    annotations:
+      code_generation:
+        metric_value_type: int
+    brief: 'Average time per output token from the client perspective on Alibaba infrastructure.'
+    instrument: histogram
+    unit: "ms"
+    stability: development
+    extends: metric_attributes.alibaba.gen_ai
+    attributes:
+      - ref: error.type
+        requirement_level:
+          conditionally_required: "if the operation ended in an error"
+
+  - id: metric.alibaba.gen_ai.workflow.duration
+    type: metric
+    metric_name: gen_ai.workflow.duration
+    annotations:
+      code_generation:
+        metric_value_type: double
+    brief: 'GenAI workflow invocation duration with Alibaba infrastructure context.'
+    instrument: histogram
+    unit: "ms"
+    stability: development
+    extends: metric_attributes.alibaba.gen_ai
+    attributes:
+      - ref: gen_ai.workflow.name
+        requirement_level: required
+      - ref: error.type
+        requirement_level:
+          conditionally_required: "if the operation ended in an error"
+
+  - id: metric.alibaba.gen_ai.skill.duration
+    type: metric
+    metric_name: gen_ai.skill.duration
+    annotations:
+      code_generation:
+        metric_value_type: double
+    brief: 'GenAI skill execution duration with Alibaba infrastructure context.'
+    instrument: histogram
+    unit: "ms"
+    stability: development
+    extends: metric_attributes.alibaba.gen_ai
+    attributes:
+      - ref: gen_ai.skill.name
+        requirement_level: required
+      - ref: error.type
+        requirement_level:
+          conditionally_required: "if the operation ended in an error"
