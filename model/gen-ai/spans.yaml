@@ -25,7 +25,7 @@ groups:
         requirement_level:
           conditionally_required: "if the operation ended in an error"
         note: |
-          The `error.type` SHOULD match the error code returned by the Generative AI provider or the client library,
+          The `error.type` SHOULD match the error code returned by the Gen AI provider or the client library,
           the canonical name of exception that occurred, or another low-cardinality error identifier.
           Instrumentations SHOULD document the list of errors they report.
 
