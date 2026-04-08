@@ -1,29 +1,24 @@
 <!--- Hugo front matter used to generate the website version of this page:
-linkTitle: Alibaba Inference Engine
+linkTitle: Inference
 --->
 
-# Semantic Conventions for Alibaba GenAI Inference Engine
+# Semantic Conventions for GenAI Inference Engine
 
 **Status**: [Development][DocumentStatus]
 
 <!-- toc -->
 
-- [Overview](#overview)
 - [Inference Engine Metrics](#inference-engine-metrics)
   - [Token Metrics](#token-metrics)
   - [Request Metrics](#request-metrics)
   - [Latency Metrics](#latency-metrics)
-- [Alibaba-specific Attributes](#alibaba-specific-attributes)
 
 <!-- tocstop -->
 
-## Overview
-
-This document defines Alibaba-specific extensions to the [GenAI Inference Engine semantic conventions](../gen-ai-metrics.md).
-These metrics are designed to monitor GenAI inference engines such as vLLM and SGLang deployed on Alibaba infrastructure.
-They provide visibility into token processing, request queueing, and end-to-end latency with additional Alibaba context.
-
 ## Inference Engine Metrics
+
+These metrics are designed to monitor GenAI inference engines such as vLLM and SGLang.
+They provide visibility into token processing, request queueing, and end-to-end latency.
 
 ### Token Metrics
 
@@ -46,23 +41,23 @@ They provide visibility into token processing, request queueing, and end-to-end 
 | --- | --- | --- | --- |
 | `gen_ai.server.e2e_request_latency` | Histogram | `ms` | End-to-end request latency including queue time and processing time. |
 
-### Alibaba Inference Engine Metric Attributes
+### Metric Attributes
 
-In addition to the standard [inference engine metric attributes](../gen-ai-metrics.md), the following
-Alibaba-specific attributes SHOULD be populated for inference engine metrics on Alibaba infrastructure:
+The following attributes are used with inference engine metrics:
 
 | Attribute | Requirement Level | Description |
 | --- | --- | --- |
-| `alibaba.base.env` | Recommended | Environment identifier (DEV, PRE, PROD) |
-| `alibaba.base.idc` | Recommended | Data center identifier where the inference engine is deployed |
-
-## Alibaba-specific Attributes
-
-See [Alibaba GenAI Extension Attributes](../../model/gen-ai/alibaba/) for full attribute definitions.
+| `gen_ai.provider.name` | Required | The Generative AI provider name. |
+| `gen_ai.operation.name` | Required | The name of the operation being performed. |
+| `gen_ai.request.model` | Conditionally Required: if available | The name of the model a request is being made to. |
+| `gen_ai.response.model` | Recommended | The name of the model that generated the response. |
+| `server.address` | Recommended | GenAI server address. |
+| `server.port` | Conditionally Required: if server.address is set | GenAI server port. |
+| `error.type` | Conditionally Required: if error | Error type if the operation ended in an error. |
 
 ## Compatibility
 
-These metrics are designed to be compatible with popular open-source inference engines deployed on Alibaba infrastructure:
+These metrics are designed to be compatible with popular open-source inference engines:
 
 - **vLLM**: Metrics align with vLLM's Prometheus exporter
 - **SGLang**: Compatible with SGLang's monitoring interface

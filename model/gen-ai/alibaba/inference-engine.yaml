@@ -1,82 +1,85 @@
 groups:
-  - id: metric_attributes.alibaba.gen_ai.server
+  - id: metric_attributes.gen_ai.server
     type: attribute_group
-    brief: 'Alibaba-specific attributes for GenAI inference engine server metrics'
-    extends: metric_attributes.gen_ai.server
+    brief: 'This group describes GenAI server metrics attributes'
+    extends: metric_attributes.gen_ai
     attributes:
-      - ref: alibaba.base.env
-        requirement_level: recommended
-      - ref: alibaba.base.idc
-        requirement_level: recommended
+      - ref: error.type
+        requirement_level:
+          conditionally_required: "if the operation ended in an error"
+        note: |
+          The `error.type` SHOULD match the error code returned by the Generative AI service,
+          the canonical name of exception that occurred, or another low-cardinality error identifier.
+          Instrumentations SHOULD document the list of errors they report.
 
-  - id: metric.alibaba.gen_ai.server.prompt_tokens
+  - id: metric.gen_ai.server.prompt_tokens
     type: metric
     metric_name: gen_ai.server.prompt_tokens
     annotations:
       code_generation:
         metric_value_type: int
-    brief: 'Number of prompt/input tokens processed by the Alibaba inference engine.'
+    brief: 'Number of prompt/input tokens processed by the inference engine.'
     instrument: counter
     unit: "{token}"
     stability: development
-    extends: metric_attributes.alibaba.gen_ai.server
+    extends: metric_attributes.gen_ai.server
 
-  - id: metric.alibaba.gen_ai.server.generation_tokens
+  - id: metric.gen_ai.server.generation_tokens
     type: metric
     metric_name: gen_ai.server.generation_tokens
     annotations:
       code_generation:
         metric_value_type: int
-    brief: 'Number of generation/output tokens produced by the Alibaba inference engine.'
+    brief: 'Number of generation/output tokens produced by the inference engine.'
     instrument: counter
     unit: "{token}"
     stability: development
-    extends: metric_attributes.alibaba.gen_ai.server
+    extends: metric_attributes.gen_ai.server
 
-  - id: metric.alibaba.gen_ai.server.cached_tokens
+  - id: metric.gen_ai.server.cached_tokens
     type: metric
     metric_name: gen_ai.server.cached_tokens
     annotations:
       code_generation:
         metric_value_type: int
-    brief: 'Number of tokens served from cache by the Alibaba inference engine.'
+    brief: 'Number of tokens served from cache by the inference engine.'
     instrument: histogram
     unit: "{token}"
     stability: development
-    extends: metric_attributes.alibaba.gen_ai.server
+    extends: metric_attributes.gen_ai.server
 
-  - id: metric.alibaba.gen_ai.server.num_requests_running
+  - id: metric.gen_ai.server.num_requests_running
     type: metric
     metric_name: gen_ai.server.num_requests_running
     annotations:
       code_generation:
         metric_value_type: int
-    brief: 'Number of requests currently being processed by the Alibaba inference engine.'
+    brief: 'Number of requests currently being processed by the inference engine.'
     instrument: gauge
     unit: "{request}"
     stability: development
-    extends: metric_attributes.alibaba.gen_ai.server
+    extends: metric_attributes.gen_ai.server
 
-  - id: metric.alibaba.gen_ai.server.num_requests_waiting
+  - id: metric.gen_ai.server.num_requests_waiting
     type: metric
     metric_name: gen_ai.server.num_requests_waiting
     annotations:
       code_generation:
         metric_value_type: int
-    brief: 'Number of requests waiting to be processed by the Alibaba inference engine.'
+    brief: 'Number of requests waiting to be processed by the inference engine.'
     instrument: gauge
     unit: "{request}"
     stability: development
-    extends: metric_attributes.alibaba.gen_ai.server
+    extends: metric_attributes.gen_ai.server
 
-  - id: metric.alibaba.gen_ai.server.e2e_request_latency
+  - id: metric.gen_ai.server.e2e_request_latency
     type: metric
     metric_name: gen_ai.server.e2e_request_latency
     annotations:
       code_generation:
         metric_value_type: double
-    brief: 'End-to-end request latency including queue time and processing time for the Alibaba inference engine.'
+    brief: 'End-to-end request latency including queue time and processing time.'
     instrument: histogram
     unit: "ms"
     stability: development
-    extends: metric_attributes.alibaba.gen_ai.server
+    extends: metric_attributes.gen_ai.server
