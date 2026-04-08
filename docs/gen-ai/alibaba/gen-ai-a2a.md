@@ -1,25 +1,19 @@
 <!--- Hugo front matter used to generate the website version of this page:
-linkTitle: Alibaba A2A Protocol
+linkTitle: A2A Protocol
 --->
 
-# Semantic Conventions for Alibaba Agent-to-Agent (A2A) Protocol
+# Semantic Conventions for Agent-to-Agent (A2A) Protocol
 
 **Status**: [Development][DocumentStatus]
 
 <!-- toc -->
 
-- [Overview](#overview)
 - [A2A Span](#a2a-span)
 - [A2A Task States](#a2a-task-states)
-- [Alibaba-specific Attributes](#alibaba-specific-attributes)
 
 <!-- tocstop -->
 
-## Overview
-
-This document defines Alibaba-specific extensions to the [Agent-to-Agent (A2A) Protocol semantic conventions](../gen-ai-spans.md).
-[A2A](https://github.com/google/A2A) is a JSON-RPC based protocol for inter-agent communication.
-These extensions add Alibaba infrastructure context to A2A telemetry.
+[A2A (Agent-to-Agent)](https://github.com/google/A2A) is a JSON-RPC based protocol for inter-agent communication. It defines standard methods for agents to exchange messages and manage tasks.
 
 ## A2A Span
 
@@ -41,19 +35,19 @@ Common A2A JSON-RPC methods include:
 | `tasks/get` | Get task status and result |
 | `tasks/cancel` | Cancel a running task |
 
-### Alibaba A2A Span Attributes
-
-In addition to the standard [A2A span attributes](../gen-ai-spans.md), the following
-Alibaba-specific attributes SHOULD be populated for A2A spans running on Alibaba infrastructure:
+### Attributes
 
 | Attribute | Type | Description | Requirement Level |
 | --- | --- | --- | --- |
-| `alibaba.base.env` | string | Environment identifier | Recommended |
-| `alibaba.base.idc` | string | Data center identifier | Recommended |
-| `alibaba.user.data` | string | User-defined custom data attached to the A2A call | Opt-in |
-| `alibaba.experiment.id` | string | RL experiment identifier | Conditionally Required: if applicable |
-| `alibaba.group.id` | string | RL group identifier | Conditionally Required: if applicable |
-| `alibaba.instance.id` | string | RL instance identifier | Conditionally Required: if applicable |
+| `gen_ai.provider.name` | string | The Generative AI provider name | Required |
+| `gen_ai.a2a.rpc.method` | string | The A2A JSON-RPC method name | Required |
+| `server.address` | string | GenAI server address | Recommended |
+| `server.port` | int | GenAI server port | Conditionally Required: if `server.address` is set |
+| `gen_ai.a2a.task.id` | string | The unique identifier of the A2A task | Conditionally Required: when task ID is available |
+| `gen_ai.a2a.task.state` | string | The state of the A2A task | Conditionally Required: when task state is available |
+| `gen_ai.a2a.protocol.version` | string | The version of the A2A protocol being used | Recommended |
+| `gen_ai.a2a.streaming` | boolean | Whether the response uses SSE streaming | Recommended |
+| `error.type` | string | Error type if the operation ended in an error | Conditionally Required: if error |
 
 ## A2A Task States
 
@@ -65,9 +59,5 @@ Alibaba-specific attributes SHOULD be populated for A2A spans running on Alibaba
 | `completed` | Task has completed successfully |
 | `failed` | Task has failed |
 | `canceled` | Task was canceled |
-
-## Alibaba-specific Attributes
-
-See [Alibaba GenAI Extension Attributes](../../model/gen-ai/alibaba/) for full attribute definitions.
 
 [DocumentStatus]: https://github.com/open-telemetry/opentelemetry-specification/blob/v1.37.0/specification/document-status.md

@@ -1,11 +1,10 @@
 groups:
-  - id: span.alibaba.gen_ai.a2a.client
+  - id: span.gen_ai.a2a.client
     type: span
     stability: development
     span_kind: client
     brief: >
-      Alibaba-specific extension for Agent-to-Agent (A2A) protocol spans.
-      Extends the standard gen_ai A2A span with Alibaba infrastructure attributes.
+      Describes Agent-to-Agent (A2A) protocol operation.
     note: |
       The `gen_ai.operation.name` SHOULD match the A2A operation being performed
       (e.g., `invoke_agent` for message/send, or use `gen_ai.a2a.rpc.method` as operation name).
@@ -14,20 +13,24 @@ groups:
 
       A2A is a JSON-RPC based protocol for agent-to-agent communication.
       See https://github.com/google/A2A for protocol specification.
-    extends: span.gen_ai.a2a.client
+    extends: attributes.gen_ai.common.client
     attributes:
-      - ref: alibaba.base.env
+      - ref: gen_ai.provider.name
+        requirement_level: required
+        sampling_relevant: true
+      - ref: gen_ai.a2a.rpc.method
+        requirement_level: required
+        sampling_relevant: true
+      - ref: gen_ai.a2a.task.id
+        requirement_level:
+          conditionally_required: when task ID is available.
+      - ref: gen_ai.a2a.task.state
+        requirement_level:
+          conditionally_required: when task state is available.
+      - ref: gen_ai.a2a.protocol.version
         requirement_level: recommended
-      - ref: alibaba.base.idc
+      - ref: gen_ai.a2a.streaming
         requirement_level: recommended
-      - ref: alibaba.user.data
-        requirement_level: opt_in
-      - ref: alibaba.experiment.id
+      - ref: error.type
         requirement_level:
-          conditionally_required: if applicable for RL-based agent interactions.
-      - ref: alibaba.group.id
-        requirement_level:
-          conditionally_required: if applicable for RL-based agent interactions.
-      - ref: alibaba.instance.id
-        requirement_level:
-          conditionally_required: if applicable for RL-based agent interactions.
+          conditionally_required: "if the operation ended in an error"
