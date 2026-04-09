@@ -10,8 +10,17 @@ linkTitle: GenAI Metrics
 
 - [Metric Attributes](#metric-attributes)
 - [Client Metrics](#client-metrics)
+  - [Metric: `gen_ai.client.token.usage`](#metric-gen_aiclienttokenusage)
+  - [Metric: `gen_ai.client.operation.duration`](#metric-gen_aiclientoperationduration)
+  - [Metric: `gen_ai.client.time_to_first_token`](#metric-gen_aiclienttime_to_first_token)
+  - [Metric: `gen_ai.client.time_per_output_token`](#metric-gen_aiclienttime_per_output_token)
 - [Server Metrics](#server-metrics)
+  - [Metric: `gen_ai.server.request.duration`](#metric-gen_aiserverrequestduration)
+  - [Metric: `gen_ai.server.time_to_first_token`](#metric-gen_aiservertime_to_first_token)
+  - [Metric: `gen_ai.server.time_per_output_token`](#metric-gen_aiservertime_per_output_token)
 - [Workflow and Skill Metrics](#workflow-and-skill-metrics)
+  - [Metric: `gen_ai.workflow.duration`](#metric-gen_aiworkflowduration)
+  - [Metric: `gen_ai.skill.duration`](#metric-gen_aiskillduration)
 
 <!-- tocstop -->
 
