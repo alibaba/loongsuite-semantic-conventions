@@ -338,7 +338,7 @@ groups:
           conditionally_required: if this tool execution loaded a skill
       - ref: gen_ai.skill.id
         requirement_level:
-           conditionally_required: if this tool execution loaded a skill
+          conditionally_required: if this tool execution loaded a skill
       - ref: gen_ai.skill.description
         requirement_level: recommended
       - ref: gen_ai.skill.version
