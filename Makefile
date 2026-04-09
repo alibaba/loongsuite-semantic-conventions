@@ -147,7 +147,7 @@ markdown-toc:
 .PHONY: markdownlint
 markdownlint:
 	@if ! npm ls markdownlint-cli2; then npm ci --ignore-scripts; fi
-	npx --no -- markdownlint-cli2 --config .markdownlint.yaml "**/*.md" "#.github" "#node_modules" "#.git" "#.cursor"
+	npx --no -- markdownlint-cli2 --config .markdownlint.yaml "**/*.md" "#.github" "#node_modules" "#.git"
 
 .PHONY: install-yamllint
 install-yamllint:

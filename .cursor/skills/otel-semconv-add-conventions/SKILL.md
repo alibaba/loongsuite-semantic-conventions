@@ -78,6 +78,7 @@ groups:
 ```
 
 **Rules for attributes:**
+
 - New attributes use `stability: development`
 - Provide realistic `examples`
 - Enum types define `members` with `id`, `value`, `brief`, `stability`
@@ -178,7 +179,7 @@ Brief description of what these conventions cover.
 **What is hand-written vs auto-generated:**
 
 | Part | Source | Editable? |
-|------|--------|-----------|
+| --- | --- | --- |
 | Hugo frontmatter (`<!--- Hugo front matter ... --->`) | Hand-written | Yes |
 | Page title, status badge, intro text | Hand-written | Yes |
 | Section headers (`## Client Span`) | Hand-written | Yes |
@@ -194,6 +195,7 @@ make table-generation registry-generation
 ```
 
 This runs Weaver to:
+
 1. Resolve all YAML model files (expand `ref:`, `extends:`)
 2. Replace content between `<!-- semconv -->` / `<!-- endsemconv -->` markers
 3. Generate `docs/registry/attributes/{namespace}.md` pages
@@ -218,7 +220,7 @@ make chlog-validate
 ### Group types
 
 | type | Use for | Required fields |
-|------|---------|-----------------|
+| --- | --- | --- |
 | `attribute_group` | Attribute registry or shared groups | `id`, `attributes` |
 | `span` | Span conventions | `id`, `span_kind`, `brief`, `stability` |
 | `metric` | Metric conventions | `id`, `metric_name`, `instrument`, `unit`, `stability` |
@@ -252,7 +254,7 @@ make chlog-validate
 ### Requirement levels
 
 | Level | Meaning |
-|-------|---------|
+| --- | --- |
 | `required` | MUST be provided |
 | `conditionally_required` | MUST if condition met (provide condition text) |
 | `recommended` | SHOULD be provided |
@@ -286,6 +288,7 @@ Used when multiple protocols share common attributes (e.g., RPC):
 When adding a new system (e.g., new database, new RPC framework):
 
 1. Add enum member in existing registry:
+
    ```yaml
    # model/rpc/registry.yaml, under rpc.system.name members:
    - id: my_protocol

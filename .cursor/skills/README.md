@@ -8,13 +8,15 @@ This directory contains Cursor AI skills specific to this semantic-conventions p
 
 **Purpose**: Guide for adding or modifying OpenTelemetry semantic conventions using the YAML model + Weaver toolchain.
 
-**When to use**: 
+**When to use**:
+
 - Adding new attributes, spans, metrics, events, or resources
 - Creating new semantic convention areas (e.g., new database, RPC framework, cloud provider)
 - Editing `model/*.yaml` and `docs/*.md` files
 - Understanding the semconv generation workflow
 
-**Activation keywords**: 
+**Activation keywords**:
+
 - "add semantic conventions"
 - "create new span/metric/event"
 - "add dubbo/redis/kafka conventions"
@@ -22,6 +24,7 @@ This directory contains Cursor AI skills specific to this semantic-conventions p
 - "model/rpc/spans.yaml"
 
 **Example usage**:
+
 ```
 User: "帮我添加一个新的 Redis 语义约定"
 AI: [Automatically reads and follows the otel-semconv-add-conventions skill]
@@ -32,6 +35,7 @@ AI: [Automatically reads and follows the otel-semconv-add-conventions skill]
 1. **Automatic activation**: When you mention relevant keywords or file paths, Cursor AI automatically loads the appropriate skill to provide specialized guidance.
 
 2. **Manual activation**: You can explicitly reference a skill by mentioning it:
+
    ```
    User: "使用 otel-semconv-add-conventions skill 帮我添加一个新的消息队列约定"
    ```
@@ -43,19 +47,21 @@ AI: [Automatically reads and follows the otel-semconv-add-conventions skill]
 To add a new skill for this project:
 
 1. Create a new directory under `.cursor/skills/`:
+
    ```bash
    mkdir -p .cursor/skills/my-new-skill
    ```
 
 2. Create a `SKILL.md` file with the frontmatter:
+
    ```markdown
    ---
    name: my-new-skill
    description: Brief description of what this skill does and when to use it
    ---
-   
+
    # Skill Content
-   
+
    Your detailed guidance here...
    ```
 
@@ -91,6 +97,7 @@ Each skill is a directory containing a `SKILL.md` file:
 ## Questions?
 
 If you have questions about using or creating skills, please:
+
 - Check the [Cursor documentation](https://docs.cursor.com)
 - Ask in your team's communication channel
 - Open an issue in the project repository
