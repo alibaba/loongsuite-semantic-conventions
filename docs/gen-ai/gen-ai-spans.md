@@ -579,6 +579,11 @@ are encouraged to follow this semantic convention for tools invoked by their
 own code and to manually instrument any tool calls that automatic
 instrumentations do not cover.
 
+Instrumentations should try their best to determine whether a given tool
+execution represents a skill load. When a tool loads a skill into context,
+the `gen_ai.skill.*` attributes SHOULD be set. Common patterns include
+tools named `load_skill`, `read_skill`, or similar.
+
 **Span kind** SHOULD be `INTERNAL`.
 
 **Span status** SHOULD follow the [Recording Errors](/docs/general/recording-errors.md) document.
@@ -589,6 +594,10 @@ instrumentations do not cover.
 | --- | --- | --- | --- | --- | --- |
 | [`gen_ai.operation.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The name of the operation being performed. [1] | `chat`; `generate_content`; `text_completion` |
 | [`error.type`](/docs/registry/attributes/error.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` if the operation ended in an error | string | Describes a class of error the operation ended with. [2] | `timeout`; `java.net.UnknownHostException`; `server_certificate_invalid`; `500` |
+| [`gen_ai.skill.id`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` if this tool execution loaded a skill | string | The unique identifier of the GenAI skill being invoked. | `skill_29bbe8a7` |
+| [`gen_ai.skill.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` if this tool execution loaded a skill | string | The name of the GenAI skill being invoked. | `code_review`; `change_workitem` |
+| [`gen_ai.skill.description`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | Free-form description of the GenAI skill provided by the application. | `Execute code review on GitHub repositories` |
+| [`gen_ai.skill.version`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | The version of the GenAI skill being invoked. | `0.2.0`; `v2.1.0` |
 | [`gen_ai.tool.call.id`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` if available | string | The tool call identifier. | `call_mszuSIzqtI65i1wAUOE8w5H4` |
 | [`gen_ai.tool.description`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` if available | string | The tool description. | `Multiply two numbers` |
 | [`gen_ai.tool.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | Name of the tool utilized by the agent. | `Flights` |

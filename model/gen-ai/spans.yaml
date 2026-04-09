@@ -309,6 +309,11 @@ groups:
       are encouraged to follow this semantic convention for tools invoked by their
       own code and to manually instrument any tool calls that automatic
       instrumentations do not cover.
+
+      Instrumentations should try their best to determine whether a given tool
+      execution represents a skill load. When a tool loads a skill into context,
+      the `gen_ai.skill.*` attributes SHOULD be set. Common patterns include
+      tools named `load_skill`, `read_skill`, or similar.
     attributes:
       - ref: gen_ai.operation.name
         requirement_level: required
@@ -328,6 +333,16 @@ groups:
         requirement_level: opt_in
       - ref: gen_ai.tool.call.result
         requirement_level: opt_in
+      - ref: gen_ai.skill.name
+        requirement_level:
+          conditionally_required: if this tool execution loaded a skill
+      - ref: gen_ai.skill.id
+        requirement_level:
+           conditionally_required: if this tool execution loaded a skill
+      - ref: gen_ai.skill.description
+        requirement_level: recommended
+      - ref: gen_ai.skill.version
+        requirement_level: recommended
       - ref: error.type
         requirement_level:
           conditionally_required: "if the operation ended in an error"
