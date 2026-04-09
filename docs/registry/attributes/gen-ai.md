@@ -15,6 +15,11 @@ This document defines the attributes used to describe telemetry in the context o
 
 | Key | Stability | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- |
+| <a id="gen-ai-a2a-protocol-version" href="#gen-ai-a2a-protocol-version">`gen_ai.a2a.protocol.version`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The version of the A2A protocol being used. | `0.1`; `0.2` |
+| <a id="gen-ai-a2a-rpc-method" href="#gen-ai-a2a-rpc-method">`gen_ai.a2a.rpc.method`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The A2A (Agent-to-Agent) JSON-RPC method name. | `message/send`; `tasks/get`; `tasks/cancel` |
+| <a id="gen-ai-a2a-streaming" href="#gen-ai-a2a-streaming">`gen_ai.a2a.streaming`</a> | ![Development](https://img.shields.io/badge/-development-blue) | boolean | Indicates whether the response uses SSE streaming. | `true`; `false` |
+| <a id="gen-ai-a2a-task-id" href="#gen-ai-a2a-task-id">`gen_ai.a2a.task.id`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The unique identifier of the A2A task. | `wJU4XHw4` |
+| <a id="gen-ai-a2a-task-state" href="#gen-ai-a2a-task-state">`gen_ai.a2a.task.state`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The state of the A2A task. | `submitted`; `working`; `input-required` |
 | <a id="gen-ai-agent-description" href="#gen-ai-agent-description">`gen_ai.agent.description`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | Free-form description of the GenAI agent provided by the application. | `Helps with math problems`; `Generates fiction stories` |
 | <a id="gen-ai-agent-id" href="#gen-ai-agent-id">`gen_ai.agent.id`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The unique identifier of the GenAI agent. | `asst_5j66UpCpwteGg4YSxUnt7lPY` |
 | <a id="gen-ai-agent-name" href="#gen-ai-agent-name">`gen_ai.agent.name`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | Human-readable name of the GenAI agent provided by the application. | `Math Tutor`; `Fiction Writer` |
@@ -192,6 +197,19 @@ populating this attribute.
 Function: A tool executed on the client-side, where the agent generates parameters for a predefined function, and the client executes the logic.
   Client-side operations are actions taken on the user's end or within the client application.
 Datastore: A tool used by the agent to access and query structured or unstructured external data for retrieval-augmented tasks or knowledge updates.
+
+---
+
+`gen_ai.a2a.task.state` has the following list of well-known values. If one of them applies, then the respective value MUST be used; otherwise, a custom value MAY be used.
+
+| Value | Description | Stability |
+| --- | --- | --- |
+| `canceled` | Task was canceled | ![Development](https://img.shields.io/badge/-development-blue) |
+| `completed` | Task has completed successfully | ![Development](https://img.shields.io/badge/-development-blue) |
+| `failed` | Task has failed | ![Development](https://img.shields.io/badge/-development-blue) |
+| `input-required` | Task requires additional input | ![Development](https://img.shields.io/badge/-development-blue) |
+| `submitted` | Task has been submitted | ![Development](https://img.shields.io/badge/-development-blue) |
+| `working` | Task is currently being processed | ![Development](https://img.shields.io/badge/-development-blue) |
 
 ---
 

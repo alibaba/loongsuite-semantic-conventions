@@ -349,7 +349,7 @@ groups:
       **Span name** SHOULD be `{gen_ai.a2a.rpc.method}` (e.g., `message/send`, `tasks/get`).
 
       A2A is a JSON-RPC based protocol for agent-to-agent communication.
-      See https://github.com/google/A2A for protocol specification.
+      See [A2A protocol specification](https://github.com/google/A2A) for protocol specification.
     extends: attributes.gen_ai.common.client
     attributes:
       - ref: gen_ai.provider.name
