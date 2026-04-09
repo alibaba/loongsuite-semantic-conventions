@@ -294,7 +294,6 @@ check-policies:
 		--mount 'type=bind,source=$(PWD)/model,target=/home/weaver/source,readonly' \
 		${WEAVER_CONTAINER} registry check \
 		--registry=/home/weaver/source \
-		--baseline-registry=https://github.com/open-telemetry/semantic-conventions/archive/refs/tags/v$(LATEST_RELEASED_SEMCONV_VERSION).zip[model] \
 		--policy=/home/weaver/policies
 
 # Test rego policies
@@ -337,6 +336,7 @@ generate-schema-next:
 	--mount 'type=bind,source=$(TOOLS_DIR)/bin,target=/home/weaver/target' \
 	$(WEAVER_CONTAINER) registry diff \
 		--registry=/home/weaver/source \
+		--baseline-registry=https://github.com/open-telemetry/semantic-conventions/archive/refs/tags/v$(LATEST_RELEASED_SEMCONV_VERSION).zip[model] \
 		--diff-format yaml \
 		--diff-template /home/weaver/templates/schema-diff \
 		--output /home/weaver/target
