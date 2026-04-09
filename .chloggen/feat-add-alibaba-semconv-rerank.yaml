@@ -1,0 +1,4 @@
+change_type: enhancement
+component: gen-ai
+note: Add GenAI rerank operation semantic conventions.
+issues: [1]
