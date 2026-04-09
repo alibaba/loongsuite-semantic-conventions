@@ -636,3 +636,44 @@ groups:
         brief: The name of the prompt that uniquely identifies it.
         stability: development
         examples: ["analyze-code"]
+      - id: gen_ai.span.kind
+        stability: development
+        type:
+          members:
+            - id: entry
+              stability: development
+              value: "ENTRY"
+              brief: >
+                Entry span representing the user-facing entry point of an AI application system.
+                A trace should have at most one Entry-type span.
+              note: >
+                This is an Alibaba Cloud extension attribute. The probe side should continue recording this field
+                and will eventually be replaced by `gen_ai.operation.name`.
+        brief: Dedicated enum for large model span kinds.
+        note: >
+          This attribute identifies the role of a GenAI span within the application architecture.
+          For Entry spans, the value must be `ENTRY`.
+      - id: gen_ai.session.id
+        stability: development
+        type: string
+        brief: Session identifier for the conversation.
+        examples: ["ddde34343-f93a-4477-33333-sdfsdaf"]
+        note: >
+          Identifies a unique conversation session. Used to reconstruct user conversation history
+          by user/session dimension and perform user-perspective evaluations.
+      - id: gen_ai.user.id
+        stability: development
+        type: string
+        brief: End-user identifier for the AI application.
+        examples: ["u-lK8JddD"]
+        note: >
+          Identifies the end user interacting with the AI application. Used for user-centric
+          analysis, preference reconstruction, and memory building.
+      - id: gen_ai.response.time_to_first_token
+        stability: development
+        type: int
+        brief: Time to first token in streaming response scenarios, in microseconds.
+        examples: [1000000]
+        note: >
+          For streaming responses, measures the time until the first token is received.
+          For non-streaming responses, this equals the total response time.
