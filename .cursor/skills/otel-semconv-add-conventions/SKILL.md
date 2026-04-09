@@ -83,7 +83,7 @@ groups:
 - Provide realistic `examples`
 - Enum types define `members` with `id`, `value`, `brief`, `stability`
 - Reuse existing attributes (`server.address`, `error.type`, etc.) when possible
-- Follow [naming guidance](docs/general/naming.md): `{namespace}.{noun}.{adjective}`
+- Follow [naming guidance](../../../docs/general/naming.md): `{namespace}.{noun}.{adjective}`
 
 ### Step 2: Define signal conventions (spans/metrics/events)
 
@@ -304,6 +304,6 @@ When adding a new system (e.g., new database, new RPC framework):
 
 - [Semconv YAML syntax](https://github.com/open-telemetry/weaver/blob/main/schemas/semconv-syntax.md)
 - [Weaver template docs](https://github.com/open-telemetry/weaver/blob/main/crates/weaver_forge/README.md)
-- [How to write conventions](docs/how-to-write-conventions/README.md)
-- [Naming guidelines](docs/general/naming.md)
-- [Attribute requirement levels](docs/general/attribute-requirement-level.md)
+- [How to write conventions](../../../docs/how-to-write-conventions/README.md)
+- [Naming guidelines](../../../docs/general/naming.md)
+- [Attribute requirement levels](../../../docs/general/attribute-requirement-level.md)
