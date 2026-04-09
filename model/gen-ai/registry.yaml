@@ -636,3 +636,52 @@ groups:
         brief: The name of the prompt that uniquely identifies it.
         stability: development
         examples: ["analyze-code"]
+      - id: gen_ai.a2a.rpc.method
+        stability: development
+        type: string
+        brief: The A2A (Agent-to-Agent) JSON-RPC method name.
+        examples: ["message/send", "tasks/get", "tasks/cancel"]
+      - id: gen_ai.a2a.task.id
+        stability: development
+        type: string
+        brief: The unique identifier of the A2A task.
+        examples: ["wJU4XHw4"]
+      - id: gen_ai.a2a.task.state
+        stability: development
+        type:
+          members:
+            - id: submitted
+              value: "submitted"
+              brief: "Task has been submitted"
+              stability: development
+            - id: working
+              value: "working"
+              brief: "Task is currently being processed"
+              stability: development
+            - id: input_required
+              value: "input-required"
+              brief: "Task requires additional input"
+              stability: development
+            - id: completed
+              value: "completed"
+              brief: "Task has completed successfully"
+              stability: development
+            - id: failed
+              value: "failed"
+              brief: "Task has failed"
+              stability: development
+            - id: canceled
+              value: "canceled"
+              brief: "Task was canceled"
+              stability: development
+        brief: The state of the A2A task.
+      - id: gen_ai.a2a.protocol.version
+        stability: development
+        type: string
+        brief: The version of the A2A protocol being used.
+        examples: ["0.1", "0.2"]
+      - id: gen_ai.a2a.streaming
+        stability: development
+        type: boolean
+        brief: Indicates whether the response uses SSE streaming.
+        examples: [true, false]
