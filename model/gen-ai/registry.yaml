@@ -386,6 +386,10 @@ groups:
               value: "execute_tool"
               brief: 'Execute a tool'
               stability: development
+            - id: rerank
+              value: "rerank"
+              brief: 'Rerank documents based on relevance to a query'
+              stability: development
         brief: The name of the operation being performed.
         note: >
           If one of the predefined values applies, but specific system uses a different name it's RECOMMENDED to document it in the semantic
@@ -636,3 +640,31 @@ groups:
         brief: The name of the prompt that uniquely identifies it.
         stability: development
         examples: ["analyze-code"]
+      - id: gen_ai.rerank.query
+        stability: development
+        type: string
+        brief: The query used for reranking documents.
+        examples: ["What is machine learning?"]
+        note: |
+          > [!Warning]
+          > This attribute may contain sensitive information.
+      - id: gen_ai.rerank.top_k
+        stability: development
+        type: double
+        brief: The number of top documents to return from reranking.
+        examples: [5.0, 10.0]
+      - id: gen_ai.rerank.input_documents
+        stability: development
+        type: string[]
+        brief: List of input documents for a rerank operation.
+        examples:
+          - ["Document about machine learning", "Document about quantum computing"]
+        note: |
+          > [!Warning]
+          > This attribute may contain sensitive information.
+      - id: gen_ai.rerank.output_documents
+        stability: development
+        type: string[]
+        brief: List of output documents from a rerank operation in relevance order.
+        examples:
+          - ["Document about machine learning (relevance: 0.95)", "Document about AI (relevance: 0.82)"]
