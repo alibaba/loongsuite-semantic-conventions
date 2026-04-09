@@ -9,12 +9,12 @@ linkTitle: Metrics
 <!-- toc -->
 
 - [Generative AI client metrics](#generative-ai-client-metrics)
-  - [Metric: `gen_ai.client.token.usage`](#metric-gen_aiclienttokenusage)
-  - [Metric: `gen_ai.client.operation.duration`](#metric-gen_aiclientoperationduration)
+    - [Metric: `gen_ai.client.token.usage`](#metric-gen_aiclienttokenusage)
+    - [Metric: `gen_ai.client.operation.duration`](#metric-gen_aiclientoperationduration)
 - [Generative AI model server metrics](#generative-ai-model-server-metrics)
-  - [Metric: `gen_ai.server.request.duration`](#metric-gen_aiserverrequestduration)
-  - [Metric: `gen_ai.server.time_per_output_token`](#metric-gen_aiservertime_per_output_token)
-  - [Metric: `gen_ai.server.time_to_first_token`](#metric-gen_aiservertime_to_first_token)
+    - [Metric: `gen_ai.server.request.duration`](#metric-gen_aiserverrequestduration)
+    - [Metric: `gen_ai.server.time_per_output_token`](#metric-gen_aiservertime_per_output_token)
+    - [Metric: `gen_ai.server.time_to_first_token`](#metric-gen_aiservertime_to_first_token)
 
 <!-- tocstop -->
 
@@ -25,16 +25,16 @@ linkTitle: Metrics
 > (or prior):
 >
 > * SHOULD NOT change the version of the GenAI conventions that they emit by default.
->   Conventions include, but are not limited to, attributes, metric, span and event names,
->   span kind and unit of measure.
+    >   Conventions include, but are not limited to, attributes, metric, span and event names,
+    >   span kind and unit of measure.
 > * SHOULD introduce an environment variable `OTEL_SEMCONV_STABILITY_OPT_IN`
->   as a comma-separated list of category-specific values. The list of values
->   includes:
->   * `gen_ai_latest_experimental` - emit the latest experimental version of
->     GenAI conventions (supported by the instrumentation) and do not emit the
->     old one (v1.36.0 or prior).
+    >   as a comma-separated list of category-specific values. The list of values
+    >   includes:
+    >   * `gen_ai_latest_experimental` - emit the latest experimental version of
+          >     GenAI conventions (supported by the instrumentation) and do not emit the
+          >     old one (v1.36.0 or prior).
 >   * The default behavior is to continue emitting whatever version of the GenAI
->     conventions the instrumentation was emitting (1.36.0 or prior).
+      >     conventions the instrumentation was emitting (1.36.0 or prior).
 >
 > This transition plan will be updated to include stable version before the
 > GenAI conventions are marked as stable.
