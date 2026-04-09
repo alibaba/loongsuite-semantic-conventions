@@ -304,6 +304,7 @@ When a PR is raised, maintainers from the Alibaba Observability Team will review
 and provide feedback. For significant changes, at least two approvals are required.
 
 Before merging a PR, maintainers MUST verify that:
+
 - The PR has been properly reviewed
 - All feedback has been addressed
 - Tests and checks pass

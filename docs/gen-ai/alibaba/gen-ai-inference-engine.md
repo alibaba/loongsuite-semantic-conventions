@@ -12,6 +12,8 @@ linkTitle: Inference
   - [Token Metrics](#token-metrics)
   - [Request Metrics](#request-metrics)
   - [Latency Metrics](#latency-metrics)
+  - [Metric Attributes](#metric-attributes)
+- [Compatibility](#compatibility)
 
 <!-- tocstop -->
 

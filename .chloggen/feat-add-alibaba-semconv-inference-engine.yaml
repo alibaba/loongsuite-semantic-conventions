@@ -1,0 +1,4 @@
+change_type: enhancement
+component: gen-ai
+note: Add GenAI inference engine semantic conventions.
+issues: [1]
