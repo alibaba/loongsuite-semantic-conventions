@@ -97,3 +97,107 @@ groups:
     unit: "s"
     stability: development
     extends: metric_attributes.gen_ai
+
+  - id: metric.gen_ai.client.operation.time_to_first_chunk
+    type: metric
+    metric_name: gen_ai.client.operation.time_to_first_chunk
+    annotations:
+      code_generation:
+        metric_value_type: int
+    brief: 'Time to receive the first chunk, measured from when the client issues the generation request to when the first chunk is received in the response stream.'
+    instrument: histogram
+    unit: "ms"
+    stability: development
+    extends: metric_attributes.gen_ai
+    attributes:
+      - ref: error.type
+        requirement_level:
+          conditionally_required: "if the operation ended in an error"
+
+  - id: metric.gen_ai.client.operation.time_per_output_chunk
+    type: metric
+    metric_name: gen_ai.client.operation.time_per_output_chunk
+    annotations:
+      code_generation:
+        metric_value_type: int
+    brief: 'Time per output chunk, recorded for each chunk received after the first one, measured as the time elapsed from the end of the previous chunk to the end of the current chunk.'
+    instrument: histogram
+    unit: "ms"
+    stability: development
+    extends: metric_attributes.gen_ai
+    attributes:
+      - ref: error.type
+        requirement_level:
+          conditionally_required: "if the operation ended in an error"
+
+  - id: metric.gen_ai.workflow.duration
+    type: metric
+    metric_name: gen_ai.workflow.duration
+    annotations:
+      code_generation:
+        metric_value_type: int
+    brief: 'GenAI workflow invocation duration.'
+    instrument: histogram
+    unit: "ms"
+    stability: development
+    extends: metric_attributes.gen_ai
+    attributes:
+      - ref: gen_ai.workflow.name
+        requirement_level: required
+      - ref: error.type
+        requirement_level:
+          conditionally_required: "if the operation ended in an error"
+
+  - id: metric.gen_ai.skill.duration
+    type: metric
+    metric_name: gen_ai.skill.duration
+    annotations:
+      code_generation:
+        metric_value_type: int
+    brief: 'GenAI skill execution duration.'
+    instrument: histogram
+    unit: "ms"
+    stability: development
+    extends: metric_attributes.gen_ai
+    attributes:
+      - ref: gen_ai.skill.name
+        requirement_level: required
+      - ref: error.type
+        requirement_level:
+          conditionally_required: "if the operation ended in an error"
+
+  - id: metric.gen_ai.agent.duration
+    type: metric
+    metric_name: gen_ai.agent.duration
+    annotations:
+      code_generation:
+        metric_value_type: int
+    brief: 'GenAI agent invocation duration.'
+    instrument: histogram
+    unit: "ms"
+    stability: development
+    extends: metric_attributes.gen_ai
+    attributes:
+      - ref: gen_ai.agent.name
+        requirement_level: required
+      - ref: error.type
+        requirement_level:
+          conditionally_required: "if the operation ended in an error"
+
+  - id: metric.gen_ai.tool.duration
+    type: metric
+    metric_name: gen_ai.tool.duration
+    annotations:
+      code_generation:
+        metric_value_type: int
+    brief: 'GenAI tool execution duration.'
+    instrument: histogram
+    unit: "ms"
+    stability: development
+    extends: metric_attributes.gen_ai
+    attributes:
+      - ref: gen_ai.tool.name
+        requirement_level: required
+      - ref: error.type
+        requirement_level:
+          conditionally_required: "if the operation ended in an error"
