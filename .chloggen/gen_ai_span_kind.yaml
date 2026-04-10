@@ -17,5 +17,4 @@ issues: [14, 15]
 # These lines will be padded with 2 spaces and then inserted directly into the document.
 # Use pipe (|) for multiline entries.
 subtext: |
-  Adds a dedicated GenAI spanKind enum (as an Attribute) with values: LLM, EMBEDDING, RETRIEVER, TOOL, AGENT, RERANKER, CHAIN, TASK, ENTRY, STEP.
-  This is an Alibaba Cloud extension based on the ARMS semantic convention.
+  Adds `gen_ai.span.kind` for GenAI spans.
