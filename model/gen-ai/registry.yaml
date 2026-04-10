@@ -729,4 +729,61 @@ groups:
           | `RERANKER` | - | Document reranking |
           | `ENTRY` | - | Entry point invocation |
           | `STEP` | - | ReAct iteration step |
+
+          **Semantic Convention Dialect:**
+          This attribute is conditionally required. Instrumentations SHOULD implement a dialect switch controlled by
+          `loongsuite.semconv.dialect.name` (environment variable: `LOONGSUITE_SEMCONV_DIALECT_NAME`):
+
+          - `ALIBABA_CLOUD` (default): Collect using `gen_ai.span.kind`.
+          - `ALIBABA_GROUP`: Collect using `gen_ai.span_kind_name` instead.
+        examples: ['LLM', 'RETRIEVER', 'EMBEDDING', 'TOOL', 'AGENT']
+      - id: gen_ai.span_kind_name
+        stability: development
+        type:
+          members:
+            - id: llm
+              value: "LLM"
+              brief: 'Model invocation (chat, generate_content, text_completion)'
+              stability: development
+            - id: embedding
+              value: "EMBEDDING"
+              brief: 'Embedding operation'
+              stability: development
+            - id: retriever
+              value: "RETRIEVER"
+              brief: 'Document retrieval operation'
+              stability: development
+            - id: tool
+              value: "TOOL"
+              brief: 'Tool execution operation'
+              stability: development
+            - id: agent
+              value: "AGENT"
+              brief: 'Agent invocation or creation operation'
+              stability: development
+            - id: reranker
+              value: "RERANKER"
+              brief: 'Document reranking operation'
+              stability: development
+              note: 'Not yet defined in OTel community.'
+            - id: entry
+              value: "ENTRY"
+              brief: 'Entry point invocation identifier for AI application system'
+              stability: development
+              note: 'Not yet defined in OTel community.'
+            - id: step
+              value: "STEP"
+              brief: 'ReAct iteration step identifier'
+              stability: development
+              note: 'Not yet defined in OTel community.'
+        brief: The type of GenAI operation being performed.
+        note: |
+          `gen_ai.span_kind_name` is an alias of `gen_ai.span.kind` for the `ALIBABA_GROUP` semantic convention dialect.
+          Instrumentations SHOULD implement a dialect switch controlled by `loongsuite.semconv.dialect.name`
+          (environment variable: `LOONGSUITE_SEMCONV_DIALECT_NAME`):
+
+          - `ALIBABA_CLOUD` (default): Collect using `gen_ai.span.kind`.
+          - `ALIBABA_GROUP`: Collect using `gen_ai.span_kind_name`.
+
+          The enum values and their meaning are identical to `gen_ai.span.kind`.
         examples: ['LLM', 'RETRIEVER', 'EMBEDDING', 'TOOL', 'AGENT']
