@@ -710,7 +710,7 @@ groups:
               brief: 'ReAct iteration step identifier'
               stability: development
               note: 'Not yet defined in OTel community.'
-        brief: The type of GenAI operation being performed. [1]
+        brief: The type of GenAI operation being performed.
         note: |
           `gen_ai.span.kind` is a dedicated GenAI span classification attribute, distinct from OTel's standard `SpanKind`.
           Due to existing widespread usage, there are no plans to remove this attribute in the short term.
