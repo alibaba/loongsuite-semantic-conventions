@@ -414,6 +414,13 @@ groups:
               value: "invoke_workflow"
               brief: 'Invoke GenAI workflow'
               stability: development
+            - id: react
+              value: "react"
+              brief: 'ReAct (Reasoning-Acting) iteration loop for GenAI agents'
+              stability: development
+              note: >
+                This value is used for the ReAct iteration span that wraps individual
+                reasoning-acting cycles within an agent loop. It is an Alibaba Cloud extension.
         brief: The name of the operation being performed.
         note: >
           If one of the predefined values applies, but specific system uses a different name it's RECOMMENDED to document it in the semantic
@@ -671,3 +678,56 @@ groups:
         examples: [ "multi_agent_rag", "customer_support_pipeline" ]
         note: |
           This attribute can be populated in different frameworks eg: name of the first chain in LangChain OR name of the crew in CrewAI.
+      - id: gen_ai.span.kind
+        stability: development
+        type:
+          members:
+            - id: step
+              value: "STEP"
+              brief: >
+                Wraps a single iteration (turn) within a ReAct loop of a Reasoning-Acting agent.
+              stability: development
+              note: >
+                This span kind is an Alibaba Cloud extension. It is used to identify
+                individual ReAct iteration turns within an agent loop, enabling clear
+                isolation and analysis of each reasoning-acting cycle.
+        brief: Dedicated span kind enum for identifying specific span purposes within GenAI agent workflows.
+        note: >
+          When set to `STEP`, the span represents a single ReAct iteration turn.
+          This is an Alibaba Cloud extension and not part of the upstream OpenTelemetry semantic conventions.
+      - id: gen_ai.session.id
+        stability: development
+        type: string
+        brief: A unique identifier for the GenAI session.
+        examples: ["sess_abc123"]
+        note: |
+          Identifies the session that the GenAI interaction belongs to.
+          Conditionally required when session management is enabled.
+      - id: gen_ai.user.id
+        stability: development
+        type: string
+        brief: A unique identifier for the end user.
+        examples: ["user_456", "alice@example.com"]
+        note: |
+          > [!WARNING]
+          >
+          > This attribute may contain personally identifiable information (PII).
+          > Instrumentations SHOULD consider this when recording the value.
+          Identifies the end user initiating the GenAI interaction.
+          Conditionally required when user authentication is enabled.
+      - id: gen_ai.framework
+        stability: development
+        type: string
+        brief: The name of the GenAI framework or library being used.
+        examples: ["langchain", "llama_index", "crewai", "autogen"]
+        note: |
+          Identifies the framework used to build and orchestrate the GenAI agent or application.
+          Conditionally required when the framework is detectable.
+      - id: gen_ai.react.iteration.count
+        stability: development
+        type: int
+        brief: The iteration number of the current ReAct turn within the agent loop.
+        examples: [1, 2, 3]
+        note: |
+          Indicates which iteration this ReAct turn represents, starting from 1.
+          Useful for tracking the total number of iterations required to reach a final result.

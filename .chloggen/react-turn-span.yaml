@@ -1,0 +1,24 @@
+# Use this changelog template to create an entry for release notes.
+#
+# If your change doesn't affect end users you should instead start
+# your pull request title with [chore] or use the "Skip Changelog" label.
+
+# One of 'breaking', 'deprecation', 'new_component', 'enhancement', 'bug_fix'
+change_type: new_component
+
+# The name of the area of concern in the attributes-registry, (e.g. http, cloud, db)
+component: gen-ai
+
+# A brief description of the change. Surround your text with quotes ("") if it needs to start with a backtick (`).
+note: Add `gen_ai.react_turn.internal` span for ReAct iteration loops and related attributes (`gen_ai.span.kind`, `gen_ai.session.id`, `gen_ai.user.id`, `gen_ai.framework`, `gen_ai.react.iteration.count`)
+
+# Mandatory: One or more tracking issues related to the change. You can use the PR number here if no issue exists.
+# The values here must be integers.
+issues: [5]
+
+# (Optional) One or more lines of additional information to render under the primary note.
+# These lines will be padded with 2 spaces and then inserted directly into the document.
+# Use pipe (|) for multiline entries.
+subtext: |
+  This is an Alibaba Cloud extension. The `STEP` span kind and `react` operation name
+  are used to identify individual ReAct iteration turns within an agent loop.
