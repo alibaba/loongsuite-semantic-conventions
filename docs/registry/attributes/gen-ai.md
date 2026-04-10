@@ -166,15 +166,15 @@ The mapping between `gen_ai.span.kind` and `gen_ai.operation.name` is as follows
 This attribute is conditionally required. Instrumentations SHOULD implement a dialect switch controlled by
 `loongsuite.semconv.dialect.name` (environment variable: `LOONGSUITE_SEMCONV_DIALECT_NAME`):
 
-- `ALIBABA_CLOUD` (default): Collect using `gen_ai.span.kind`.
-- `ALIBABA_GROUP`: Collect using `gen_ai.span_kind_name` instead.
+- `alibaba_cloud` (default): Collect using `gen_ai.span.kind`.
+- `alibaba_group`: Collect using `gen_ai.span_kind_name` instead.
 
-**[12] `gen_ai.span_kind_name`:** `gen_ai.span_kind_name` is an alias of `gen_ai.span.kind` for the `ALIBABA_GROUP` semantic convention dialect.
+**[12] `gen_ai.span_kind_name`:** `gen_ai.span_kind_name` is an alias of `gen_ai.span.kind` for the `alibaba_group` semantic convention dialect.
 Instrumentations SHOULD implement a dialect switch controlled by `loongsuite.semconv.dialect.name`
 (environment variable: `LOONGSUITE_SEMCONV_DIALECT_NAME`):
 
-- `ALIBABA_CLOUD` (default): Collect using `gen_ai.span.kind`.
-- `ALIBABA_GROUP`: Collect using `gen_ai.span_kind_name`.
+- `alibaba_cloud` (default): Collect using `gen_ai.span.kind`.
+- `alibaba_group`: Collect using `gen_ai.span_kind_name`.
 
 The enum values and their meaning are identical to `gen_ai.span.kind`.
 

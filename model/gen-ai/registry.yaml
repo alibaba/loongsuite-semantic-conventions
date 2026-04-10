@@ -734,8 +734,8 @@ groups:
           This attribute is conditionally required. Instrumentations SHOULD implement a dialect switch controlled by
           `loongsuite.semconv.dialect.name` (environment variable: `LOONGSUITE_SEMCONV_DIALECT_NAME`):
 
-          - `ALIBABA_CLOUD` (default): Collect using `gen_ai.span.kind`.
-          - `ALIBABA_GROUP`: Collect using `gen_ai.span_kind_name` instead.
+          - `alibaba_cloud` (default): Collect using `gen_ai.span.kind`.
+          - `alibaba_group`: Collect using `gen_ai.span_kind_name` instead.
         examples: ['LLM', 'RETRIEVER', 'EMBEDDING', 'TOOL', 'AGENT']
       - id: gen_ai.span_kind_name
         stability: development
@@ -778,12 +778,12 @@ groups:
               note: 'Not yet defined in OTel community.'
         brief: The type of GenAI operation being performed.
         note: |
-          `gen_ai.span_kind_name` is an alias of `gen_ai.span.kind` for the `ALIBABA_GROUP` semantic convention dialect.
+          `gen_ai.span_kind_name` is an alias of `gen_ai.span.kind` for the `alibaba_group` semantic convention dialect.
           Instrumentations SHOULD implement a dialect switch controlled by `loongsuite.semconv.dialect.name`
           (environment variable: `LOONGSUITE_SEMCONV_DIALECT_NAME`):
 
-          - `ALIBABA_CLOUD` (default): Collect using `gen_ai.span.kind`.
-          - `ALIBABA_GROUP`: Collect using `gen_ai.span_kind_name`.
+          - `alibaba_cloud` (default): Collect using `gen_ai.span.kind`.
+          - `alibaba_group`: Collect using `gen_ai.span_kind_name`.
 
           The enum values and their meaning are identical to `gen_ai.span.kind`.
         examples: ['LLM', 'RETRIEVER', 'EMBEDDING', 'TOOL', 'AGENT']

@@ -17,6 +17,6 @@ issues: [14, 15]
 # These lines will be padded with 2 spaces and then inserted directly into the document.
 # Use pipe (|) for multiline entries.
 subtext: |
-  Adds `gen_ai.span.kind` for GenAI spans.
+  Adds `gen_ai.span.kind` and `gen_ai.span_kind_name` for GenAI spans.
   Instrumentations SHOULD implement a dialect switch controlled by `loongsuite.semconv.dialect.name`:
-  `ALIBABA_CLOUD` (default) uses `gen_ai.span.kind`, `ALIBABA_GROUP` uses `gen_ai.span_kind_name`.
+  `alibaba_cloud` (default) uses `gen_ai.span.kind`, `alibaba_group` uses `gen_ai.span_kind_name`.
