@@ -7,7 +7,7 @@ change_type: new_component
 component: gen-ai
 
 # A brief description of the change. Surround your text with quotes ("") if it needs to start with a backtick (`).
-note: Add `gen_ai.span.kind` attribute to classify GenAI operations at a higher level
+note: Add `gen_ai.span.kind` and `gen_ai.span_kind_name` attributes to classify GenAI operations at a higher level
 
 # Mandatory: One or more tracking issues related to the change. You can use the PR number here if no issue exists.
 # The values here must be integers.
@@ -18,3 +18,5 @@ issues: [14, 15]
 # Use pipe (|) for multiline entries.
 subtext: |
   Adds `gen_ai.span.kind` for GenAI spans.
+  Instrumentations SHOULD implement a dialect switch controlled by `loongsuite.semconv.dialect.name`:
+  `ALIBABA_CLOUD` (default) uses `gen_ai.span.kind`, `ALIBABA_GROUP` uses `gen_ai.span_kind_name`.
