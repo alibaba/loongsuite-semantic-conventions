@@ -671,3 +671,134 @@ groups:
         examples: [ "multi_agent_rag", "customer_support_pipeline" ]
         note: |
           This attribute can be populated in different frameworks eg: name of the first chain in LangChain OR name of the crew in CrewAI.
+      - id: gen_ai.span.kind
+        stability: development
+        type:
+          members:
+            - id: llm
+              value: "LLM"
+              brief: 'Model invocation (chat, generate_content, text_completion)'
+              stability: development
+            - id: embedding
+              value: "EMBEDDING"
+              brief: 'Embedding operation'
+              stability: development
+            - id: retriever
+              value: "RETRIEVER"
+              brief: 'Document retrieval operation'
+              stability: development
+            - id: tool
+              value: "TOOL"
+              brief: 'Tool execution operation'
+              stability: development
+            - id: agent
+              value: "AGENT"
+              brief: 'Agent invocation or creation operation'
+              stability: development
+            - id: reranker
+              value: "RERANKER"
+              brief: 'Document reranking operation'
+              stability: development
+            - id: entry
+              value: "ENTRY"
+              brief: 'Entry point invocation identifier for AI application system'
+              stability: development
+            - id: step
+              value: "STEP"
+              brief: 'ReAct iteration step identifier'
+              stability: development
+            - id: workflow
+              value: "WORKFLOW"
+              brief: 'GenAI workflow invocation operation'
+              stability: development
+            - id: mcp
+              value: "MCP"
+              brief: 'Tool execution via Model Context Protocol (MCP)'
+              stability: development
+        brief: The type of GenAI operation being performed.
+        note: |
+          `gen_ai.span.kind` is a dedicated GenAI span classification attribute, distinct from OTel's standard `SpanKind`.
+          Due to existing widespread usage, there are no plans to remove this attribute in the short term.
+          Instrumentation probes should continue to record this field, and server-side consumers can also derive equivalent
+          logic from `gen_ai.operation.name` using the mapping below.
+
+          The mapping between `gen_ai.span.kind` and `gen_ai.operation.name` is as follows:
+
+          | `gen_ai.span.kind` | `gen_ai.operation.name` | Description |
+          | --- | --- | --- |
+          | `RETRIEVER` | `retrieval` | Document retrieval |
+          | `LLM` | `chat`, `generate_content`, `text_completion` | Model invocation |
+          | `EMBEDDING` | `embeddings` | Embedding |
+          | `TOOL` | `execute_tool` | Tool execution |
+          | `MCP` | `execute_tool` | Tool execution via Model Context Protocol |
+          | `AGENT` | `create_agent`, `invoke_agent` | Agent invocation/creation |
+          | `RERANKER` | - | Document reranking |
+          | `WORKFLOW` | `invoke_workflow` | GenAI workflow invocation |
+          | `ENTRY` | - | Entry point invocation |
+          | `STEP` | - | ReAct iteration step |
+
+          **Non-community extensions:**
+          The values `RERANKER`, `ENTRY`, `STEP`, `WORKFLOW`, and `MCP` are not yet defined in the OTel community.
+
+          **Semantic Convention Dialect:**
+          This attribute is conditionally required. Instrumentations SHOULD implement a dialect switch controlled by
+          `loongsuite.semconv.dialect.name` (environment variable: `LOONGSUITE_SEMCONV_DIALECT_NAME`):
+
+          - `alibaba_cloud` (default): Collect using `gen_ai.span.kind`.
+          - `alibaba_group`: Collect using `gen_ai.span_kind_name` instead.
+        examples: ['LLM', 'RETRIEVER', 'EMBEDDING', 'TOOL', 'AGENT']
+      - id: gen_ai.span_kind_name
+        stability: development
+        type:
+          members:
+            - id: llm
+              value: "LLM"
+              brief: 'Model invocation (chat, generate_content, text_completion)'
+              stability: development
+            - id: embedding
+              value: "EMBEDDING"
+              brief: 'Embedding operation'
+              stability: development
+            - id: retriever
+              value: "RETRIEVER"
+              brief: 'Document retrieval operation'
+              stability: development
+            - id: tool
+              value: "TOOL"
+              brief: 'Tool execution operation'
+              stability: development
+            - id: agent
+              value: "AGENT"
+              brief: 'Agent invocation or creation operation'
+              stability: development
+            - id: reranker
+              value: "RERANKER"
+              brief: 'Document reranking operation'
+              stability: development
+            - id: entry
+              value: "ENTRY"
+              brief: 'Entry point invocation identifier for AI application system'
+              stability: development
+            - id: step
+              value: "STEP"
+              brief: 'ReAct iteration step identifier'
+              stability: development
+            - id: workflow
+              value: "WORKFLOW"
+              brief: 'GenAI workflow invocation operation'
+              stability: development
+            - id: mcp
+              value: "MCP"
+              brief: 'Tool execution via Model Context Protocol (MCP)'
+              stability: development
+        brief: The type of GenAI operation being performed.
+        note: |
+          `gen_ai.span_kind_name` is an alias of `gen_ai.span.kind` for the `alibaba_group` semantic convention dialect.
+          Instrumentations SHOULD implement a dialect switch controlled by `loongsuite.semconv.dialect.name`
+          (environment variable: `LOONGSUITE_SEMCONV_DIALECT_NAME`):
+
+          - `alibaba_cloud` (default): Collect using `gen_ai.span.kind`.
+          - `alibaba_group`: Collect using `gen_ai.span_kind_name`.
+
+          The enum values and their meaning are identical to `gen_ai.span.kind`.
+        examples: ['LLM', 'RETRIEVER', 'EMBEDDING', 'TOOL', 'AGENT']
