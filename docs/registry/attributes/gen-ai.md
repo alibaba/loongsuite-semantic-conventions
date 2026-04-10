@@ -157,7 +157,7 @@ The mapping between `gen_ai.span.kind` and `gen_ai.operation.name` is as follows
 | `EMBEDDING` | `embeddings` | Embedding |
 | `TOOL` | `execute_tool` | Tool execution |
 | `AGENT` | `create_agent`, `invoke_agent` | Agent invocation/creation |
-| `TASK` | - | Task invocation |
+| `RERANKER` | - | Document reranking |
 | `ENTRY` | - | Entry point invocation |
 | `STEP` | - | ReAct iteration step |
 
@@ -292,9 +292,9 @@ by summing different token types parsed from the provider output.
 | `EMBEDDING` | Embedding operation | ![Development](https://img.shields.io/badge/-development-blue) |
 | `ENTRY` | Entry point invocation identifier for AI application system [24] | ![Development](https://img.shields.io/badge/-development-blue) |
 | `LLM` | Model invocation (chat, generate_content, text_completion) | ![Development](https://img.shields.io/badge/-development-blue) |
+| `RERANKER` | Document reranking operation [25] | ![Development](https://img.shields.io/badge/-development-blue) |
 | `RETRIEVER` | Document retrieval operation | ![Development](https://img.shields.io/badge/-development-blue) |
-| `STEP` | ReAct iteration step identifier [25] | ![Development](https://img.shields.io/badge/-development-blue) |
-| `TASK` | Task invocation operation [26] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `STEP` | ReAct iteration step identifier [26] | ![Development](https://img.shields.io/badge/-development-blue) |
 | `TOOL` | Tool execution operation | ![Development](https://img.shields.io/badge/-development-blue) |
 
 **[24]:** Not yet defined in OTel community.
