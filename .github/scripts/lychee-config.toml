@@ -21,6 +21,8 @@ exclude = [
   # TODO (lmolkova) treat timeout as not a failure?
   "^https://www.intersystems.com",
   "^https://gcc.gnu.org",
+  # Cursor docs often return HTTP 429 in CI; exclude only this host from link checks
+  "^https://docs\\.cursor\\.com",
 ]
 
 # better to be safe and avoid failures
