@@ -1,0 +1,6 @@
+change_type: enhancement
+component: gen-ai
+note: Add token-level GenAI inference events and optional span attributes for per-token timing, iteration metadata, and candidate-token details.
+issues: [3335]
+subtext: |
+  Defines both event-based token telemetry and span-level per-token attributes for inference spans.
