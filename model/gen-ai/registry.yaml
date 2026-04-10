@@ -710,6 +710,16 @@ groups:
               brief: 'ReAct iteration step identifier'
               stability: development
               note: 'Not yet defined in OTel community.'
+            - id: workflow
+              value: "WORKFLOW"
+              brief: 'GenAI workflow invocation operation'
+              stability: development
+              note: 'Not yet defined in OTel community.'
+            - id: mcp
+              value: "MCP"
+              brief: 'Tool execution via Model Context Protocol (MCP)'
+              stability: development
+              note: 'Not yet defined in OTel community.'
         brief: The type of GenAI operation being performed.
         note: |
           `gen_ai.span.kind` is a dedicated GenAI span classification attribute, distinct from OTel's standard `SpanKind`.
@@ -725,8 +735,10 @@ groups:
           | `LLM` | `chat`, `generate_content`, `text_completion` | Model invocation |
           | `EMBEDDING` | `embeddings` | Embedding |
           | `TOOL` | `execute_tool` | Tool execution |
+          | `MCP` | `execute_tool` | Tool execution via Model Context Protocol |
           | `AGENT` | `create_agent`, `invoke_agent` | Agent invocation/creation |
           | `RERANKER` | - | Document reranking |
+          | `WORKFLOW` | `invoke_workflow` | GenAI workflow invocation |
           | `ENTRY` | - | Entry point invocation |
           | `STEP` | - | ReAct iteration step |
 
@@ -774,6 +786,16 @@ groups:
             - id: step
               value: "STEP"
               brief: 'ReAct iteration step identifier'
+              stability: development
+              note: 'Not yet defined in OTel community.'
+            - id: workflow
+              value: "WORKFLOW"
+              brief: 'GenAI workflow invocation operation'
+              stability: development
+              note: 'Not yet defined in OTel community.'
+            - id: mcp
+              value: "MCP"
+              brief: 'Tool execution via Model Context Protocol (MCP)'
               stability: development
               note: 'Not yet defined in OTel community.'
         brief: The type of GenAI operation being performed.
