@@ -671,3 +671,74 @@ groups:
         examples: [ "multi_agent_rag", "customer_support_pipeline" ]
         note: |
           This attribute can be populated in different frameworks eg: name of the first chain in LangChain OR name of the crew in CrewAI.
+      - id: gen_ai.span.kind
+        stability: development
+        type:
+          members:
+            - id: llm
+              value: "LLM"
+              brief: 'Model invocation (chat, generate_content, text_completion)'
+              stability: development
+            - id: embedding
+              value: "EMBEDDING"
+              brief: 'Embedding operation'
+              stability: development
+            - id: retriever
+              value: "RETRIEVER"
+              brief: 'Document retrieval operation'
+              stability: development
+            - id: tool
+              value: "TOOL"
+              brief: 'Tool execution operation'
+              stability: development
+            - id: agent
+              value: "AGENT"
+              brief: 'Agent invocation or creation operation'
+              stability: development
+            - id: reranker
+              value: "RERANKER"
+              brief: 'Document reranking operation'
+              stability: development
+              note: 'Not yet defined in OTel community.'
+            - id: chain
+              value: "CHAIN"
+              brief: 'Chain (invocation unit) operation'
+              stability: development
+              note: 'Not yet defined in OTel community.'
+            - id: task
+              value: "TASK"
+              brief: 'Task invocation operation'
+              stability: development
+              note: 'Not yet defined in OTel community.'
+            - id: entry
+              value: "ENTRY"
+              brief: 'Entry point invocation identifier for AI application system'
+              stability: development
+              note: 'Not yet defined in OTel community.'
+            - id: step
+              value: "STEP"
+              brief: 'ReAct iteration step identifier'
+              stability: development
+              note: 'Not yet defined in OTel community.'
+        brief: The type of GenAI operation being performed. [1]
+        note: |
+          > [!NOTE]
+          > This attribute is planned to be replaced by `gen_ai.operation.name` in the future.
+          > Due to existing consumer dependencies, instrumentation probes should continue to record this field.
+          > Server-side consumers can gradually migrate to logic derived from `gen_ai.operation.name`.
+
+          The mapping between `gen_ai.span.kind` and `gen_ai.operation.name` is as follows:
+
+          | `gen_ai.span.kind` | `gen_ai.operation.name` | Description |
+          | --- | --- | --- |
+          | `RETRIEVER` | `retrieval` | Document retrieval |
+          | `LLM` | `chat`, `generate_content`, `text_completion` | Model invocation |
+          | `EMBEDDING` | `embeddings` | Embedding |
+          | `TOOL` | `execute_tool` | Tool execution |
+          | `AGENT` | `create_agent`, `invoke_agent` | Agent invocation/creation |
+          | `RERANKER` | - | Document reranking |
+          | `CHAIN` | - | Chain (invocation unit) |
+          | `TASK` | - | Task invocation |
+          | `ENTRY` | - | Entry point invocation |
+          | `STEP` | - | ReAct iteration step |
+        examples: ['LLM', 'RETRIEVER', 'EMBEDDING', 'TOOL', 'AGENT']
