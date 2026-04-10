@@ -695,9 +695,9 @@ groups:
               value: "AGENT"
               brief: 'Agent invocation or creation operation'
               stability: development
-            - id: task
-              value: "TASK"
-              brief: 'Task invocation operation'
+            - id: reranker
+              value: "RERANKER"
+              brief: 'Document reranking operation'
               stability: development
               note: 'Not yet defined in OTel community.'
             - id: entry
@@ -726,7 +726,7 @@ groups:
           | `EMBEDDING` | `embeddings` | Embedding |
           | `TOOL` | `execute_tool` | Tool execution |
           | `AGENT` | `create_agent`, `invoke_agent` | Agent invocation/creation |
-          | `TASK` | - | Task invocation |
+          | `RERANKER` | - | Document reranking |
           | `ENTRY` | - | Entry point invocation |
           | `STEP` | - | ReAct iteration step |
         examples: ['LLM', 'RETRIEVER', 'EMBEDDING', 'TOOL', 'AGENT']
