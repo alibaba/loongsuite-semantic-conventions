@@ -322,16 +322,11 @@ defined in the [CODEOWNERS](./.github/CODEOWNERS) file.
 When a PR is raised, maintainers from the Alibaba Observability Team will review
 and provide feedback. For significant changes, at least two approvals are required.
 
-Before merging a PR, [@specs-semconv-maintainers](https://github.com/orgs/open-telemetry/teams/specs-semconv-maintainers)
+Before merging a PR, maintainers MUST verify that:
 MUST verify that the PR has been approved by the corresponding area owner(s). For
 non-trivial changes, maintainers SHOULD NOT merge PRs without other code owner approvals.
 
-Reviews from non-code owners are encouraged, with the following assumptions:
-
-- There is a reasonable intersection between the change and the reviewer's area of expertise or interest
-- Area owners have autonomy to accept or dismiss feedback from non-codeowners and
-  SHOULD consult with [@specs-semconv-maintainers](https://github.com/orgs/open-telemetry/teams/specs-semconv-maintainers)
-  in case of conflicts
+Reviews from community members are encouraged and appreciated!
 
 When reviewing changes, reviewers SHOULD include relevant context such as:
 
