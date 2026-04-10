@@ -699,27 +699,22 @@ groups:
               value: "RERANKER"
               brief: 'Document reranking operation'
               stability: development
-              note: 'Not yet defined in OTel community.'
             - id: entry
               value: "ENTRY"
               brief: 'Entry point invocation identifier for AI application system'
               stability: development
-              note: 'Not yet defined in OTel community.'
             - id: step
               value: "STEP"
               brief: 'ReAct iteration step identifier'
               stability: development
-              note: 'Not yet defined in OTel community.'
             - id: workflow
               value: "WORKFLOW"
               brief: 'GenAI workflow invocation operation'
               stability: development
-              note: 'Not yet defined in OTel community.'
             - id: mcp
               value: "MCP"
               brief: 'Tool execution via Model Context Protocol (MCP)'
               stability: development
-              note: 'Not yet defined in OTel community.'
         brief: The type of GenAI operation being performed.
         note: |
           `gen_ai.span.kind` is a dedicated GenAI span classification attribute, distinct from OTel's standard `SpanKind`.
@@ -741,6 +736,9 @@ groups:
           | `WORKFLOW` | `invoke_workflow` | GenAI workflow invocation |
           | `ENTRY` | - | Entry point invocation |
           | `STEP` | - | ReAct iteration step |
+
+          **Non-community extensions:**
+          The values `RERANKER`, `ENTRY`, `STEP`, `WORKFLOW`, and `MCP` are not yet defined in the OTel community.
 
           **Semantic Convention Dialect:**
           This attribute is conditionally required. Instrumentations SHOULD implement a dialect switch controlled by
@@ -777,27 +775,22 @@ groups:
               value: "RERANKER"
               brief: 'Document reranking operation'
               stability: development
-              note: 'Not yet defined in OTel community.'
             - id: entry
               value: "ENTRY"
               brief: 'Entry point invocation identifier for AI application system'
               stability: development
-              note: 'Not yet defined in OTel community.'
             - id: step
               value: "STEP"
               brief: 'ReAct iteration step identifier'
               stability: development
-              note: 'Not yet defined in OTel community.'
             - id: workflow
               value: "WORKFLOW"
               brief: 'GenAI workflow invocation operation'
               stability: development
-              note: 'Not yet defined in OTel community.'
             - id: mcp
               value: "MCP"
               brief: 'Tool execution via Model Context Protocol (MCP)'
               stability: development
-              note: 'Not yet defined in OTel community.'
         brief: The type of GenAI operation being performed.
         note: |
           `gen_ai.span_kind_name` is an alias of `gen_ai.span.kind` for the `alibaba_group` semantic convention dialect.

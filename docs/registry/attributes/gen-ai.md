@@ -164,6 +164,9 @@ The mapping between `gen_ai.span.kind` and `gen_ai.operation.name` is as follows
 | `ENTRY` | - | Entry point invocation |
 | `STEP` | - | ReAct iteration step |
 
+**Non-community extensions:**
+The values `RERANKER`, `ENTRY`, `STEP`, `WORKFLOW`, and `MCP` are not yet defined in the OTel community.
+
 **Semantic Convention Dialect:**
 This attribute is conditionally required. Instrumentations SHOULD implement a dialect switch controlled by
 `loongsuite.semconv.dialect.name` (environment variable: `LOONGSUITE_SEMCONV_DIALECT_NAME`):
@@ -309,24 +312,14 @@ by summing different token types parsed from the provider output.
 | --- | --- | --- |
 | `AGENT` | Agent invocation or creation operation | ![Development](https://img.shields.io/badge/-development-blue) |
 | `EMBEDDING` | Embedding operation | ![Development](https://img.shields.io/badge/-development-blue) |
-| `ENTRY` | Entry point invocation identifier for AI application system [25] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `ENTRY` | Entry point invocation identifier for AI application system | ![Development](https://img.shields.io/badge/-development-blue) |
 | `LLM` | Model invocation (chat, generate_content, text_completion) | ![Development](https://img.shields.io/badge/-development-blue) |
-| `MCP` | Tool execution via Model Context Protocol (MCP) [26] | ![Development](https://img.shields.io/badge/-development-blue) |
-| `RERANKER` | Document reranking operation [27] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `MCP` | Tool execution via Model Context Protocol (MCP) | ![Development](https://img.shields.io/badge/-development-blue) |
+| `RERANKER` | Document reranking operation | ![Development](https://img.shields.io/badge/-development-blue) |
 | `RETRIEVER` | Document retrieval operation | ![Development](https://img.shields.io/badge/-development-blue) |
-| `STEP` | ReAct iteration step identifier [28] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `STEP` | ReAct iteration step identifier | ![Development](https://img.shields.io/badge/-development-blue) |
 | `TOOL` | Tool execution operation | ![Development](https://img.shields.io/badge/-development-blue) |
-| `WORKFLOW` | GenAI workflow invocation operation [29] | ![Development](https://img.shields.io/badge/-development-blue) |
-
-**[25]:** Not yet defined in OTel community.
-
-**[26]:** Not yet defined in OTel community.
-
-**[27]:** Not yet defined in OTel community.
-
-**[28]:** Not yet defined in OTel community.
-
-**[29]:** Not yet defined in OTel community.
+| `WORKFLOW` | GenAI workflow invocation operation | ![Development](https://img.shields.io/badge/-development-blue) |
 
 ---
 
@@ -336,24 +329,14 @@ by summing different token types parsed from the provider output.
 | --- | --- | --- |
 | `AGENT` | Agent invocation or creation operation | ![Development](https://img.shields.io/badge/-development-blue) |
 | `EMBEDDING` | Embedding operation | ![Development](https://img.shields.io/badge/-development-blue) |
-| `ENTRY` | Entry point invocation identifier for AI application system [30] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `ENTRY` | Entry point invocation identifier for AI application system | ![Development](https://img.shields.io/badge/-development-blue) |
 | `LLM` | Model invocation (chat, generate_content, text_completion) | ![Development](https://img.shields.io/badge/-development-blue) |
-| `MCP` | Tool execution via Model Context Protocol (MCP) [31] | ![Development](https://img.shields.io/badge/-development-blue) |
-| `RERANKER` | Document reranking operation [32] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `MCP` | Tool execution via Model Context Protocol (MCP) | ![Development](https://img.shields.io/badge/-development-blue) |
+| `RERANKER` | Document reranking operation | ![Development](https://img.shields.io/badge/-development-blue) |
 | `RETRIEVER` | Document retrieval operation | ![Development](https://img.shields.io/badge/-development-blue) |
-| `STEP` | ReAct iteration step identifier [33] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `STEP` | ReAct iteration step identifier | ![Development](https://img.shields.io/badge/-development-blue) |
 | `TOOL` | Tool execution operation | ![Development](https://img.shields.io/badge/-development-blue) |
-| `WORKFLOW` | GenAI workflow invocation operation [34] | ![Development](https://img.shields.io/badge/-development-blue) |
-
-**[30]:** Not yet defined in OTel community.
-
-**[31]:** Not yet defined in OTel community.
-
-**[32]:** Not yet defined in OTel community.
-
-**[33]:** Not yet defined in OTel community.
-
-**[34]:** Not yet defined in OTel community.
+| `WORKFLOW` | GenAI workflow invocation operation | ![Development](https://img.shields.io/badge/-development-blue) |
 
 ---
 
@@ -390,9 +373,9 @@ Describes deprecated `gen_ai` attributes.
 | `azure.ai.openai` | Azure OpenAI | ![Development](https://img.shields.io/badge/-development-blue) |
 | `cohere` | Cohere | ![Development](https://img.shields.io/badge/-development-blue) |
 | `deepseek` | DeepSeek | ![Development](https://img.shields.io/badge/-development-blue) |
-| `gcp.gemini` | Gemini [35] | ![Development](https://img.shields.io/badge/-development-blue) |
-| `gcp.gen_ai` | Any Google generative AI endpoint [36] | ![Development](https://img.shields.io/badge/-development-blue) |
-| `gcp.vertex_ai` | Vertex AI [37] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `gcp.gemini` | Gemini [25] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `gcp.gen_ai` | Any Google generative AI endpoint [26] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `gcp.vertex_ai` | Vertex AI [27] | ![Development](https://img.shields.io/badge/-development-blue) |
 | `groq` | Groq | ![Development](https://img.shields.io/badge/-development-blue) |
 | `ibm.watsonx.ai` | IBM Watsonx AI | ![Development](https://img.shields.io/badge/-development-blue) |
 | `mistral_ai` | Mistral AI | ![Development](https://img.shields.io/badge/-development-blue) |
@@ -400,11 +383,11 @@ Describes deprecated `gen_ai` attributes.
 | `perplexity` | Perplexity | ![Development](https://img.shields.io/badge/-development-blue) |
 | `xai` | xAI | ![Development](https://img.shields.io/badge/-development-blue) |
 
-**[35]:** This refers to the 'generativelanguage.googleapis.com' endpoint. Also known as the AI Studio API. May use common attributes prefixed with 'gcp.gen_ai.'.
+**[25]:** This refers to the 'generativelanguage.googleapis.com' endpoint. Also known as the AI Studio API. May use common attributes prefixed with 'gcp.gen_ai.'.
 
-**[36]:** May be used when specific backend is unknown. May use common attributes prefixed with 'gcp.gen_ai.'.
+**[26]:** May be used when specific backend is unknown. May use common attributes prefixed with 'gcp.gen_ai.'.
 
-**[37]:** This refers to the 'aiplatform.googleapis.com' endpoint. May use common attributes prefixed with 'gcp.gen_ai.'.
+**[27]:** This refers to the 'aiplatform.googleapis.com' endpoint. May use common attributes prefixed with 'gcp.gen_ai.'.
 
 ## Deprecated OpenAI GenAI Attributes
 
