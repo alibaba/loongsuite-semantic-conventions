@@ -143,12 +143,10 @@ Each document object SHOULD contain at least the following properties:
 > [!Warning]
 > This attribute may contain sensitive information.
 
-**[11] `gen_ai.span.kind`:**
-
-> [!NOTE]
-> This attribute is planned to be replaced by `gen_ai.operation.name` in the future.
-> Due to existing consumer dependencies, instrumentation probes should continue to record this field.
-> Server-side consumers can gradually migrate to logic derived from `gen_ai.operation.name`.
+**[11] `gen_ai.span.kind`:** `gen_ai.span.kind` is a dedicated GenAI span classification attribute, distinct from OTel's standard `SpanKind`.
+Due to existing widespread usage, there are no plans to remove this attribute in the short term.
+Instrumentation probes should continue to record this field, and server-side consumers can also derive equivalent
+logic from `gen_ai.operation.name` using the mapping below.
 
 The mapping between `gen_ai.span.kind` and `gen_ai.operation.name` is as follows:
 
@@ -159,8 +157,6 @@ The mapping between `gen_ai.span.kind` and `gen_ai.operation.name` is as follows
 | `EMBEDDING` | `embeddings` | Embedding |
 | `TOOL` | `execute_tool` | Tool execution |
 | `AGENT` | `create_agent`, `invoke_agent` | Agent invocation/creation |
-| `RERANKER` | - | Document reranking |
-| `CHAIN` | - | Chain (invocation unit) |
 | `TASK` | - | Task invocation |
 | `ENTRY` | - | Entry point invocation |
 | `STEP` | - | ReAct iteration step |
@@ -293,14 +289,12 @@ by summing different token types parsed from the provider output.
 | Value | Description | Stability |
 | --- | --- | --- |
 | `AGENT` | Agent invocation or creation operation | ![Development](https://img.shields.io/badge/-development-blue) |
-| `CHAIN` | Chain (invocation unit) operation [24] | ![Development](https://img.shields.io/badge/-development-blue) |
 | `EMBEDDING` | Embedding operation | ![Development](https://img.shields.io/badge/-development-blue) |
-| `ENTRY` | Entry point invocation identifier for AI application system [25] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `ENTRY` | Entry point invocation identifier for AI application system [24] | ![Development](https://img.shields.io/badge/-development-blue) |
 | `LLM` | Model invocation (chat, generate_content, text_completion) | ![Development](https://img.shields.io/badge/-development-blue) |
-| `RERANKER` | Document reranking operation [26] | ![Development](https://img.shields.io/badge/-development-blue) |
 | `RETRIEVER` | Document retrieval operation | ![Development](https://img.shields.io/badge/-development-blue) |
-| `STEP` | ReAct iteration step identifier [27] | ![Development](https://img.shields.io/badge/-development-blue) |
-| `TASK` | Task invocation operation [28] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `STEP` | ReAct iteration step identifier [25] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `TASK` | Task invocation operation [26] | ![Development](https://img.shields.io/badge/-development-blue) |
 | `TOOL` | Tool execution operation | ![Development](https://img.shields.io/badge/-development-blue) |
 
 **[24]:** Not yet defined in OTel community.
@@ -308,10 +302,6 @@ by summing different token types parsed from the provider output.
 **[25]:** Not yet defined in OTel community.
 
 **[26]:** Not yet defined in OTel community.
-
-**[27]:** Not yet defined in OTel community.
-
-**[28]:** Not yet defined in OTel community.
 
 ---
 
@@ -348,9 +338,9 @@ Describes deprecated `gen_ai` attributes.
 | `azure.ai.openai` | Azure OpenAI | ![Development](https://img.shields.io/badge/-development-blue) |
 | `cohere` | Cohere | ![Development](https://img.shields.io/badge/-development-blue) |
 | `deepseek` | DeepSeek | ![Development](https://img.shields.io/badge/-development-blue) |
-| `gcp.gemini` | Gemini [29] | ![Development](https://img.shields.io/badge/-development-blue) |
-| `gcp.gen_ai` | Any Google generative AI endpoint [30] | ![Development](https://img.shields.io/badge/-development-blue) |
-| `gcp.vertex_ai` | Vertex AI [31] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `gcp.gemini` | Gemini [27] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `gcp.gen_ai` | Any Google generative AI endpoint [28] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `gcp.vertex_ai` | Vertex AI [29] | ![Development](https://img.shields.io/badge/-development-blue) |
 | `groq` | Groq | ![Development](https://img.shields.io/badge/-development-blue) |
 | `ibm.watsonx.ai` | IBM Watsonx AI | ![Development](https://img.shields.io/badge/-development-blue) |
 | `mistral_ai` | Mistral AI | ![Development](https://img.shields.io/badge/-development-blue) |
@@ -358,11 +348,11 @@ Describes deprecated `gen_ai` attributes.
 | `perplexity` | Perplexity | ![Development](https://img.shields.io/badge/-development-blue) |
 | `xai` | xAI | ![Development](https://img.shields.io/badge/-development-blue) |
 
-**[29]:** This refers to the 'generativelanguage.googleapis.com' endpoint. Also known as the AI Studio API. May use common attributes prefixed with 'gcp.gen_ai.'.
+**[27]:** This refers to the 'generativelanguage.googleapis.com' endpoint. Also known as the AI Studio API. May use common attributes prefixed with 'gcp.gen_ai.'.
 
-**[30]:** May be used when specific backend is unknown. May use common attributes prefixed with 'gcp.gen_ai.'.
+**[28]:** May be used when specific backend is unknown. May use common attributes prefixed with 'gcp.gen_ai.'.
 
-**[31]:** This refers to the 'aiplatform.googleapis.com' endpoint. May use common attributes prefixed with 'gcp.gen_ai.'.
+**[29]:** This refers to the 'aiplatform.googleapis.com' endpoint. May use common attributes prefixed with 'gcp.gen_ai.'.
 
 ## Deprecated OpenAI GenAI Attributes
 
