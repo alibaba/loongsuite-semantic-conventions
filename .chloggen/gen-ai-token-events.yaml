@@ -1,0 +1,6 @@
+change_type: enhancement
+component: gen-ai
+note: Add token-level GenAI events for scheduled and generated output tokens, plus supporting iteration and candidate-token attributes.
+issues: [3335]
+subtext: |
+  Uses event timestamps to represent token scheduling and generation timing instead of span-level per-token time arrays.
