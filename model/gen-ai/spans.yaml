@@ -484,3 +484,53 @@ groups:
         requirement_level: opt_in
       - ref: gen_ai.output.messages
         requirement_level: opt_in
+
+  - id: span.gen_ai.react_turn.internal
+    type: span
+    stability: development
+    span_kind: internal
+    brief: >
+      Wraps a single iteration (turn) within a ReAct (Reasoning-Acting) loop of a GenAI agent.
+    note: |
+      `gen_ai.operation.name` SHOULD be `react`.
+      `gen_ai.span.kind` MUST be `STEP` for this span.
+
+      **Span name** SHOULD be `react_turn {gen_ai.react.iteration.count}`.
+
+      This span serves as a parent for all operations within a single ReAct iteration,
+      including LLM calls (`chat`), tool executions (`execute_tool`), and other
+      intermediate steps. It enables:
+
+      - Clear identification of where one iteration ends and the next begins
+      - Per-turn latency analysis and composition breakdown
+      - Tracking the total number of iterations required to reach a final result
+
+      This is an Alibaba Cloud extension and not part of the upstream
+      OpenTelemetry semantic conventions.
+    attributes:
+      - ref: gen_ai.operation.name
+        requirement_level: required
+        sampling_relevant: true
+      - ref: gen_ai.span.kind
+        requirement_level: required
+      - ref: gen_ai.request.model
+        requirement_level:
+          conditionally_required: If available.
+      - ref: gen_ai.session.id
+        requirement_level:
+          conditionally_required: when session management is enabled.
+      - ref: gen_ai.user.id
+        requirement_level:
+          conditionally_required: when user authentication is enabled.
+      - ref: gen_ai.framework
+        requirement_level:
+          conditionally_required: when the framework is detectable.
+      - ref: gen_ai.react.iteration.count
+        requirement_level: recommended
+      - ref: error.type
+        requirement_level:
+          conditionally_required: "if the operation ended in an error"
+        note: |
+          The `error.type` SHOULD match the error code returned by the Generative AI provider or the client library,
+          the canonical name of exception that occurred, or another low-cardinality error identifier.
+          Instrumentations SHOULD document the list of errors they report.
