@@ -410,10 +410,6 @@ groups:
               value: "execute_tool"
               brief: 'Execute a tool'
               stability: development
-            - id: invoke_skill
-              value: "invoke_skill"
-              brief: 'Invoke GenAI skill'
-              stability: development
             - id: invoke_workflow
               value: "invoke_workflow"
               brief: 'Invoke GenAI workflow'
