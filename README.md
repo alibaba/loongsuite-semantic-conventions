@@ -67,6 +67,8 @@ This project builds upon the excellent work of the [OpenTelemetry Semantic Conve
 
 ---
 
-**Maintained by Alibaba Observability Team**
+## Maintainers
+
+Maintained by Alibaba Observability Team
 
 For enterprise support and integration assistance, please contact: [support information]
