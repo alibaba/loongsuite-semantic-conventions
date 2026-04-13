@@ -36,8 +36,4 @@ Semantic conventions for Generative AI operations are defined for the following 
 
 Vendor-specific and protocol-specific conventions (such as OpenAI, AWS Bedrock, MCP) are maintained in the upstream [OpenTelemetry semantic-conventions](https://github.com/open-telemetry/semantic-conventions) repository. This project keeps the shared GenAI base conventions and is the place to add Alibaba-specific extensions.
 
-See also:
-
-* [Extension guide](./EXTENSION-GUIDE.md): How to add Alibaba-specific GenAI conventions while reusing the base model and docs.
-
 [DocumentStatus]: https://opentelemetry.io/docs/specs/otel/document-status
