@@ -23,6 +23,7 @@ body:
         # DO NOT manually edit it.
         # Start semconv area list
         - area:error
+        - area:exception
         - area:gen-ai
         - area:openai
         - area:server
