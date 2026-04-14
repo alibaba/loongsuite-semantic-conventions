@@ -14,6 +14,18 @@ groups:
             custom model, the value should have a more specific name than the base model that's been fine-tuned.
       - ref: gen_ai.operation.name
         requirement_level: required
+      - ref: gen_ai.span.kind
+        requirement_level:
+          conditionally_required: if dialect is alibaba_cloud (default)
+        note: >
+          Dedicated GenAI span classification attribute for the `alibaba_cloud` dialect.
+          See the dialect switch documentation in `gen_ai.span.kind` for details.
+      - ref: gen_ai.span_kind_name
+        requirement_level:
+          conditionally_required: if dialect is alibaba_group
+        note: >
+          Dedicated GenAI span classification attribute for the `alibaba_group` dialect.
+          See the dialect switch documentation in `gen_ai.span_kind_name` for details.
       - ref: error.type
         requirement_level:
           conditionally_required: "if the operation ended in an error"
