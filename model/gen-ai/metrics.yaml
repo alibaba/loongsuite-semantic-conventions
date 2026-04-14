@@ -133,7 +133,7 @@ groups:
     stability: development
     extends: metric_attributes.gen_ai
 
-  - id: metric.gen_ai.workflow.duration.alibaba_group
+  - id: metric.gen_ai.workflow.duration
     type: metric
     metric_name: gen_ai.workflow.duration
     annotations:
@@ -151,7 +151,7 @@ groups:
         requirement_level:
           conditionally_required: "if the operation ended in an error"
 
-  - id: metric.gen_ai.agent.duration.alibaba_group
+  - id: metric.gen_ai.agent.duration
     type: metric
     metric_name: gen_ai.agent.duration
     annotations:
@@ -169,7 +169,7 @@ groups:
         requirement_level:
           conditionally_required: "if the operation ended in an error"
 
-  - id: metric.gen_ai.tool.duration.alibaba_group
+  - id: metric.gen_ai.tool.duration
     type: metric
     metric_name: gen_ai.tool.duration
     annotations:
