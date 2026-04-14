@@ -668,7 +668,7 @@ groups:
         brief: The name of the prompt that uniquely identifies it.
         stability: development
         examples: ["analyze-code"]
-      - id: gen_ai.rerank.query
+      - id: gen_ai.rerank.query.text
         stability: development
         type: string
         brief: The query used for reranking documents.
@@ -676,11 +676,6 @@ groups:
         note: |
           > [!Warning]
           > This attribute may contain sensitive information.
-      - id: gen_ai.rerank.top_k
-        stability: development
-        type: double
-        brief: The number of top documents to return from reranking.
-        examples: [5.0, 10.0]
       - id: gen_ai.rerank.input_documents
         stability: development
         type: string[]
