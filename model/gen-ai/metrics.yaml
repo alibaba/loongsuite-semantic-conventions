@@ -151,24 +151,6 @@ groups:
         requirement_level:
           conditionally_required: "if the operation ended in an error"
 
-  - id: metric.gen_ai.skill.duration
-    type: metric
-    metric_name: gen_ai.skill.duration
-    annotations:
-      code_generation:
-        metric_value_type: int
-    brief: 'GenAI skill execution duration.'
-    instrument: histogram
-    unit: "ms"
-    stability: development
-    extends: metric_attributes.gen_ai
-    attributes:
-      - ref: gen_ai.skill.name
-        requirement_level: required
-      - ref: error.type
-        requirement_level:
-          conditionally_required: "if the operation ended in an error"
-
   - id: metric.gen_ai.agent.duration
     type: metric
     metric_name: gen_ai.agent.duration
