@@ -1,0 +1,51 @@
+groups:
+  - id: registry.alibaba.gen_ai
+    type: attribute_group
+    display_name: Alibaba GenAI Extension Attributes
+    brief: >
+      This document defines Alibaba-specific attributes used to describe telemetry
+      in the context of Generative AI operations. These attributes extend the
+      OpenTelemetry GenAI semantic conventions with Alibaba infrastructure-specific
+      identifiers.
+    attributes:
+      - id: alibaba.base.env
+        stability: development
+        type: string
+        brief: The environment identifier for the Alibaba service.
+        examples: ["DEV", "PRE", "PROD"]
+      - id: alibaba.base.idc
+        stability: development
+        type: string
+        brief: The data center identifier for the Alibaba service.
+        examples: ["NA610", "CN_HANGZHOU"]
+      - id: alibaba.user.data
+        stability: development
+        type: string
+        brief: User-defined data attached to GenAI operations.
+        examples: ['{"custom_field": "value"}']
+        note: |
+          This attribute allows users to attach custom data to GenAI operations
+          for debugging, analysis, or business logic purposes.
+
+          > [!Warning]
+          > This attribute may contain sensitive information.
+      - id: alibaba.experiment.id
+        stability: development
+        type: string
+        brief: The unique identifier for a reinforcement learning experiment.
+        examples: ["test-openclaw-metrics-b"]
+      - id: alibaba.group.id
+        stability: development
+        type: string
+        brief: The unique identifier for a reinforcement learning group.
+        examples: ["default-group"]
+      - id: alibaba.job.id
+        stability: development
+        type: string
+        brief: The unique identifier for a reinforcement learning job.
+        examples: ["job-test-openclaw-0324"]
+      - id: alibaba.instance.id
+        stability: development
+        type: string
+        brief: The unique identifier for a reinforcement learning instance.
+        examples: ["swe-env.v1.tobymao__sqlglot-4451.composite__f5umdxdw"]
