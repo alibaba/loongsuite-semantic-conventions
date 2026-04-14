@@ -1,0 +1,58 @@
+{
+    "$defs": {
+        "RerankOutputDocument": {
+            "additionalProperties": true,
+            "description": "Represents a single document returned from a rerank operation, ordered by relevance to the query.",
+            "properties": {
+                "index": {
+                    "description": "The zero-based index of the document in the original input list.",
+                    "title": "Index",
+                    "type": "integer"
+                },
+                "relevance_score": {
+                    "description": "The relevance score assigned by the reranker, indicating how relevant the document is to the query. Higher scores indicate greater relevance.",
+                    "title": "Relevance Score",
+                    "type": "number"
+                },
+                "id": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "A unique identifier for the document, matching the id in the input document if provided.",
+                    "title": "Id"
+                },
+                "text": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "The text content of the document, if returned by the reranker.",
+                    "title": "Text"
+                }
+            },
+            "required": [
+                "index",
+                "relevance_score"
+            ],
+            "title": "RerankOutputDocument",
+            "type": "object"
+        }
+    },
+    "description": "Represents the list of output documents returned from a rerank operation, ordered by relevance to the query.",
+    "items": {
+        "$ref": "#/$defs/RerankOutputDocument"
+    },
+    "title": "RerankOutputDocuments",
+    "type": "array"
+}

@@ -845,9 +845,9 @@ otherwise `rerank`.
 | [`server.port`](/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If `server.address` is set. | int | GenAI server port. [7] | `80`; `8080`; `443` |
 | [`gen_ai.request.top_k`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | double | The top_k sampling setting for the GenAI request. | `1.0` |
 | [`server.address`](/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Recommended` | string | GenAI server address. [8] | `example.com`; `10.1.2.80`; `/tmp/my.sock` |
-| [`gen_ai.rerank.input_documents`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Opt-In` | string[] | List of input documents for a rerank operation. [9] | `["Document about machine learning", "Document about quantum computing"]` |
-| [`gen_ai.rerank.output_documents`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Opt-In` | string[] | List of output documents from a rerank operation in relevance order. | `["Document about machine learning (relevance: 0.95)", "Document about AI (relevance: 0.82)"]` |
-| [`gen_ai.rerank.query.text`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Opt-In` | string | The query used for reranking documents. [10] | `What is machine learning?` |
+| [`gen_ai.rerank.input_documents`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Opt-In` | any | List of input documents for a rerank operation. [9] | [<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"id": "doc_001",<br>&nbsp;&nbsp;&nbsp;&nbsp;"text": "Document about machine learning"<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"id": "doc_002",<br>&nbsp;&nbsp;&nbsp;&nbsp;"text": "Document about quantum computing"<br>&nbsp;&nbsp;}<br>] |
+| [`gen_ai.rerank.output_documents`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Opt-In` | any | List of output documents from a rerank operation in relevance order. [10] | [<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"index": 0,<br>&nbsp;&nbsp;&nbsp;&nbsp;"relevance_score": 0.95,<br>&nbsp;&nbsp;&nbsp;&nbsp;"id": "doc_001",<br>&nbsp;&nbsp;&nbsp;&nbsp;"text": "Document about machine learning"<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"index": 2,<br>&nbsp;&nbsp;&nbsp;&nbsp;"relevance_score": 0.82,<br>&nbsp;&nbsp;&nbsp;&nbsp;"id": "doc_003",<br>&nbsp;&nbsp;&nbsp;&nbsp;"text": "Document about AI"<br>&nbsp;&nbsp;}<br>] |
+| [`gen_ai.rerank.query.text`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Opt-In` | string | The query used for reranking documents. [11] | `What is machine learning?` |
 
 **[1] `gen_ai.operation.name`:** If one of the predefined values applies, but specific system uses a different name it's RECOMMENDED to document it in the semantic conventions for specific GenAI system and use system-specific name in the instrumentation. If a different name is not documented, instrumentation libraries SHOULD use applicable predefined value.
 
@@ -884,12 +884,33 @@ Instrumentations SHOULD document the list of errors they report.
 
 **[8] `server.address`:** When observed from the client side, and when communicating through an intermediary, `server.address` SHOULD represent the server address behind any intermediaries, for example proxies, if it's available.
 
-**[9] `gen_ai.rerank.input_documents`:**
+**[9] `gen_ai.rerank.input_documents`:** Instrumentations MUST follow [Rerank input documents JSON schema](/docs/gen-ai/gen-ai-rerank-input-documents.json).
+When the attribute is recorded on events, it MUST be recorded in structured
+form. When recorded on spans, it MAY be recorded as a JSON string if structured
+format is not supported and SHOULD be recorded in structured form otherwise.
+
+Each document object MUST contain the following property:
+`text` (string): The text content of the document to be reranked.
+Each document object MAY contain the following optional properties:
+`id` (string): A unique identifier for the document,
+`metadata` (object): Additional metadata associated with the document.
 
 > [!Warning]
 > This attribute may contain sensitive information.
 
-**[10] `gen_ai.rerank.query.text`:**
+**[10] `gen_ai.rerank.output_documents`:** Instrumentations MUST follow [Rerank output documents JSON schema](/docs/gen-ai/gen-ai-rerank-output-documents.json).
+When the attribute is recorded on events, it MUST be recorded in structured
+form. When recorded on spans, it MAY be recorded as a JSON string if structured
+format is not supported and SHOULD be recorded in structured form otherwise.
+
+Each document object MUST contain the following properties:
+`index` (integer): The zero-based index of the document in the original input list,
+`relevance_score` (double): The relevance score assigned by the reranker.
+Each document object MAY contain the following optional properties:
+`id` (string): A unique identifier matching the input document,
+`text` (string): The text content of the document.
+
+**[11] `gen_ai.rerank.query.text`:**
 
 > [!Warning]
 > This attribute may contain sensitive information.
@@ -938,9 +959,9 @@ and SHOULD be provided **at span creation time** (if provided at all):
 | `azure.ai.openai` | [Azure OpenAI](https://azure.microsoft.com/products/ai-services/openai-service/) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `cohere` | [Cohere](https://cohere.com/) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `deepseek` | [DeepSeek](https://www.deepseek.com/) | ![Development](https://img.shields.io/badge/-development-blue) |
-| `gcp.gemini` | [Gemini](https://cloud.google.com/products/gemini) [11] | ![Development](https://img.shields.io/badge/-development-blue) |
-| `gcp.gen_ai` | Any Google generative AI endpoint [12] | ![Development](https://img.shields.io/badge/-development-blue) |
-| `gcp.vertex_ai` | [Vertex AI](https://cloud.google.com/vertex-ai) [13] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `gcp.gemini` | [Gemini](https://cloud.google.com/products/gemini) [12] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `gcp.gen_ai` | Any Google generative AI endpoint [13] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `gcp.vertex_ai` | [Vertex AI](https://cloud.google.com/vertex-ai) [14] | ![Development](https://img.shields.io/badge/-development-blue) |
 | `groq` | [Groq](https://groq.com/) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `ibm.watsonx.ai` | [IBM Watsonx AI](https://www.ibm.com/products/watsonx-ai) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `mistral_ai` | [Mistral AI](https://mistral.ai/) | ![Development](https://img.shields.io/badge/-development-blue) |
@@ -948,11 +969,11 @@ and SHOULD be provided **at span creation time** (if provided at all):
 | `perplexity` | [Perplexity](https://www.perplexity.ai/) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `x_ai` | [xAI](https://x.ai/) | ![Development](https://img.shields.io/badge/-development-blue) |
 
-**[11]:** Used when accessing the 'generativelanguage.googleapis.com' endpoint. Also known as the AI Studio API.
+**[12]:** Used when accessing the 'generativelanguage.googleapis.com' endpoint. Also known as the AI Studio API.
 
-**[12]:** May be used when specific backend is unknown.
+**[13]:** May be used when specific backend is unknown.
 
-**[13]:** Used when accessing the 'aiplatform.googleapis.com' endpoint.
+**[14]:** Used when accessing the 'aiplatform.googleapis.com' endpoint.
 
 ---
 
