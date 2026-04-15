@@ -164,7 +164,7 @@ Each document object MAY contain the following optional properties:
 `id` (string): A unique identifier matching the input document,
 `text` (string): The text content of the document.
 
-**[11] `gen_ai.rerank.query.text`:**
+**[11] `gen_ai.rerank.query.text`:** The text of the query being used to rerank the documents.
 
 > [!Warning]
 > This attribute may contain sensitive information.
