@@ -483,6 +483,7 @@ groups:
       that reorders documents based on relevance to a query.
     note: |
       The `gen_ai.operation.name` SHOULD be `rerank`.
+      The `gen_ai.span.kind` / `gen_ai.span_kind_name` SHOULD be `RERANKER`.
 
       **Span name** SHOULD be `rerank {gen_ai.request.model}` if model is available,
       otherwise `rerank`.
@@ -492,6 +493,7 @@ groups:
         requirement_level: required
         sampling_relevant: true
       - ref: gen_ai.operation.name
+        requirement_level: required
         sampling_relevant: true
       - ref: gen_ai.request.model
         requirement_level:
