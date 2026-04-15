@@ -674,6 +674,8 @@ groups:
         brief: The query used for reranking documents.
         examples: ["What is machine learning?"]
         note: |
+          The text of the query being used to rerank the documents.
+          
           > [!Warning]
           > This attribute may contain sensitive information.
       - id: gen_ai.rerank.input_documents

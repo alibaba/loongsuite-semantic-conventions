@@ -824,6 +824,7 @@ GenAI rerank represents a request to a Generative AI service that reorders docum
 Describes GenAI reranking operation - a request to a Generative AI service that reorders documents based on relevance to a query.
 
 The `gen_ai.operation.name` SHOULD be `rerank`.
+The `gen_ai.span.kind` / `gen_ai.span_kind_name` SHOULD be `RERANKER`.
 
 **Span name** SHOULD be `rerank {gen_ai.request.model}` if model is available,
 otherwise `rerank`.
