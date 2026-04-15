@@ -499,6 +499,10 @@ groups:
         requirement_level:
           conditionally_required: if available.
         sampling_relevant: true
+      - ref: server.address
+        sampling_relevant: true
+      - ref: server.port
+        sampling_relevant: true
       - ref: gen_ai.rerank.query.text
         requirement_level: opt_in
       - ref: gen_ai.request.top_k
