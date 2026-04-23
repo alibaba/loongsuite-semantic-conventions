@@ -51,7 +51,8 @@ jobs:
     runs-on: ubuntu-latest
     if: |
       needs.check-versions.outputs.current-version != needs.check-versions.outputs.latest-version &&
-      needs.check-versions.outputs.already-opened != 'true'
+      needs.check-versions.outputs.already-opened != 'true' &&
+      vars.OTELBOT_APP_ID != ''
     needs:
       - check-versions
     steps:
