@@ -59,7 +59,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines on:
 
 ## License
 
-This project is licensed under the Apache License 2.0 - see the LICENSE file for details.
+This project is licensed under the [Apache License 2.0](LICENSE)
 
 ## Acknowledgments
 
@@ -70,5 +70,3 @@ This project builds upon the excellent work of the [OpenTelemetry Semantic Conve
 ## Maintainers
 
 Maintained by Alibaba Observability Team
-
-For enterprise support and integration assistance, please contact: [support information]
