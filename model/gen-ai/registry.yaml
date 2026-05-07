@@ -420,10 +420,10 @@ groups:
               stability: development
             - id: react
               value: "react"
-              brief: 'ReAct (Reasoning-Acting) iteration loop for GenAI agents'
+              brief: 'ReAct (Reasoning-Acting) step within a GenAI agent loop'
               stability: development
               note: >
-                This value is used for the ReAct iteration span that wraps individual
+                This value is used for the ReAct step span that wraps individual
                 reasoning-acting cycles within an agent loop. It is an Alibaba Cloud extension.
         brief: The name of the operation being performed.
         note: >
@@ -925,11 +925,19 @@ groups:
           > Instrumentations SHOULD consider this when recording the value.
           Identifies the end user initiating the GenAI interaction.
           Conditionally required when user authentication is enabled.
-      - id: gen_ai.react.iteration.count
+      - id: gen_ai.react.round
         stability: development
         type: int
-        brief: The iteration number of the current ReAct turn within the agent loop.
+        brief: The round number (1-based) of the current ReAct iteration within the agent loop.
         examples: [1, 2, 3]
         note: |
-          Indicates which iteration this ReAct turn represents, starting from 1.
+          Indicates which round this ReAct step represents, starting from 1.
           Useful for tracking the total number of iterations required to reach a final result.
+      - id: gen_ai.react.finish_reason
+        stability: development
+        type: string
+        brief: The reason why this ReAct iteration ended.
+        examples: ['stop', 'tool_calls']
+        note: |
+          Indicates why a ReAct step concluded. Common values include `stop`
+          (model produced a final answer) and `tool_calls` (model invoked a tool).

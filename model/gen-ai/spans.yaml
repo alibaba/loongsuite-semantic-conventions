@@ -553,17 +553,17 @@ groups:
       - ref: gen_ai.output.messages
         requirement_level: opt_in
 
-  - id: span.gen_ai.react_turn.internal
+  - id: span.gen_ai.react_step.internal
     type: span
     stability: development
     span_kind: internal
     brief: >
-      Wraps a single iteration (turn) within a ReAct (Reasoning-Acting) loop of a GenAI agent.
+      Wraps a single iteration (step) within a ReAct (Reasoning-Acting) loop of a GenAI agent.
     note: |
-      `gen_ai.operation.name` SHOULD be `react`.
+      `gen_ai.operation.name` MUST be `react`.
       `gen_ai.span.kind` MUST be `STEP` for this span.
 
-      **Span name** SHOULD be `react_turn {gen_ai.react.iteration.count}`.
+      **Span name** SHOULD be `react step`.
 
       This span serves as a parent for all operations within a single ReAct iteration,
       including LLM calls (`chat`), tool executions (`execute_tool`), and other
@@ -581,16 +581,9 @@ groups:
         sampling_relevant: true
       - ref: gen_ai.span.kind
         requirement_level: required
-      - ref: gen_ai.request.model
-        requirement_level:
-          conditionally_required: If available.
-      - ref: gen_ai.session.id
-        requirement_level:
-          conditionally_required: when session management is enabled.
-      - ref: gen_ai.user.id
-        requirement_level:
-          conditionally_required: when user authentication is enabled.
-      - ref: gen_ai.react.iteration.count
+      - ref: gen_ai.react.round
+        requirement_level: recommended
+      - ref: gen_ai.react.finish_reason
         requirement_level: recommended
       - ref: error.type
         requirement_level:

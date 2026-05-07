@@ -128,12 +128,12 @@ applicable `aws.bedrock.*` attributes and are not expected to include
 | `generate_content` | Multimodal content generation operation such as [Gemini Generate Content](https://ai.google.dev/api/generate-content) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `invoke_agent` | Invoke GenAI agent | ![Development](https://img.shields.io/badge/-development-blue) |
 | `invoke_workflow` | Invoke GenAI workflow | ![Development](https://img.shields.io/badge/-development-blue) |
-| `react` | ReAct (Reasoning-Acting) iteration loop for GenAI agents [5] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `react` | ReAct (Reasoning-Acting) step within a GenAI agent loop [5] | ![Development](https://img.shields.io/badge/-development-blue) |
 | `rerank` | Rerank documents based on relevance to a query | ![Development](https://img.shields.io/badge/-development-blue) |
 | `retrieval` | Retrieval operation such as [OpenAI Search Vector Store API](https://platform.openai.com/docs/api-reference/vector-stores/search) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `text_completion` | Text completions operation such as [OpenAI Completions API (Legacy)](https://platform.openai.com/docs/api-reference/completions) | ![Development](https://img.shields.io/badge/-development-blue) |
 
-**[5]:** This value is used for the ReAct iteration span that wraps individual reasoning-acting cycles within an agent loop. It is an Alibaba Cloud extension.
+**[5]:** This value is used for the ReAct step span that wraps individual reasoning-acting cycles within an agent loop. It is an Alibaba Cloud extension.
 
 ---
 
@@ -253,12 +253,12 @@ Instrumentations SHOULD document the list of errors they report.
 | `generate_content` | Multimodal content generation operation such as [Gemini Generate Content](https://ai.google.dev/api/generate-content) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `invoke_agent` | Invoke GenAI agent | ![Development](https://img.shields.io/badge/-development-blue) |
 | `invoke_workflow` | Invoke GenAI workflow | ![Development](https://img.shields.io/badge/-development-blue) |
-| `react` | ReAct (Reasoning-Acting) iteration loop for GenAI agents [6] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `react` | ReAct (Reasoning-Acting) step within a GenAI agent loop [6] | ![Development](https://img.shields.io/badge/-development-blue) |
 | `rerank` | Rerank documents based on relevance to a query | ![Development](https://img.shields.io/badge/-development-blue) |
 | `retrieval` | Retrieval operation such as [OpenAI Search Vector Store API](https://platform.openai.com/docs/api-reference/vector-stores/search) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `text_completion` | Text completions operation such as [OpenAI Completions API (Legacy)](https://platform.openai.com/docs/api-reference/completions) | ![Development](https://img.shields.io/badge/-development-blue) |
 
-**[6]:** This value is used for the ReAct iteration span that wraps individual reasoning-acting cycles within an agent loop. It is an Alibaba Cloud extension.
+**[6]:** This value is used for the ReAct step span that wraps individual reasoning-acting cycles within an agent loop. It is an Alibaba Cloud extension.
 
 ---
 
@@ -358,12 +358,12 @@ applicable `aws.bedrock.*` attributes and are not expected to include
 | `generate_content` | Multimodal content generation operation such as [Gemini Generate Content](https://ai.google.dev/api/generate-content) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `invoke_agent` | Invoke GenAI agent | ![Development](https://img.shields.io/badge/-development-blue) |
 | `invoke_workflow` | Invoke GenAI workflow | ![Development](https://img.shields.io/badge/-development-blue) |
-| `react` | ReAct (Reasoning-Acting) iteration loop for GenAI agents [5] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `react` | ReAct (Reasoning-Acting) step within a GenAI agent loop [5] | ![Development](https://img.shields.io/badge/-development-blue) |
 | `rerank` | Rerank documents based on relevance to a query | ![Development](https://img.shields.io/badge/-development-blue) |
 | `retrieval` | Retrieval operation such as [OpenAI Search Vector Store API](https://platform.openai.com/docs/api-reference/vector-stores/search) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `text_completion` | Text completions operation such as [OpenAI Completions API (Legacy)](https://platform.openai.com/docs/api-reference/completions) | ![Development](https://img.shields.io/badge/-development-blue) |
 
-**[5]:** This value is used for the ReAct iteration span that wraps individual reasoning-acting cycles within an agent loop. It is an Alibaba Cloud extension.
+**[5]:** This value is used for the ReAct step span that wraps individual reasoning-acting cycles within an agent loop. It is an Alibaba Cloud extension.
 
 ---
 
@@ -463,12 +463,12 @@ applicable `aws.bedrock.*` attributes and are not expected to include
 | `generate_content` | Multimodal content generation operation such as [Gemini Generate Content](https://ai.google.dev/api/generate-content) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `invoke_agent` | Invoke GenAI agent | ![Development](https://img.shields.io/badge/-development-blue) |
 | `invoke_workflow` | Invoke GenAI workflow | ![Development](https://img.shields.io/badge/-development-blue) |
-| `react` | ReAct (Reasoning-Acting) iteration loop for GenAI agents [5] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `react` | ReAct (Reasoning-Acting) step within a GenAI agent loop [5] | ![Development](https://img.shields.io/badge/-development-blue) |
 | `rerank` | Rerank documents based on relevance to a query | ![Development](https://img.shields.io/badge/-development-blue) |
 | `retrieval` | Retrieval operation such as [OpenAI Search Vector Store API](https://platform.openai.com/docs/api-reference/vector-stores/search) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `text_completion` | Text completions operation such as [OpenAI Completions API (Legacy)](https://platform.openai.com/docs/api-reference/completions) | ![Development](https://img.shields.io/badge/-development-blue) |
 
-**[5]:** This value is used for the ReAct iteration span that wraps individual reasoning-acting cycles within an agent loop. It is an Alibaba Cloud extension.
+**[5]:** This value is used for the ReAct step span that wraps individual reasoning-acting cycles within an agent loop. It is an Alibaba Cloud extension.
 
 ---
 
@@ -586,12 +586,12 @@ Instrumentations SHOULD document the list of errors they report.
 | `generate_content` | Multimodal content generation operation such as [Gemini Generate Content](https://ai.google.dev/api/generate-content) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `invoke_agent` | Invoke GenAI agent | ![Development](https://img.shields.io/badge/-development-blue) |
 | `invoke_workflow` | Invoke GenAI workflow | ![Development](https://img.shields.io/badge/-development-blue) |
-| `react` | ReAct (Reasoning-Acting) iteration loop for GenAI agents [6] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `react` | ReAct (Reasoning-Acting) step within a GenAI agent loop [6] | ![Development](https://img.shields.io/badge/-development-blue) |
 | `rerank` | Rerank documents based on relevance to a query | ![Development](https://img.shields.io/badge/-development-blue) |
 | `retrieval` | Retrieval operation such as [OpenAI Search Vector Store API](https://platform.openai.com/docs/api-reference/vector-stores/search) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `text_completion` | Text completions operation such as [OpenAI Completions API (Legacy)](https://platform.openai.com/docs/api-reference/completions) | ![Development](https://img.shields.io/badge/-development-blue) |
 
-**[6]:** This value is used for the ReAct iteration span that wraps individual reasoning-acting cycles within an agent loop. It is an Alibaba Cloud extension.
+**[6]:** This value is used for the ReAct step span that wraps individual reasoning-acting cycles within an agent loop. It is an Alibaba Cloud extension.
 
 ---
 
@@ -696,12 +696,12 @@ applicable `aws.bedrock.*` attributes and are not expected to include
 | `generate_content` | Multimodal content generation operation such as [Gemini Generate Content](https://ai.google.dev/api/generate-content) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `invoke_agent` | Invoke GenAI agent | ![Development](https://img.shields.io/badge/-development-blue) |
 | `invoke_workflow` | Invoke GenAI workflow | ![Development](https://img.shields.io/badge/-development-blue) |
-| `react` | ReAct (Reasoning-Acting) iteration loop for GenAI agents [5] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `react` | ReAct (Reasoning-Acting) step within a GenAI agent loop [5] | ![Development](https://img.shields.io/badge/-development-blue) |
 | `rerank` | Rerank documents based on relevance to a query | ![Development](https://img.shields.io/badge/-development-blue) |
 | `retrieval` | Retrieval operation such as [OpenAI Search Vector Store API](https://platform.openai.com/docs/api-reference/vector-stores/search) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `text_completion` | Text completions operation such as [OpenAI Completions API (Legacy)](https://platform.openai.com/docs/api-reference/completions) | ![Development](https://img.shields.io/badge/-development-blue) |
 
-**[5]:** This value is used for the ReAct iteration span that wraps individual reasoning-acting cycles within an agent loop. It is an Alibaba Cloud extension.
+**[5]:** This value is used for the ReAct step span that wraps individual reasoning-acting cycles within an agent loop. It is an Alibaba Cloud extension.
 
 ---
 
@@ -805,12 +805,12 @@ applicable `aws.bedrock.*` attributes and are not expected to include
 | `generate_content` | Multimodal content generation operation such as [Gemini Generate Content](https://ai.google.dev/api/generate-content) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `invoke_agent` | Invoke GenAI agent | ![Development](https://img.shields.io/badge/-development-blue) |
 | `invoke_workflow` | Invoke GenAI workflow | ![Development](https://img.shields.io/badge/-development-blue) |
-| `react` | ReAct (Reasoning-Acting) iteration loop for GenAI agents [5] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `react` | ReAct (Reasoning-Acting) step within a GenAI agent loop [5] | ![Development](https://img.shields.io/badge/-development-blue) |
 | `rerank` | Rerank documents based on relevance to a query | ![Development](https://img.shields.io/badge/-development-blue) |
 | `retrieval` | Retrieval operation such as [OpenAI Search Vector Store API](https://platform.openai.com/docs/api-reference/vector-stores/search) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `text_completion` | Text completions operation such as [OpenAI Completions API (Legacy)](https://platform.openai.com/docs/api-reference/completions) | ![Development](https://img.shields.io/badge/-development-blue) |
 
-**[5]:** This value is used for the ReAct iteration span that wraps individual reasoning-acting cycles within an agent loop. It is an Alibaba Cloud extension.
+**[5]:** This value is used for the ReAct step span that wraps individual reasoning-acting cycles within an agent loop. It is an Alibaba Cloud extension.
 
 ---
 
