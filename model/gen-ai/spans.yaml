@@ -103,7 +103,7 @@ groups:
         requirement_level: opt_in
       - ref: gen_ai.iteration.per_token_batch_size
         requirement_level: opt_in
-      - ref: gen_ai.iteration.per_token_waiting_size
+      - ref: gen_ai.iteration.per_token_waiting_requests
         requirement_level: opt_in
       - ref: gen_ai.iteration.per_token_total_tokens
         requirement_level: opt_in

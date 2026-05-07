@@ -271,7 +271,7 @@ groups:
           There SHOULD be one value per generated output token position.
         examples:
           - [32, 32, 28]
-      - id: gen_ai.iteration.per_token_waiting_size
+      - id: gen_ai.iteration.per_token_waiting_requests
         stability: development
         type: int[]
         brief: Number of requests waiting in the scheduler queue when each output token was scheduled.
