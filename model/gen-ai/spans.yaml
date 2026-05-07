@@ -474,6 +474,47 @@ groups:
           the canonical name of exception that occurred, or another low-cardinality error identifier.
           Instrumentations SHOULD document the list of errors they report.
 
+  - id: span.gen_ai.rerank.client
+    type: span
+    stability: development
+    span_kind: client
+    brief: >
+      Describes GenAI reranking operation - a request to a Generative AI service
+      that reorders documents based on relevance to a query.
+    note: |
+      The `gen_ai.operation.name` SHOULD be `rerank`.
+      The `gen_ai.span.kind` / `gen_ai.span_kind_name` SHOULD be `RERANKER`.
+
+      **Span name** SHOULD be `rerank {gen_ai.request.model}` if model is available,
+      otherwise `rerank`.
+    extends: attributes.gen_ai.common.client
+    attributes:
+      - ref: gen_ai.provider.name
+        requirement_level: required
+        sampling_relevant: true
+      - ref: gen_ai.operation.name
+        requirement_level: required
+        sampling_relevant: true
+      - ref: gen_ai.request.model
+        requirement_level:
+          conditionally_required: if available.
+        sampling_relevant: true
+      - ref: server.address
+        sampling_relevant: true
+      - ref: server.port
+        sampling_relevant: true
+      - ref: gen_ai.rerank.query.text
+        requirement_level: opt_in
+      - ref: gen_ai.request.top_k
+        requirement_level: recommended
+      - ref: gen_ai.rerank.input_documents
+        requirement_level: opt_in
+      - ref: gen_ai.rerank.output_documents
+        requirement_level: opt_in
+      - ref: error.type
+        requirement_level:
+          conditionally_required: "if the operation ended in an error"
+
   - id: span.gen_ai.invoke_workflow.internal
     type: span
     span_kind: internal

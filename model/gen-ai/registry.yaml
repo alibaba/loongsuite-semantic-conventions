@@ -410,6 +410,10 @@ groups:
               value: "execute_tool"
               brief: 'Execute a tool'
               stability: development
+            - id: rerank
+              value: "rerank"
+              brief: 'Rerank documents based on relevance to a query'
+              stability: development
             - id: invoke_workflow
               value: "invoke_workflow"
               brief: 'Invoke GenAI workflow'
@@ -671,6 +675,78 @@ groups:
         brief: The name of the prompt that uniquely identifies it.
         stability: development
         examples: ["analyze-code"]
+      - id: gen_ai.rerank.query.text
+        stability: development
+        type: string
+        brief: The query used for reranking documents.
+        examples: ["What is machine learning?"]
+        note: |
+          The text of the query being used to rerank the documents.
+
+          > [!Warning]
+          > This attribute may contain sensitive information.
+      - id: gen_ai.rerank.input_documents
+        stability: development
+        type: any
+        brief: List of input documents for a rerank operation.
+        note: |
+          Instrumentations MUST follow [Rerank input documents JSON schema](/docs/gen-ai/gen-ai-rerank-input-documents.json).
+          When the attribute is recorded on events, it MUST be recorded in structured
+          form. When recorded on spans, it MAY be recorded as a JSON string if structured
+          format is not supported and SHOULD be recorded in structured form otherwise.
+
+          Each document object MUST contain the following property:
+          `text` (string): The text content of the document to be reranked.
+          Each document object MAY contain the following optional properties:
+          `id` (string): A unique identifier for the document,
+          `metadata` (object): Additional metadata associated with the document.
+
+          > [!Warning]
+          > This attribute may contain sensitive information.
+        examples:
+          - |
+              [
+                {
+                  "id": "doc_001",
+                  "text": "Document about machine learning"
+                },
+                {
+                  "id": "doc_002",
+                  "text": "Document about quantum computing"
+                }
+              ]
+      - id: gen_ai.rerank.output_documents
+        stability: development
+        type: any
+        brief: List of output documents from a rerank operation in relevance order.
+        note: |
+          Instrumentations MUST follow [Rerank output documents JSON schema](/docs/gen-ai/gen-ai-rerank-output-documents.json).
+          When the attribute is recorded on events, it MUST be recorded in structured
+          form. When recorded on spans, it MAY be recorded as a JSON string if structured
+          format is not supported and SHOULD be recorded in structured form otherwise.
+
+          Each document object MUST contain the following properties:
+          `index` (integer): The zero-based index of the document in the original input list,
+          `relevance_score` (double): The relevance score assigned by the reranker.
+          Each document object MAY contain the following optional properties:
+          `id` (string): A unique identifier matching the input document,
+          `text` (string): The text content of the document.
+        examples:
+          - |
+              [
+                {
+                  "index": 0,
+                  "relevance_score": 0.95,
+                  "id": "doc_001",
+                  "text": "Document about machine learning"
+                },
+                {
+                  "index": 2,
+                  "relevance_score": 0.82,
+                  "id": "doc_003",
+                  "text": "Document about AI"
+                }
+              ]
       - id: gen_ai.skill.id
         stability: development
         type: string

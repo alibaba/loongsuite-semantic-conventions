@@ -1,0 +1,52 @@
+{
+    "$defs": {
+        "RerankDocument": {
+            "additionalProperties": true,
+            "description": "Represents a single document submitted as input to a rerank operation.",
+            "properties": {
+                "id": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "A unique identifier for the document.",
+                    "title": "Id"
+                },
+                "text": {
+                    "description": "The text content of the document to be reranked.",
+                    "title": "Text",
+                    "type": "string"
+                },
+                "metadata": {
+                    "anyOf": [
+                        {
+                            "type": "object"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Additional metadata associated with the document.",
+                    "title": "Metadata"
+                }
+            },
+            "required": [
+                "text"
+            ],
+            "title": "RerankDocument",
+            "type": "object"
+        }
+    },
+    "description": "Represents the list of input documents submitted to a rerank operation.",
+    "items": {
+        "$ref": "#/$defs/RerankDocument"
+    },
+    "title": "RerankInputDocuments",
+    "type": "array"
+}
