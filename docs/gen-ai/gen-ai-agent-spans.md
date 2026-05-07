@@ -13,6 +13,7 @@ linkTitle: Agent spans
   - [Invoke agent client span](#invoke-agent-client-span)
   - [Invoke agent internal span](#invoke-agent-internal-span)
   - [Invoke workflow span](#invoke-workflow-span)
+  - [ReAct Step span](#react-step-span)
 - [Execute tool span](#execute-tool-span)
 
 <!-- tocstop -->
