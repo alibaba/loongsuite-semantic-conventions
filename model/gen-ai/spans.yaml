@@ -590,9 +590,6 @@ groups:
       - ref: gen_ai.user.id
         requirement_level:
           conditionally_required: when user authentication is enabled.
-      - ref: gen_ai.framework
-        requirement_level:
-          conditionally_required: when the framework is detectable.
       - ref: gen_ai.react.iteration.count
         requirement_level: recommended
       - ref: error.type

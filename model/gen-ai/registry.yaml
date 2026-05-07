@@ -925,14 +925,6 @@ groups:
           > Instrumentations SHOULD consider this when recording the value.
           Identifies the end user initiating the GenAI interaction.
           Conditionally required when user authentication is enabled.
-      - id: gen_ai.framework
-        stability: development
-        type: string
-        brief: The name of the GenAI framework or library being used.
-        examples: ["langchain", "llama_index", "crewai", "autogen"]
-        note: |
-          Identifies the framework used to build and orchestrate the GenAI agent or application.
-          Conditionally required when the framework is detectable.
       - id: gen_ai.react.iteration.count
         stability: development
         type: int
