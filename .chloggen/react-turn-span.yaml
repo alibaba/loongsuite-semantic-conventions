@@ -10,7 +10,7 @@ change_type: new_component
 component: gen-ai
 
 # A brief description of the change. Surround your text with quotes ("") if it needs to start with a backtick (`).
-note: Add `gen_ai.react_turn.internal` span for ReAct iteration loops and related attributes (`gen_ai.span.kind`, `gen_ai.session.id`, `gen_ai.user.id`, `gen_ai.framework`, `gen_ai.react.iteration.count`)
+note: Add `gen_ai.react_turn.internal` span for ReAct iteration loops and related attributes (`gen_ai.span.kind`, `gen_ai.session.id`, `gen_ai.user.id`, `gen_ai.react.iteration.count`)
 
 # Mandatory: One or more tracking issues related to the change. You can use the PR number here if no issue exists.
 # The values here must be integers.
