@@ -51,7 +51,6 @@ This document defines the attributes used to describe telemetry in the context o
 | <a id="gen-ai-request-temperature" href="#gen-ai-request-temperature">`gen_ai.request.temperature`</a> | ![Development](https://img.shields.io/badge/-development-blue) | double | The temperature setting for the GenAI request. | `0.0` |
 | <a id="gen-ai-request-top-k" href="#gen-ai-request-top-k">`gen_ai.request.top_k`</a> | ![Development](https://img.shields.io/badge/-development-blue) | double | The top_k sampling setting for the GenAI request. | `1.0` |
 | <a id="gen-ai-request-top-p" href="#gen-ai-request-top-p">`gen_ai.request.top_p`</a> | ![Development](https://img.shields.io/badge/-development-blue) | double | The top_p sampling setting for the GenAI request. | `1.0` |
-| <a id="gen-ai-request-trace-level" href="#gen-ai-request-trace-level">`gen_ai.request.trace_level`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The level of detail captured for the inference operation. | `none`; `request`; `token` |
 | <a id="gen-ai-rerank-input-documents" href="#gen-ai-rerank-input-documents">`gen_ai.rerank.input_documents`</a> | ![Development](https://img.shields.io/badge/-development-blue) | any | List of input documents for a rerank operation. [14] | [<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"id": "doc_001",<br>&nbsp;&nbsp;&nbsp;&nbsp;"text": "Document about machine learning"<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"id": "doc_002",<br>&nbsp;&nbsp;&nbsp;&nbsp;"text": "Document about quantum computing"<br>&nbsp;&nbsp;}<br>] |
 | <a id="gen-ai-rerank-output-documents" href="#gen-ai-rerank-output-documents">`gen_ai.rerank.output_documents`</a> | ![Development](https://img.shields.io/badge/-development-blue) | any | List of output documents from a rerank operation in relevance order. [15] | [<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"index": 0,<br>&nbsp;&nbsp;&nbsp;&nbsp;"relevance_score": 0.95,<br>&nbsp;&nbsp;&nbsp;&nbsp;"id": "doc_001",<br>&nbsp;&nbsp;&nbsp;&nbsp;"text": "Document about machine learning"<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"index": 2,<br>&nbsp;&nbsp;&nbsp;&nbsp;"relevance_score": 0.82,<br>&nbsp;&nbsp;&nbsp;&nbsp;"id": "doc_003",<br>&nbsp;&nbsp;&nbsp;&nbsp;"text": "Document about AI"<br>&nbsp;&nbsp;}<br>] |
 | <a id="gen-ai-rerank-query-text" href="#gen-ai-rerank-query-text">`gen_ai.rerank.query.text`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The query used for reranking documents. [16] | `What is machine learning?` |
@@ -408,16 +407,6 @@ by summing different token types parsed from the provider output.
 **[41]:** May be used when specific backend is unknown.
 
 **[42]:** Used when accessing the 'aiplatform.googleapis.com' endpoint.
-
----
-
-`gen_ai.request.trace_level` has the following list of well-known values. If one of them applies, then the respective value MUST be used; otherwise, a custom value MAY be used.
-
-| Value | Description | Stability |
-| --- | --- | --- |
-| `none` | No additional request or token-level tracing. | ![Development](https://img.shields.io/badge/-development-blue) |
-| `request` | Request-level tracing enabled. | ![Development](https://img.shields.io/badge/-development-blue) |
-| `token` | Token-level tracing enabled. | ![Development](https://img.shields.io/badge/-development-blue) |
 
 ---
 

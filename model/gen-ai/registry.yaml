@@ -160,24 +160,6 @@ groups:
         type: int
         brief: Requests with same seed value more likely to return same result.
         examples: [100]
-      - id: gen_ai.request.trace_level
-        stability: development
-        type:
-          members:
-            - id: none
-              stability: development
-              value: "none"
-              brief: No additional request or token-level tracing.
-            - id: request
-              stability: development
-              value: "request"
-              brief: Request-level tracing enabled.
-            - id: token
-              stability: development
-              value: "token"
-              brief: Token-level tracing enabled.
-        brief: The level of detail captured for the inference operation.
-        examples: ["none", "request", "token"]
       - id: gen_ai.response.id
         stability: development
         type: string
