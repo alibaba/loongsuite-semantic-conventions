@@ -95,6 +95,24 @@ groups:
         requirement_level: recommended
       - ref: gen_ai.usage.output_tokens
         requirement_level: recommended
+      - ref: gen_ai.response.per_token_time_to_generate
+        requirement_level: opt_in
+      - ref: gen_ai.response.per_token_time_to_schedule
+        requirement_level: opt_in
+      - ref: gen_ai.iteration.per_token_batch_size
+        requirement_level: opt_in
+      - ref: gen_ai.iteration.per_token_waiting_requests
+        requirement_level: opt_in
+      - ref: gen_ai.iteration.per_token_cumulative_count
+        requirement_level: opt_in
+      - ref: gen_ai.response.candidate.per_position_decoded_tokens
+        requirement_level: opt_in
+      - ref: gen_ai.response.candidate.per_position_token_ids
+        requirement_level: opt_in
+      - ref: gen_ai.response.candidate.per_position_logprobs
+        requirement_level: opt_in
+      - ref: gen_ai.response.per_token_new_tokens
+        requirement_level: opt_in
       - ref: gen_ai.conversation.id
         requirement_level:
           conditionally_required: when available
@@ -106,7 +124,7 @@ groups:
           (see [LlamaIndex chat store](https://docs.llamaindex.ai/en/stable/module_guides/storing/chat_stores/))
           - when instrumenting GenAI client libraries that maintain conversation on the backend side
           (see [AWS Bedrock agent sessions](https://docs.aws.amazon.com/bedrock/latest/userguide/agents-session-state.html),
-          [OpenAI Assistant threads](https://platform.openai.com/docs/api-reference/threads))
+          [OpenAI Assistant threads](https://developers.openai.com/docs/api-reference/threads))
 
           Application developers that manage conversation history MAY add conversation id to GenAI and other
           spans or logs using custom span or log record processors or hooks provided by instrumentation
@@ -310,7 +328,7 @@ groups:
           (see [LlamaIndex chat store](https://docs.llamaindex.ai/en/stable/module_guides/storing/chat_stores/))
           - when instrumenting GenAI client libraries that maintain conversation on the backend side
           (see [AWS Bedrock agent sessions](https://docs.aws.amazon.com/bedrock/latest/userguide/agents-session-state.html),
-          [OpenAI Assistant threads](https://platform.openai.com/docs/api-reference/threads))
+          [OpenAI Assistant threads](https://developers.openai.com/docs/api-reference/threads))
 
           Application developers that manage conversation history MAY add conversation id to GenAI and other
           spans or logs using custom span or log record processors or hooks provided by instrumentation

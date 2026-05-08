@@ -45,6 +45,52 @@ groups:
           the canonical name of exception that occurred, or another low-cardinality error identifier.
           Instrumentations SHOULD document the list of errors they report.
 
+  - id: event.gen_ai.token.scheduled
+    name: gen_ai.token.scheduled
+    type: event
+    stability: development
+    brief: >
+      This event describes that the request associated with generating an output
+      token has been scheduled by the inference engine.
+    note: >
+      The event timestamp SHOULD be set to the time when the corresponding
+      decode iteration scheduled the request. Relative scheduling time can be
+      derived from the parent span start time.
+    attributes:
+      - ref: gen_ai.iteration.batch_size
+        requirement_level: recommended
+      - ref: gen_ai.iteration.waiting_requests
+        requirement_level: recommended
+
+  - id: event.gen_ai.token.generated
+    name: gen_ai.token.generated
+    type: event
+    stability: development
+    brief: >
+      This event describes that an output token has been generated or emitted by
+      the inference engine.
+    note: >
+      The event timestamp SHOULD be set to the time when the output token was
+      generated or emitted. Relative generation time can be derived from the
+      parent span start time.
+
+      Instrumentations that emit candidate token details SHOULD order them by
+      rank and place the emitted token first. Systems that generate multiple
+      output tokens in one iteration MAY emit multiple
+      `gen_ai.token.generated` events with the same timestamp.
+    attributes:
+      - ref: gen_ai.iteration.total_tokens
+        requirement_level: recommended
+      - ref: gen_ai.response.candidate.decoded_tokens
+        requirement_level:
+          conditionally_required: if candidate token details are recorded
+      - ref: gen_ai.response.candidate.token_ids
+        requirement_level:
+          conditionally_required: if candidate token ids are recorded
+      - ref: gen_ai.response.candidate.logprobs
+        requirement_level:
+          conditionally_required: if candidate token log probabilities are recorded
+
   - id: event.gen_ai.client.operation.exception
     name: gen_ai.client.operation.exception
     stability: development
