@@ -521,7 +521,7 @@ groups:
           members:
             - id: chat
               value: "chat"
-              brief: 'Chat completion operation such as [OpenAI Chat API](https://platform.openai.com/docs/api-reference/chat)'
+              brief: 'Chat completion operation such as [OpenAI Chat API](https://developers.openai.com/docs/api-reference/chat)'
               stability: development
             - id: generate_content
               value: "generate_content"
@@ -529,15 +529,15 @@ groups:
               stability: development
             - id: text_completion
               value: "text_completion"
-              brief: 'Text completions operation such as [OpenAI Completions API (Legacy)](https://platform.openai.com/docs/api-reference/completions)'
+              brief: 'Text completions operation such as [OpenAI Completions API (Legacy)](https://developers.openai.com/docs/api-reference/completions)'
               stability: development
             - id: embeddings
               value: "embeddings"
-              brief: 'Embeddings operation such as [OpenAI Create embeddings API](https://platform.openai.com/docs/api-reference/embeddings/create)'
+              brief: 'Embeddings operation such as [OpenAI Create embeddings API](https://developers.openai.com/docs/api-reference/embeddings/create)'
               stability: development
             - id: retrieval
               value: "retrieval"
-              brief: 'Retrieval operation such as [OpenAI Search Vector Store API](https://platform.openai.com/docs/api-reference/vector-stores/search)'
+              brief: 'Retrieval operation such as [OpenAI Search Vector Store API](https://developers.openai.com/docs/api-reference/vector-stores/search)'
               stability: development
             - id: create_agent
               value: "create_agent"
