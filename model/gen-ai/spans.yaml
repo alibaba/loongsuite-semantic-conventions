@@ -97,23 +97,23 @@ groups:
         requirement_level: recommended
       - ref: gen_ai.usage.output_tokens
         requirement_level: recommended
-      - ref: gen_ai.latency.per_token_generation_time
+      - ref: gen_ai.response.per_token_time_to_generate
         requirement_level: opt_in
-      - ref: gen_ai.latency.per_token_scheduled_time
+      - ref: gen_ai.response.per_token_time_to_schedule
         requirement_level: opt_in
       - ref: gen_ai.iteration.per_token_batch_size
         requirement_level: opt_in
       - ref: gen_ai.iteration.per_token_waiting_requests
         requirement_level: opt_in
-      - ref: gen_ai.iteration.per_token_total_tokens
+      - ref: gen_ai.iteration.per_token_cumulative_count
         requirement_level: opt_in
-      - ref: gen_ai.response.per_token_candidate_decoded_tokens
+      - ref: gen_ai.response.candidate.per_position_decoded_tokens
         requirement_level: opt_in
-      - ref: gen_ai.response.per_token_candidate_token_ids
+      - ref: gen_ai.response.candidate.per_position_token_ids
         requirement_level: opt_in
-      - ref: gen_ai.response.per_token_candidate_tokens_logprobs
+      - ref: gen_ai.response.candidate.per_position_logprobs
         requirement_level: opt_in
-      - ref: gen_ai.response.per_token_num_new_tokens
+      - ref: gen_ai.response.per_token_new_tokens
         requirement_level: opt_in
       - ref: gen_ai.conversation.id
         requirement_level:
