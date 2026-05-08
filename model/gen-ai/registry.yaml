@@ -577,6 +577,13 @@ groups:
               value: "invoke_workflow"
               brief: 'Invoke GenAI workflow'
               stability: development
+            - id: react
+              value: "react"
+              brief: 'ReAct (Reasoning-Acting) step within a GenAI agent loop'
+              stability: development
+              note: >
+                This value is used for the ReAct step span that wraps individual
+                reasoning-acting cycles within an agent loop. It is an Alibaba Cloud extension.
         brief: The name of the operation being performed.
         note: >
           If one of the predefined values applies, but specific system uses a different name it's RECOMMENDED to document it in the semantic
@@ -1057,3 +1064,19 @@ groups:
 
           The enum values and their meaning are identical to `gen_ai.span.kind`.
         examples: ['LLM', 'RETRIEVER', 'EMBEDDING', 'TOOL', 'AGENT']
+      - id: gen_ai.react.round
+        stability: development
+        type: int
+        brief: The round number (1-based) of the current ReAct iteration within the agent loop.
+        examples: [1, 2, 3]
+        note: |
+          Indicates which round this ReAct step represents, starting from 1.
+          Useful for tracking the total number of iterations required to reach a final result.
+      - id: gen_ai.react.finish_reason
+        stability: development
+        type: string
+        brief: The reason why this ReAct iteration ended.
+        examples: ['stop', 'tool_calls']
+        note: |
+          Indicates why a ReAct step concluded. Common values include `stop`
+          (model produced a final answer) and `tool_calls` (model invoked a tool).
