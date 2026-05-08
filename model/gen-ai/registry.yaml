@@ -905,26 +905,6 @@ groups:
 
           The enum values and their meaning are identical to `gen_ai.span.kind`.
         examples: ['LLM', 'RETRIEVER', 'EMBEDDING', 'TOOL', 'AGENT']
-      - id: gen_ai.session.id
-        stability: development
-        type: string
-        brief: A unique identifier for the GenAI session.
-        examples: ["sess_abc123"]
-        note: |
-          Identifies the session that the GenAI interaction belongs to.
-          Conditionally required when session management is enabled.
-      - id: gen_ai.user.id
-        stability: development
-        type: string
-        brief: A unique identifier for the end user.
-        examples: ["user_456", "alice@example.com"]
-        note: |
-          > [!WARNING]
-          >
-          > This attribute may contain personally identifiable information (PII).
-          > Instrumentations SHOULD consider this when recording the value.
-          Identifies the end user initiating the GenAI interaction.
-          Conditionally required when user authentication is enabled.
       - id: gen_ai.react.round
         stability: development
         type: int
