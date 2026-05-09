@@ -1,7 +1,7 @@
 <!--- Hugo front matter used to generate the website version of this page:
 cascade:
   body_class: otel-docs-spec
-  github_repo: &repo https://github.com/alibaba/loongsuite-semantic-conventions
+  github_repo: &repo https://github.com/alibaba/loongsuite-semantic-conventions-genai
   github_subdir: docs
   path_base_for_github_subdir: tmp/semconv/docs/
   github_project_repo: *repo
