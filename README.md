@@ -41,9 +41,9 @@ This project builds upon the excellent work of the [OpenTelemetry GenAI Semantic
 We are looking forward to your feedback and suggestions. You can join
 our [DingTalk group](https://qr.dingtalk.com/action/joingroup?code=v1,k1,mexukXI88tZ1uiuLYkKhdaETUx/K59ncyFFFG5Voe9s=&_dt_no_comment=1&origin=11?) or scan the QR code below to engage with us.
 
-| LoongSuite SemConv SIG | LoongSuite Python SIG | LoongSuite Java SIG | LoongSuite Go SIG |
-|----|----|----|----|
-| <img src="docs/assets/img/loongsuite-semconv-sig-dingtalk.png" height="150"> | <img src="docs/assets/img/loongsuite-python-sig-dingtalk.jpg" height="150"> | <img src="docs/assets/img/loongsuite-java-sig-dingtalk.jpg" height="150"> | <img src="docs/assets/img/loongsuite-go-sig-dingtalk.png" height="150"> |
+| LoongSuite GenAI SemConv SIG | LoongSuite Python SIG | LoongSuite Java SIG | LoongSuite Go SIG |
+| --- | --- | --- | --- |
+| <img src="docs/assets/img/loongsuite-semconv-sig-dingtalk.png" alt="GenAI SemConv SIG" height="150"> | <img src="docs/assets/img/loongsuite-python-sig-dingtalk.jpg" alt="Python SIG" height="150"> | <img src="docs/assets/img/loongsuite-java-sig-dingtalk.jpg" alt="Java SIG" height="150"> | <img src="docs/assets/img/loongsuite-go-sig-dingtalk.png" alt="Go SIG" height="150"> |
 
 ## Resources
 
