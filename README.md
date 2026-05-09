@@ -1,10 +1,10 @@
-# LoongSuite Semantic Conventions
+# LoongSuite GenAI Semantic Conventions
 
-LoongSuite Semantic Conventions is an **open-source semantic conventions repository from Alibaba** that provides enhanced GenAI (Generative AI) observability standards, building upon the foundation of [OpenTelemetry Semantic Conventions](https://github.com/open-telemetry/semantic-conventions).
+LoongSuite GenAI Semantic Conventions is an **open-source GenAI semantic conventions repository from Alibaba** that provides enhanced Generative AI observability standards, building upon the foundation of [OpenTelemetry GenAI Semantic Conventions](https://github.com/open-telemetry/semantic-conventions-genai).
 
 ## About
 
-This repository supplements the OpenTelemetry Semantic Conventions with additional GenAI-specific semantic conventions derived from Alibaba's internal observability practices. It defines a comprehensive set of semantic attributes, spans, metrics, and events specifically designed for tracing and monitoring Generative AI applications and services.
+This repository extends the [OpenTelemetry GenAI Semantic Conventions](https://github.com/open-telemetry/semantic-conventions-genai) with additional GenAI-specific semantic conventions derived from Alibaba's internal observability practices. It defines a comprehensive set of semantic attributes, spans, metrics, and events specifically designed for tracing and monitoring Generative AI applications and services, using [Weaver](https://github.com/open-telemetry/weaver) to manage dependencies on the core semantic conventions.
 
 ### Key Features
 
@@ -13,38 +13,13 @@ This repository supplements the OpenTelemetry Semantic Conventions with addition
 - **OTel-Compatible**: Built on OpenTelemetry standards, ensuring seamless integration with the OTel ecosystem
 - **Community-Driven**: Open-sourced to benefit the broader GenAI observability community
 
-### Use Cases
-
-- Tracing LLM API calls (OpenAI, Alibaba Cloud Bailian, Spring AI, etc.)
-- Monitoring token usage and model performance
-- Tracking prompt engineering and response quality
-- Observing multi-modal AI interactions
-- Measuring AI service latency and costs
-
 ## Documentation
 
-The human-readable semantic conventions documentation is available in the [docs](docs/README.md) folder. These Markdown documents are generated from YAML model definitions located in the [model](model/README.md) folder, following the OpenTelemetry Semantic Conventions toolchain approach.
-
-## Repository Structure
-
-```
-├── model/          # YAML definitions for semantic conventions
-├── docs/           # Generated documentation (Markdown)
-├── templates/      # Weaver templates for code generation
-└── schemas/        # JSON schemas for validation
-```
+The human-readable version of the semantic conventions resides in the [docs](docs/README.md) folder. These Markdown documents are generated from the YAML definitions located in the [model](model/README.md) folder, following the OpenTelemetry Semantic Conventions toolchain approach.
 
 ## Relationship with OpenTelemetry
 
-LoongSuite Semantic Conventions extends and supplements the official [OpenTelemetry Semantic Conventions](https://github.com/open-telemetry/semantic-conventions). While OTel provides foundational semantic conventions for distributed tracing, metrics, and logs, LoongSuite focuses specifically on GenAI observability patterns that emerged from Alibaba's production AI workloads.
-
-### What LoongSuite Adds
-
-- **Extended GenAI Attributes**: Additional attributes for AI model characteristics, prompt engineering, and response quality
-- **Alibaba Cloud Integration**: Specific conventions for Alibaba Cloud Bailian and other cloud AI services
-- **Multi-Modal Support**: Conventions for image, video, and audio AI interactions
-- **Cost Tracking**: Detailed attributes for tracking AI service costs and resource consumption
-- **Quality Metrics**: Conventions for measuring AI output quality, relevance, and safety
+LoongSuite GenAI Semantic Conventions extends and supplements the official [OpenTelemetry GenAI Semantic Conventions](https://github.com/open-telemetry/semantic-conventions-genai). While OTel GenAI Semantic Conventions provides foundational semantic conventions for GenAI clients, MCP (Model Context Protocol), and provider-specific conventions (OpenAI, etc.), LoongSuite focuses on additional GenAI observability patterns that emerged from Alibaba's production AI workloads.
 
 ## Contributing
 
@@ -59,7 +34,21 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines on:
 
 ## Acknowledgments
 
-This project builds upon the excellent work of the [OpenTelemetry Semantic Conventions](https://github.com/open-telemetry/semantic-conventions) project and the broader OpenTelemetry community. We are grateful for their foundational contributions to observability standardization.
+This project builds upon the excellent work of the [OpenTelemetry GenAI Semantic Conventions](https://github.com/open-telemetry/semantic-conventions-genai) project, the [OpenTelemetry Semantic Conventions](https://github.com/open-telemetry/semantic-conventions) project, and the broader OpenTelemetry community. We are grateful for their foundational contributions to observability standardization.
+
+## Community
+
+We are looking forward to your feedback and suggestions. You can join
+our [DingTalk group](https://qr.dingtalk.com/action/joingroup?code=v1,k1,mexukXI88tZ1uiuLYkKhdaETUx/K59ncyFFFG5Voe9s=&_dt_no_comment=1&origin=11?) or scan the QR code below to engage with us.
+
+| LoongSuite SemConv SIG | LoongSuite Python SIG | LoongSuite Java SIG | LoongSuite Go SIG |
+|----|----|----|----|
+| <img src="docs/assets/img/loongsuite-semconv-sig-dingtalk.png" height="150"> | <img src="docs/assets/img/loongsuite-python-sig-dingtalk.jpg" height="150"> | <img src="docs/assets/img/loongsuite-java-sig-dingtalk.jpg" height="150"> | <img src="docs/assets/img/loongsuite-go-sig-dingtalk.png" height="150"> |
+
+## Resources
+
+* AgentScope: <https://github.com/modelscope/agentscope>
+* Observability Community: <https://observability.cn>
 
 ## License
 

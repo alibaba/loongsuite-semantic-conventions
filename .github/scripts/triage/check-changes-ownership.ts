@@ -35,7 +35,7 @@ This PR contains changes to area(s) that do not have an active SIG/project and w
 
 Such changes may be rejected or put on hold until a new SIG/project is established.
 
-Please refer to the [Semantic Convention Areas](https://github.com/open-telemetry/semantic-conventions/blob/main/AREAS.md)
+Please refer to the [Semantic Convention Areas](https://github.com/alibaba/loongsuite-semantic-conventions/blob/main/AREAS.md)
 document to see the current active SIGs and also to learn how to kick start a new one.`;
 }
 
