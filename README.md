@@ -2,11 +2,7 @@
 
 LoongSuite GenAI Semantic Conventions is an **open-source GenAI semantic conventions repository from Alibaba** that provides enhanced Generative AI observability standards, building upon the foundation of [OpenTelemetry GenAI Semantic Conventions](https://github.com/open-telemetry/semantic-conventions-genai).
 
-## About
-
-This repository extends the [OpenTelemetry GenAI Semantic Conventions](https://github.com/open-telemetry/semantic-conventions-genai) with additional GenAI-specific semantic conventions derived from Alibaba's internal observability practices. It defines a comprehensive set of semantic attributes, spans, metrics, and events specifically designed for tracing and monitoring Generative AI applications and services, using [Weaver](https://github.com/open-telemetry/weaver) to manage dependencies on the core semantic conventions.
-
-### Key Features
+## Key Features
 
 - **GenAI-Focused**: Specialized semantic conventions for LLM applications, model interactions, and AI service observability
 - **Production-Tested**: Based on real-world experience from Alibaba's internal AI infrastructure
@@ -16,10 +12,6 @@ This repository extends the [OpenTelemetry GenAI Semantic Conventions](https://g
 ## Documentation
 
 The human-readable version of the semantic conventions resides in the [docs](docs/README.md) folder. These Markdown documents are generated from the YAML definitions located in the [model](model/README.md) folder, following the OpenTelemetry Semantic Conventions toolchain approach.
-
-## Relationship with OpenTelemetry
-
-LoongSuite GenAI Semantic Conventions extends and supplements the official [OpenTelemetry GenAI Semantic Conventions](https://github.com/open-telemetry/semantic-conventions-genai). While OTel GenAI Semantic Conventions provides foundational semantic conventions for GenAI clients, MCP (Model Context Protocol), and provider-specific conventions (OpenAI, etc.), LoongSuite focuses on additional GenAI observability patterns that emerged from Alibaba's production AI workloads.
 
 ## Contributing
 
@@ -34,7 +26,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines on:
 
 ## Acknowledgments
 
-This project builds upon the excellent work of the [OpenTelemetry GenAI Semantic Conventions](https://github.com/open-telemetry/semantic-conventions-genai) project, the [OpenTelemetry Semantic Conventions](https://github.com/open-telemetry/semantic-conventions) project, and the broader OpenTelemetry community. We are grateful for their foundational contributions to observability standardization.
+This project builds upon the excellent work of the [OpenTelemetry GenAI Semantic Conventions](https://github.com/open-telemetry/semantic-conventions-genai) project and the broader OpenTelemetry community. We are grateful for their foundational contributions to observability standardization.
 
 ## Community
 
