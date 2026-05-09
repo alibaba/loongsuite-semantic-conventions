@@ -57,16 +57,10 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines on:
 - Development workflow
 - Testing and validation requirements
 
-## License
-
-This project is licensed under the [Apache License 2.0](LICENSE)
-
 ## Acknowledgments
 
 This project builds upon the excellent work of the [OpenTelemetry Semantic Conventions](https://github.com/open-telemetry/semantic-conventions) project and the broader OpenTelemetry community. We are grateful for their foundational contributions to observability standardization.
 
----
+## License
 
-## Maintainers
-
-Maintained by Alibaba Observability Team
+This project is licensed under the [Apache License 2.0](LICENSE)
