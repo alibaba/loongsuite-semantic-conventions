@@ -30,5 +30,6 @@ Currently, the following namespaces exist:
 - [Gen AI](gen-ai.md)
 - [OpenAI](openai.md)
 - [Server](server.md)
+- [User](user.md)
 
 [developers recommendations]: ../../general/naming.md#recommendations-for-application-developers
