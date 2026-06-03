@@ -1,0 +1,7 @@
+change_type: new_component
+component: gen-ai
+note: Add GenAI memory operation semantic conventions.
+issues: [140]
+subtext: |
+  Adds memory operation names, memory store and record attributes, a memory client span,
+  and the JSON schema for `gen_ai.memory.records`.
