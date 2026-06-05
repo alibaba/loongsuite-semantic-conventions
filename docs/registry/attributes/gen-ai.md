@@ -163,9 +163,7 @@ This attribute is intended for logs or events where structured values can be rec
 
 In typical agent loops the complete input context for request N is the
 full accumulated conversation:
-
-    input[N] = input[1] + output[1] + ... + input[N-1] + output[N-1] + new_context
-
+`input[N] = input[1] + output[1] + ... + input[N-1] + output[N-1] + new_context`.
 Where `new_context` is the new user input or tool call result that
 appeared after the last model response. Because all prior input and
 output messages are already recorded in earlier log events,
@@ -175,9 +173,9 @@ requests.
 
 Instrumentations SHOULD record `gen_ai.input.messages_delta` by default
 and SHOULD prefer it over `gen_ai.input.messages` to reduce log volume.
-`gen_ai.input.messages` SHOULD be recorded when:
-- there is no previous request context (first request in a session),
-- the context changes in a non-append-only way (e.g. after compaction).
+`gen_ai.input.messages` SHOULD be recorded when
+there is no previous request context (first request in a session) or
+the context changes in a non-append-only way (e.g. after compaction).
 
 > [!WARNING]
 > This attribute may contain sensitive information.

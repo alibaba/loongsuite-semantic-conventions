@@ -254,8 +254,6 @@ The event name MUST be `gen_ai.session.start`.
 
 Captures the start of a GenAI application, agent, or conversation session.
 
-The event name MUST be `gen_ai.session.start`.
-
 **Attributes:**
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
@@ -310,8 +308,6 @@ low-cost drift comparison of tools, skills, or plugins across sessions.
 The event name MUST be `gen_ai.session.end`.
 
 Captures the end of a GenAI application, agent, or conversation session.
-
-The event name MUST be `gen_ai.session.end`.
 
 **Attributes:**
 
@@ -394,8 +390,6 @@ The event name MUST be `gen_ai.context.compile`.
 
 Captures the complete GenAI context assembled before model submission.
 
-The event name MUST be `gen_ai.context.compile`.
-
 This event represents the audit boundary before a model request is
 submitted. It can include the assembled input messages, system
 instructions, tool definitions, and context window information.
@@ -436,9 +430,7 @@ This attribute is intended for logs or events where structured values can be rec
 
 In typical agent loops the complete input context for request N is the
 full accumulated conversation:
-
-    input[N] = input[1] + output[1] + ... + input[N-1] + output[N-1] + new_context
-
+`input[N] = input[1] + output[1] + ... + input[N-1] + output[N-1] + new_context`.
 Where `new_context` is the new user input or tool call result that
 appeared after the last model response. Because all prior input and
 output messages are already recorded in earlier log events,
@@ -448,9 +440,9 @@ requests.
 
 Instrumentations SHOULD record `gen_ai.input.messages_delta` by default
 and SHOULD prefer it over `gen_ai.input.messages` to reduce log volume.
-`gen_ai.input.messages` SHOULD be recorded when:
-- there is no previous request context (first request in a session),
-- the context changes in a non-append-only way (e.g. after compaction).
+`gen_ai.input.messages` SHOULD be recorded when
+there is no previous request context (first request in a session) or
+the context changes in a non-append-only way (e.g. after compaction).
 
 > [!WARNING]
 > This attribute may contain sensitive information.
@@ -571,8 +563,6 @@ The event name MUST be `gen_ai.model.request`.
 
 Captures a GenAI model request, including the requested model, parameters, input messages, and tool definitions.
 
-The event name MUST be `gen_ai.model.request`.
-
 Instrumentations SHOULD record `gen_ai.input.messages_delta` by default for
 agent logs, as it only captures new context (e.g. new user input or tool
 results) that is not already present in earlier request/response logs. They
@@ -645,9 +635,7 @@ This attribute is intended for logs or events where structured values can be rec
 
 In typical agent loops the complete input context for request N is the
 full accumulated conversation:
-
-    input[N] = input[1] + output[1] + ... + input[N-1] + output[N-1] + new_context
-
+`input[N] = input[1] + output[1] + ... + input[N-1] + output[N-1] + new_context`.
 Where `new_context` is the new user input or tool call result that
 appeared after the last model response. Because all prior input and
 output messages are already recorded in earlier log events,
@@ -657,9 +645,9 @@ requests.
 
 Instrumentations SHOULD record `gen_ai.input.messages_delta` by default
 and SHOULD prefer it over `gen_ai.input.messages` to reduce log volume.
-`gen_ai.input.messages` SHOULD be recorded when:
-- there is no previous request context (first request in a session),
-- the context changes in a non-append-only way (e.g. after compaction).
+`gen_ai.input.messages` SHOULD be recorded when
+there is no previous request context (first request in a session) or
+the context changes in a non-append-only way (e.g. after compaction).
 
 > [!WARNING]
 > This attribute may contain sensitive information.
@@ -762,8 +750,6 @@ populating this attribute.
 The event name MUST be `gen_ai.model.response`.
 
 Captures a GenAI model response, including generated messages, completion metadata, token usage, and cost.
-
-The event name MUST be `gen_ai.model.response`.
 
 **Attributes:**
 
@@ -880,8 +866,6 @@ The event name MUST be `gen_ai.model.change`.
 
 Captures a runtime model change in a GenAI session or agent execution.
 
-The event name MUST be `gen_ai.model.change`.
-
 **Attributes:**
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
@@ -916,8 +900,6 @@ The event name MUST be `gen_ai.model.change`.
 The event name MUST be `gen_ai.tool.call`.
 
 Captures an agent-side tool execution request.
-
-The event name MUST be `gen_ai.tool.call`.
 
 This event describes an actual tool execution initiated by an agent. It is
 distinct from a model response that merely contains a tool-call intent.
@@ -965,8 +947,6 @@ The event name MUST be `gen_ai.tool.result`.
 
 Captures the result of an agent-side tool execution.
 
-The event name MUST be `gen_ai.tool.result`.
-
 **Attributes:**
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
@@ -1003,8 +983,6 @@ The event name MUST be `gen_ai.human.review`.
 
 Captures a human review, approval, denial, or intervention in GenAI agent execution.
 
-The event name MUST be `gen_ai.human.review`.
-
 **Attributes:**
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
@@ -1039,8 +1017,6 @@ The event name MUST be `gen_ai.human.review`.
 The event name MUST be `gen_ai.context.compact`.
 
 Captures context compaction performed by a GenAI agent.
-
-The event name MUST be `gen_ai.context.compact`.
 
 **Attributes:**
 
@@ -1084,8 +1060,6 @@ The event name MUST be `gen_ai.agent.invoke`.
 
 Captures invocation or delegation of work to another GenAI agent.
 
-The event name MUST be `gen_ai.agent.invoke`.
-
 **Attributes:**
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
@@ -1112,8 +1086,6 @@ The event name MUST be `gen_ai.agent.invoke`.
 The event name MUST be `gen_ai.agent.result`.
 
 Captures the result returned by a child GenAI agent.
-
-The event name MUST be `gen_ai.agent.result`.
 
 **Attributes:**
 

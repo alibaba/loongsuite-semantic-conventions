@@ -81,8 +81,6 @@ groups:
     stability: development
     brief: >
       Captures the start of a GenAI application, agent, or conversation session.
-    note: >
-      The event name MUST be `gen_ai.session.start`.
     attributes:
       - ref: gen_ai.session.id
         requirement_level: required
@@ -110,8 +108,6 @@ groups:
     stability: development
     brief: >
       Captures the end of a GenAI application, agent, or conversation session.
-    note: >
-      The event name MUST be `gen_ai.session.end`.
     attributes:
       - ref: gen_ai.session.id
         requirement_level: required
@@ -141,8 +137,6 @@ groups:
     brief: >
       Captures the complete GenAI context assembled before model submission.
     note: |
-      The event name MUST be `gen_ai.context.compile`.
-
       This event represents the audit boundary before a model request is
       submitted. It can include the assembled input messages, system
       instructions, tool definitions, and context window information.
@@ -174,8 +168,6 @@ groups:
       Captures a GenAI model request, including the requested model, parameters,
       input messages, and tool definitions.
     note: |
-      The event name MUST be `gen_ai.model.request`.
-
       Instrumentations SHOULD record `gen_ai.input.messages_delta` by default for
       agent logs, as it only captures new context (e.g. new user input or tool
       results) that is not already present in earlier request/response logs. They
@@ -228,8 +220,6 @@ groups:
     brief: >
       Captures a GenAI model response, including generated messages, completion
       metadata, token usage, and cost.
-    note: >
-      The event name MUST be `gen_ai.model.response`.
     attributes:
       - ref: gen_ai.provider.name
         requirement_level: required
@@ -272,8 +262,6 @@ groups:
     stability: development
     brief: >
       Captures a runtime model change in a GenAI session or agent execution.
-    note: >
-      The event name MUST be `gen_ai.model.change`.
     attributes:
       - ref: gen_ai.model.change.reason
         requirement_level: required
@@ -290,8 +278,6 @@ groups:
     brief: >
       Captures an agent-side tool execution request.
     note: |
-      The event name MUST be `gen_ai.tool.call`.
-
       This event describes an actual tool execution initiated by an agent. It is
       distinct from a model response that merely contains a tool-call intent.
     attributes:
@@ -314,8 +300,6 @@ groups:
     stability: development
     brief: >
       Captures the result of an agent-side tool execution.
-    note: >
-      The event name MUST be `gen_ai.tool.result`.
     attributes:
       - ref: gen_ai.tool.name
         requirement_level: required
@@ -334,8 +318,6 @@ groups:
     stability: development
     brief: >
       Captures a human review, approval, denial, or intervention in GenAI agent execution.
-    note: >
-      The event name MUST be `gen_ai.human.review`.
     attributes:
       - ref: gen_ai.human.operation
         requirement_level: required
@@ -352,8 +334,6 @@ groups:
     stability: development
     brief: >
       Captures context compaction performed by a GenAI agent.
-    note: >
-      The event name MUST be `gen_ai.context.compact`.
     attributes:
       - ref: gen_ai.context.compaction_ratio
         requirement_level: recommended
@@ -368,8 +348,6 @@ groups:
     stability: development
     brief: >
       Captures invocation or delegation of work to another GenAI agent.
-    note: >
-      The event name MUST be `gen_ai.agent.invoke`.
     attributes:
       - ref: gen_ai.agent.parent.id
         requirement_level: recommended
@@ -388,8 +366,6 @@ groups:
     stability: development
     brief: >
       Captures the result returned by a child GenAI agent.
-    note: >
-      The event name MUST be `gen_ai.agent.result`.
     attributes:
       - ref: gen_ai.agent.parent.id
         requirement_level: recommended
