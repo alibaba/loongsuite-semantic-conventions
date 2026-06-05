@@ -27,6 +27,7 @@ body:
         - area:gen-ai
         - area:openai
         - area:server
+        - area:user
         # End semconv area list
   - type: textarea
     attributes:
