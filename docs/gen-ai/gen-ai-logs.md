@@ -495,9 +495,9 @@ populating this attribute.
 <!-- endsemconv -->
 
 For audit provenance, `gen_ai.context.compile` SHOULD at minimum carry
-`gen_ai.input.messages_hash`, `gen_ai.system_instructions_hash`,
-`gen_ai.tool.definitions_hash`, and `gen_ai.context.compile.trigger`. Full
-payload attributes such as `gen_ai.input.messages`,
+`gen_ai.system_instructions_hash`, `gen_ai.tool.definitions_hash`, and
+`gen_ai.context.compile.trigger`. Full payload attributes such as
+`gen_ai.input.messages`, `gen_ai.input.messages_delta`,
 `gen_ai.system_instructions`, and `gen_ai.tool.definitions` MAY be recorded
 according to the application's sampling, retention, and redaction policy.
 
@@ -1136,22 +1136,53 @@ SHOULD still record non-content metadata such as model names, token usage,
 finish reasons, tool names, and identifiers.
 
 For long-running agents, instrumentations SHOULD prefer
-`gen_ai.input.messages_delta` on `gen_ai.model.request` events.
-`gen_ai.input.messages` SHOULD be recorded when the full context cannot be
-reconstructed from deltas, when the context changes in a non-append-only way,
-or when `gen_ai.input.messages_hash` cannot be validated.
+`gen_ai.input.messages_delta` over `gen_ai.input.messages` on
+`gen_ai.model.request` events.
+
+Similarly, `gen_ai.system_instructions` and `gen_ai.tool.definitions` SHOULD
+only be recorded when their respective hash (`gen_ai.system_instructions_hash`,
+`gen_ai.tool.definitions_hash`) differs from the previous request in the same
+session. When the hash is unchanged, the payload is identical to the previously
+recorded value and can be omitted to reduce data duplication.
+
+### Delta construction
+
+In a typical agent loop, the complete input context for request N is the full
+accumulated conversation:
+
+```text
+input[N] = input[1] + output[1] + ... + input[N-1] + output[N-1] + new_context
+```
+
+Where `new_context` is the new user input, tool call result, or other new
+messages that appeared after the last model response. Because all prior input
+and output messages are already recorded in earlier `gen_ai.model.request` and
+`gen_ai.model.response` log events, `gen_ai.input.messages_delta` only needs to
+carry `new_context` — the truly new portion that is sufficient to reconstruct
+the full input.
+
+### When to record full messages vs delta
+
+Instrumentations SHOULD internally track whether the current input can be
+expressed as a delta from the previous request's input + output. When the
+context changes in a non-append-only way (e.g. after compaction or truncation),
+instrumentations SHOULD fall back to recording `gen_ai.input.messages` in full.
 
 | Situation | Recommended capture |
 | --- | --- |
-| First `gen_ai.model.request` | There is no previous input context to apply a delta to. |
+| First `gen_ai.model.request` in a session | Record `gen_ai.input.messages` (no previous context to delta from). |
 | `gen_ai.context.compile` | Record the assembled context needed for audit or prompt-injection analysis. |
-| Append-only turn continuation | Record `gen_ai.input.messages_delta` and `gen_ai.input.messages_hash`. |
-| Context compaction or truncation | Record `gen_ai.context.compact` and a full `gen_ai.input.messages` snapshot when available. |
-| Reconstruction cannot be verified | Record `gen_ai.input.messages`. |
+| Append-only turn continuation | Record `gen_ai.input.messages_delta`. |
+| Context compaction or truncation | Record `gen_ai.context.compact` and a full `gen_ai.input.messages` snapshot. |
+| Context changed non-append-only | Record `gen_ai.input.messages` (delta cannot represent the change). |
 
 ## Examples
 
-Example `gen_ai.model.request` log record:
+Example `gen_ai.model.request` log record using `messages_delta`:
+
+The delta below records only the tool result that appeared after the previous
+model response. The full input for this request is: previous input messages +
+previous output messages (which contained the tool_call) + this delta.
 
 ```json
 {
@@ -1165,16 +1196,16 @@ Example `gen_ai.model.request` log record:
   "gen_ai.request.model": "gpt-4o",
   "gen_ai.input.messages_delta": [
     {
-      "role": "user",
+      "role": "tool",
       "parts": [
         {
-          "type": "text",
-          "content": "Summarize the diff."
+          "type": "tool_call_response",
+          "id": "call_VSPygqKTWdrhaFErNvMV18Yl",
+          "result": "rainy, 57°F"
         }
       ]
     }
-  ],
-  "gen_ai.input.messages_hash": "a3f2d1e8b7c6a5f4"
+  ]
 }
 ```
 

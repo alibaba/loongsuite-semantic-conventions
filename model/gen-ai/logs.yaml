@@ -153,8 +153,6 @@ groups:
         requirement_level: recommended
       - ref: gen_ai.input.messages_delta
         requirement_level: recommended
-      - ref: gen_ai.input.messages_hash
-        requirement_level: recommended
       - ref: gen_ai.system_instructions
         requirement_level: recommended
       - ref: gen_ai.system_instructions_hash
@@ -179,8 +177,11 @@ groups:
       The event name MUST be `gen_ai.model.request`.
 
       Instrumentations SHOULD record `gen_ai.input.messages_delta` by default for
-      agent logs. They SHOULD also record `gen_ai.input.messages` when the full
-      context cannot be reconstructed from deltas.
+      agent logs, as it only captures new context (e.g. new user input or tool
+      results) that is not already present in earlier request/response logs. They
+      SHOULD also record `gen_ai.input.messages` when the full context cannot be
+      reconstructed from the previous input messages, previous output messages,
+      and the current delta.
     attributes:
       - ref: gen_ai.provider.name
         requirement_level: required
@@ -212,8 +213,6 @@ groups:
       - ref: gen_ai.input.messages_delta
         requirement_level: recommended
       - ref: gen_ai.input.messages
-        requirement_level: recommended
-      - ref: gen_ai.input.messages_hash
         requirement_level: recommended
       - ref: gen_ai.system_instructions
         requirement_level: recommended
@@ -361,8 +360,6 @@ groups:
       - ref: gen_ai.context.window_size
         requirement_level: recommended
       - ref: gen_ai.input.messages
-        requirement_level: recommended
-      - ref: gen_ai.input.messages_hash
         requirement_level: recommended
 
   - id: event.gen_ai.agent.invoke
