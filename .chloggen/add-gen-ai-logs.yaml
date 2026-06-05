@@ -1,5 +1,5 @@
 change_type: new_component
 component: gen-ai
 note: Add semantic conventions for GenAI behavior logs.
-issues: [0]
+issues: [32]
 subtext:

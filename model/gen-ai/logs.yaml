@@ -140,6 +140,13 @@ groups:
       This event represents the audit boundary before a model request is
       submitted. It can include the assembled input messages, system
       instructions, tool definitions, and context window information.
+
+      When recording `gen_ai.input.messages` or `gen_ai.input.messages_delta`,
+      instrumentations SHOULD separate system instructions into the dedicated
+      `gen_ai.system_instructions` attribute and tool definitions into the
+      dedicated `gen_ai.tool.definitions` attribute, and exclude both from the
+      messages payload. This reduces data redundancy and keeps system
+      instruction and tool definition content consistent across events.
     attributes:
       - ref: gen_ai.context.compilation.id
         requirement_level: recommended
@@ -174,6 +181,13 @@ groups:
       SHOULD also record `gen_ai.input.messages` when the full context cannot be
       reconstructed from the previous input messages, previous output messages,
       and the current delta.
+
+      When recording `gen_ai.input.messages` or `gen_ai.input.messages_delta`,
+      instrumentations SHOULD separate system instructions into the dedicated
+      `gen_ai.system_instructions` attribute and tool definitions into the
+      dedicated `gen_ai.tool.definitions` attribute, and exclude both from the
+      messages payload. This reduces data redundancy and keeps system
+      instruction and tool definition content consistent across events.
     attributes:
       - ref: gen_ai.provider.name
         requirement_level: required
@@ -205,7 +219,8 @@ groups:
       - ref: gen_ai.input.messages_delta
         requirement_level: recommended
       - ref: gen_ai.input.messages
-        requirement_level: recommended
+        requirement_level:
+          conditionally_required: when the full context cannot be reconstructed from previous request/response logs and the current delta
       - ref: gen_ai.system_instructions
         requirement_level: recommended
       - ref: gen_ai.tool.definitions

@@ -29,6 +29,13 @@ done
 # Extract lychee version from dependencies.dockerfile
 LYCHEE_VERSION=$(grep "FROM lycheeverse/lychee:" "$DEPENDENCIES_DOCKERFILE" | sed 's/.*FROM lycheeverse\/lychee:\([^ ]*\).*/\1/')
 
+# Use pinned image digests in CI for reproducibility. Local development defaults
+# to tag-only image references so pre-pulled images can be used without Docker
+# trying to resolve the digest from the remote registry.
+if [[ "${USE_LOCAL_CONTAINER_TAGS:-${CI:+false}}" != "false" ]]; then
+    LYCHEE_VERSION="${LYCHEE_VERSION%%@*}"
+fi
+
 if [[ -z "$TARGET" ]]; then
     TARGET="."
 fi

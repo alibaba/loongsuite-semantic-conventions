@@ -1247,8 +1247,8 @@ groups:
       - id: gen_ai.response.time_to_first_token
         stability: development
         type: int
-        brief: Time to receive the first token in a streaming GenAI response, in nanoseconds.
-        examples: [1000000]
+        brief: Time to receive the first token in a streaming GenAI response, in milliseconds.
+        examples: [120]
       - id: gen_ai.response.reasoning_time
         stability: development
         type: int
@@ -1257,7 +1257,13 @@ groups:
       - id: gen_ai.usage.total_tokens
         stability: development
         type: int
-        brief: The total number of tokens used by a GenAI request or response.
+        brief: >
+          The total number of tokens used by a GenAI operation or session.
+        note: >
+          When recorded on a single request/response, this represents the sum
+          of input and output tokens for that operation. When recorded on a
+          session-level event (e.g. `gen_ai.session.end`), it represents the
+          aggregate token count across all operations in the session.
         examples: [300]
       - id: gen_ai.usage.input_cost
         stability: development
@@ -1282,7 +1288,13 @@ groups:
       - id: gen_ai.usage.total_cost
         stability: development
         type: double
-        brief: The total cost of the GenAI operation, in USD.
+        brief: >
+          The total cost of the GenAI operation or session, in USD.
+        note: >
+          When recorded on a single request/response, this represents the cost
+          of that operation. When recorded on a session-level event
+          (e.g. `gen_ai.session.end`), it represents the aggregate cost across
+          all operations in the session.
         examples: [0.005376]
       - id: gen_ai.context.compilation.id
         stability: development

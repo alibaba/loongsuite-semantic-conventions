@@ -89,7 +89,7 @@ This document defines the attributes used to describe telemetry in the context o
 | <a id="gen-ai-response-per-token-time-to-generate" href="#gen-ai-response-per-token-time-to-generate">`gen_ai.response.per_token_time_to_generate`</a> | ![Development](https://img.shields.io/badge/-development-blue) | double[] | Time elapsed from span start to each token generation, in seconds. [29] | `[0.0031, 0.0059, 0.0088]` |
 | <a id="gen-ai-response-per-token-time-to-schedule" href="#gen-ai-response-per-token-time-to-schedule">`gen_ai.response.per_token_time_to_schedule`</a> | ![Development](https://img.shields.io/badge/-development-blue) | double[] | Time elapsed from span start to each token scheduling, in seconds. [30] | `[0.001, 0.004, 0.007]` |
 | <a id="gen-ai-response-reasoning-time" href="#gen-ai-response-reasoning-time">`gen_ai.response.reasoning_time`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | Time spent by a reasoning model before producing the final response, in milliseconds. | `1248` |
-| <a id="gen-ai-response-time-to-first-token" href="#gen-ai-response-time-to-first-token">`gen_ai.response.time_to_first_token`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | Time to receive the first token in a streaming GenAI response, in nanoseconds. | `1000000` |
+| <a id="gen-ai-response-time-to-first-token" href="#gen-ai-response-time-to-first-token">`gen_ai.response.time_to_first_token`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | Time to receive the first token in a streaming GenAI response, in milliseconds. | `120` |
 | <a id="gen-ai-retrieval-documents" href="#gen-ai-retrieval-documents">`gen_ai.retrieval.documents`</a> | ![Development](https://img.shields.io/badge/-development-blue) | any | The documents retrieved. [31] | [<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"id": "doc_123",<br>&nbsp;&nbsp;&nbsp;&nbsp;"score": 0.95<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"id": "doc_456",<br>&nbsp;&nbsp;&nbsp;&nbsp;"score": 0.87<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"id": "doc_789",<br>&nbsp;&nbsp;&nbsp;&nbsp;"score": 0.82<br>&nbsp;&nbsp;}<br>] |
 | <a id="gen-ai-retrieval-query-text" href="#gen-ai-retrieval-query-text">`gen_ai.retrieval.query.text`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The query text used for retrieval. [32] | `What is the capital of France?`; `weather in Paris` |
 | <a id="gen-ai-session-capabilities-hash" href="#gen-ai-session-capabilities-hash">`gen_ai.session.capabilities_hash`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | Stable hash of the set of tools, skills, or plugins enabled at session start. [33] | `6b4d5f2a9c3e7b10` |
@@ -127,9 +127,9 @@ This document defines the attributes used to describe telemetry in the context o
 | <a id="gen-ai-usage-input-tokens" href="#gen-ai-usage-input-tokens">`gen_ai.usage.input_tokens`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | The number of tokens used in the GenAI input (prompt). [47] | `100` |
 | <a id="gen-ai-usage-output-cost" href="#gen-ai-usage-output-cost">`gen_ai.usage.output_cost`</a> | ![Development](https://img.shields.io/badge/-development-blue) | double | The cost of output tokens for the GenAI operation, in USD. | `0.00384` |
 | <a id="gen-ai-usage-output-tokens" href="#gen-ai-usage-output-tokens">`gen_ai.usage.output_tokens`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | The number of tokens used in the GenAI response (completion). | `180` |
-| <a id="gen-ai-usage-total-cost" href="#gen-ai-usage-total-cost">`gen_ai.usage.total_cost`</a> | ![Development](https://img.shields.io/badge/-development-blue) | double | The total cost of the GenAI operation, in USD. | `0.005376` |
-| <a id="gen-ai-usage-total-tokens" href="#gen-ai-usage-total-tokens">`gen_ai.usage.total_tokens`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | The total number of tokens used by a GenAI request or response. | `300` |
-| <a id="gen-ai-workflow-name" href="#gen-ai-workflow-name">`gen_ai.workflow.name`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | Human-readable name of the GenAI workflow provided by the application. [48] | `multi_agent_rag`; `customer_support_pipeline` |
+| <a id="gen-ai-usage-total-cost" href="#gen-ai-usage-total-cost">`gen_ai.usage.total_cost`</a> | ![Development](https://img.shields.io/badge/-development-blue) | double | The total cost of the GenAI operation or session, in USD. [48] | `0.005376` |
+| <a id="gen-ai-usage-total-tokens" href="#gen-ai-usage-total-tokens">`gen_ai.usage.total_tokens`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | The total number of tokens used by a GenAI operation or session. [49] | `300` |
+| <a id="gen-ai-workflow-name" href="#gen-ai-workflow-name">`gen_ai.workflow.name`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | Human-readable name of the GenAI workflow provided by the application. [50] | `multi_agent_rag`; `customer_support_pipeline` |
 
 **[1] `gen_ai.context.compaction_ratio`:** The value SHOULD be between 0 and 1 when both original and compacted token counts are known.
 
@@ -441,7 +441,11 @@ Instrumentations SHOULD make a best effort to populate this value, using a total
 provided by the provider when available or, depending on the provider API,
 by summing different token types parsed from the provider output.
 
-**[48] `gen_ai.workflow.name`:** This attribute can be populated in different frameworks eg: name of the first chain in LangChain OR name of the crew in CrewAI.
+**[48] `gen_ai.usage.total_cost`:** When recorded on a single request/response, this represents the cost of that operation. When recorded on a session-level event (e.g. `gen_ai.session.end`), it represents the aggregate cost across all operations in the session.
+
+**[49] `gen_ai.usage.total_tokens`:** When recorded on a single request/response, this represents the sum of input and output tokens for that operation. When recorded on a session-level event (e.g. `gen_ai.session.end`), it represents the aggregate token count across all operations in the session.
+
+**[50] `gen_ai.workflow.name`:** This attribute can be populated in different frameworks eg: name of the first chain in LangChain OR name of the crew in CrewAI.
 
 ---
 
@@ -489,12 +493,12 @@ by summing different token types parsed from the provider output.
 | `generate_content` | Multimodal content generation operation such as [Gemini Generate Content](https://ai.google.dev/api/generate-content) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `invoke_agent` | Invoke GenAI agent | ![Development](https://img.shields.io/badge/-development-blue) |
 | `invoke_workflow` | Invoke GenAI workflow | ![Development](https://img.shields.io/badge/-development-blue) |
-| `react` | ReAct (Reasoning-Acting) step within a GenAI agent loop [49] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `react` | ReAct (Reasoning-Acting) step within a GenAI agent loop [51] | ![Development](https://img.shields.io/badge/-development-blue) |
 | `rerank` | Rerank documents based on relevance to a query | ![Development](https://img.shields.io/badge/-development-blue) |
 | `retrieval` | Retrieval operation such as [OpenAI Search Vector Store API](https://developers.openai.com/docs/api-reference/vector-stores/search) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `text_completion` | Text completions operation such as [OpenAI Completions API (Legacy)](https://developers.openai.com/docs/api-reference/completions) | ![Development](https://img.shields.io/badge/-development-blue) |
 
-**[49]:** This value is used for the ReAct step span that wraps individual reasoning-acting cycles within an agent loop. It is an Alibaba Cloud extension.
+**[51]:** This value is used for the ReAct step span that wraps individual reasoning-acting cycles within an agent loop. It is an Alibaba Cloud extension.
 
 ---
 
@@ -519,9 +523,9 @@ by summing different token types parsed from the provider output.
 | `azure.ai.openai` | [Azure OpenAI](https://azure.microsoft.com/products/ai-services/openai-service/) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `cohere` | [Cohere](https://cohere.com/) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `deepseek` | [DeepSeek](https://www.deepseek.com/) | ![Development](https://img.shields.io/badge/-development-blue) |
-| `gcp.gemini` | [Gemini](https://cloud.google.com/products/gemini) [50] | ![Development](https://img.shields.io/badge/-development-blue) |
-| `gcp.gen_ai` | Any Google generative AI endpoint [51] | ![Development](https://img.shields.io/badge/-development-blue) |
-| `gcp.vertex_ai` | [Vertex AI](https://cloud.google.com/vertex-ai) [52] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `gcp.gemini` | [Gemini](https://cloud.google.com/products/gemini) [52] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `gcp.gen_ai` | Any Google generative AI endpoint [53] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `gcp.vertex_ai` | [Vertex AI](https://cloud.google.com/vertex-ai) [54] | ![Development](https://img.shields.io/badge/-development-blue) |
 | `groq` | [Groq](https://groq.com/) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `ibm.watsonx.ai` | [IBM Watsonx AI](https://www.ibm.com/products/watsonx-ai) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `mistral_ai` | [Mistral AI](https://mistral.ai/) | ![Development](https://img.shields.io/badge/-development-blue) |
@@ -529,11 +533,11 @@ by summing different token types parsed from the provider output.
 | `perplexity` | [Perplexity](https://www.perplexity.ai/) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `x_ai` | [xAI](https://x.ai/) | ![Development](https://img.shields.io/badge/-development-blue) |
 
-**[50]:** Used when accessing the 'generativelanguage.googleapis.com' endpoint. Also known as the AI Studio API.
+**[52]:** Used when accessing the 'generativelanguage.googleapis.com' endpoint. Also known as the AI Studio API.
 
-**[51]:** May be used when specific backend is unknown.
+**[53]:** May be used when specific backend is unknown.
 
-**[52]:** Used when accessing the 'aiplatform.googleapis.com' endpoint.
+**[54]:** Used when accessing the 'aiplatform.googleapis.com' endpoint.
 
 ---
 
@@ -627,9 +631,9 @@ Describes deprecated `gen_ai` attributes.
 | `azure.ai.openai` | Azure OpenAI | ![Development](https://img.shields.io/badge/-development-blue) |
 | `cohere` | Cohere | ![Development](https://img.shields.io/badge/-development-blue) |
 | `deepseek` | DeepSeek | ![Development](https://img.shields.io/badge/-development-blue) |
-| `gcp.gemini` | Gemini [53] | ![Development](https://img.shields.io/badge/-development-blue) |
-| `gcp.gen_ai` | Any Google generative AI endpoint [54] | ![Development](https://img.shields.io/badge/-development-blue) |
-| `gcp.vertex_ai` | Vertex AI [55] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `gcp.gemini` | Gemini [55] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `gcp.gen_ai` | Any Google generative AI endpoint [56] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `gcp.vertex_ai` | Vertex AI [57] | ![Development](https://img.shields.io/badge/-development-blue) |
 | `groq` | Groq | ![Development](https://img.shields.io/badge/-development-blue) |
 | `ibm.watsonx.ai` | IBM Watsonx AI | ![Development](https://img.shields.io/badge/-development-blue) |
 | `mistral_ai` | Mistral AI | ![Development](https://img.shields.io/badge/-development-blue) |
@@ -637,11 +641,11 @@ Describes deprecated `gen_ai` attributes.
 | `perplexity` | Perplexity | ![Development](https://img.shields.io/badge/-development-blue) |
 | `xai` | xAI | ![Development](https://img.shields.io/badge/-development-blue) |
 
-**[53]:** This refers to the 'generativelanguage.googleapis.com' endpoint. Also known as the AI Studio API. May use common attributes prefixed with 'gcp.gen_ai.'.
+**[55]:** This refers to the 'generativelanguage.googleapis.com' endpoint. Also known as the AI Studio API. May use common attributes prefixed with 'gcp.gen_ai.'.
 
-**[54]:** May be used when specific backend is unknown. May use common attributes prefixed with 'gcp.gen_ai.'.
+**[56]:** May be used when specific backend is unknown. May use common attributes prefixed with 'gcp.gen_ai.'.
 
-**[55]:** This refers to the 'aiplatform.googleapis.com' endpoint. May use common attributes prefixed with 'gcp.gen_ai.'.
+**[57]:** This refers to the 'aiplatform.googleapis.com' endpoint. May use common attributes prefixed with 'gcp.gen_ai.'.
 
 ## Deprecated OpenAI GenAI Attributes
 

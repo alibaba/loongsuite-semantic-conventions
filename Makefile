@@ -30,6 +30,15 @@ OPA_CONTAINER_REPOSITORY=$(CONTAINER_REPOSITORY)
 VERSIONED_WEAVER_CONTAINER_NO_REPO=$(shell cat dependencies.Dockerfile | awk '$$4=="weaver" {print $$2}')
 VERSIONED_OPA_CONTAINER_NO_REPO=$(shell cat dependencies.Dockerfile | awk '$$4=="opa" {print $$2}')
 
+# Use pinned image digests in CI for reproducibility. Local development defaults
+# to tag-only image references so pre-pulled images can be used without Docker
+# trying to resolve the digest from the remote registry.
+USE_LOCAL_CONTAINER_TAGS ?= $(if $(CI),false,true)
+ifeq ($(USE_LOCAL_CONTAINER_TAGS),true)
+VERSIONED_WEAVER_CONTAINER_NO_REPO := $(word 1,$(subst @, ,$(VERSIONED_WEAVER_CONTAINER_NO_REPO)))
+VERSIONED_OPA_CONTAINER_NO_REPO := $(word 1,$(subst @, ,$(VERSIONED_OPA_CONTAINER_NO_REPO)))
+endif
+
 # Fully qualified references to containers used in this Makefile. These
 # include the container repository, so that the build will work with tools
 # like "podman" with a default "/etc/containers/registries.conf", where
@@ -353,4 +362,3 @@ areas-table-check:
 
 .PHONY: generate-all
 generate-all: table-generation registry-generation areas-table-generation generate-gh-issue-templates
-
