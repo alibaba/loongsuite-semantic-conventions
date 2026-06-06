@@ -83,7 +83,7 @@ gen_ai.agent.id
 
 `gen_ai.event.sequence` SHOULD be monotonically increasing within the same
 `gen_ai.turn.id`. It is not required to be continuous or persisted across
-sessions. `gen_ai.event.id` and `gen_ai.event.parent.id` MAY be used when the
+sessions. `event.id` and `event.parent.id` MAY be used when the
 source runtime exposes its own event graph.
 
 ## Common GenAI Log Attributes
@@ -102,23 +102,23 @@ Event-specific sections below list additional attributes for each `event.name`.
 | --- | --- | --- | --- | --- | --- |
 | [`error.message`](/docs/registry/attributes/error.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` if additional error details are available | string | A message providing more detail about an error in human-readable form. [1] | `Unexpected input type: string`; `The user has exceeded their storage quota` |
 | [`error.type`](/docs/registry/attributes/error.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` if the operation ended in an error | string | Describes a class of error the operation ended with. [2] | `timeout`; `java.net.UnknownHostException`; `server_certificate_invalid`; `500` |
+| [`event.id`](/docs/registry/attributes/event.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` [3] | string | The unique identifier of an event in the source runtime. [4] | `evt_01J2K3M4N5P6Q7R8S9T0` |
+| [`event.parent.id`](/docs/registry/attributes/event.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` [5] | string | The identifier of the parent event in the source runtime. [6] | `evt_01J2K3M4N5P6Q7R8S9SZ` |
 | [`gen_ai.conversation.id`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` when available | string | The unique identifier for a conversation (session, thread), used to store and correlate messages within this conversation. | `conv_5j66UpCpwteGg4YSxUnt7lPY` |
-| [`gen_ai.event.id`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` [3] | string | The unique identifier of a GenAI log event in the source runtime. | `evt_01J2K3M4N5P6Q7R8S9T0` |
-| [`gen_ai.event.parent.id`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` [4] | string | The identifier of the parent GenAI log event in the source runtime. [5] | `evt_01J2K3M4N5P6Q7R8S9SZ` |
-| [`gen_ai.provider.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` for model-provider operations | string | The Generative AI provider as identified by the client or server instrumentation. [6] | `openai`; `gcp.gen_ai`; `gcp.vertex_ai` |
-| [`gen_ai.session.id`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` [7] | string | The unique identifier for a user session or conversation context managed by a GenAI agent or application. | `sess_7Kp3mXq2nR8tYvWz` |
+| [`gen_ai.provider.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` for model-provider operations | string | The Generative AI provider as identified by the client or server instrumentation. [7] | `openai`; `gcp.gen_ai`; `gcp.vertex_ai` |
+| [`gen_ai.session.id`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` [8] | string | The unique identifier for a user session or conversation context managed by a GenAI agent or application. | `sess_7Kp3mXq2nR8tYvWz` |
 | [`gen_ai.agent.id`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | The unique identifier of the GenAI agent. | `asst_5j66UpCpwteGg4YSxUnt7lPY` |
 | [`gen_ai.agent.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | Human-readable name of the GenAI agent provided by the application. | `Math Tutor`; `Fiction Writer` |
 | [`gen_ai.agent.type`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | The product or runtime type of the GenAI agent. | `qoder`; `cursor`; `cowork` |
-| [`gen_ai.event.sequence`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | int | The sequence number of a GenAI log event within a turn. [8] | `4` |
-| [`gen_ai.operation.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | The name of the operation being performed. [9] | `chat`; `generate_content`; `text_completion` |
+| [`gen_ai.event.sequence`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | int | The sequence number of a GenAI log event within a turn. [9] | `4` |
+| [`gen_ai.operation.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | The name of the operation being performed. [10] | `chat`; `generate_content`; `text_completion` |
 | [`gen_ai.response.id`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | The unique identifier for the completion. | `chatcmpl-123` |
 | [`gen_ai.step.id`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | The unique identifier for one step within a GenAI agent turn. | `step_3` |
 | [`gen_ai.turn.id`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | The unique identifier for one user input and the agent work needed to produce a final response or stop. | `turn_01HWXQZ9K3P5R7S2T4U6V8W0` |
-| [`user.id`](/docs/registry/attributes/user.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | Unique identifier of the user. [10] | `S-1-5-21-202424912787-2692429404-2351956786-1000` |
+| [`user.id`](/docs/registry/attributes/user.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | Unique identifier of the user. [11] | `S-1-5-21-202424912787-2692429404-2351956786-1000` |
 | [`gen_ai.agent.channel`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Opt-In` | string | The channel through which the GenAI agent request entered the system. | `ide_plugin`; `web`; `slack` |
 | [`gen_ai.event.original_name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Opt-In` | string | The original event name reported by the source GenAI runtime before semantic convention normalization. | `model.fallback_step`; `context.compiled` |
-| [`gen_ai.react.round`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Opt-In` | int | The round number (1-based) of the current ReAct iteration within the agent loop. [11] | `1`; `2`; `3` |
+| [`gen_ai.react.round`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Opt-In` | int | The round number (1-based) of the current ReAct iteration within the agent loop. [12] | `1`; `2`; `3` |
 
 **[1] `error.message`:** `error.message` should provide additional context and detail about an error.
 It is NOT RECOMMENDED to duplicate the value of `error.type` in `error.message`.
@@ -146,13 +146,15 @@ it's RECOMMENDED to:
 - Use a domain-specific attribute
 - Set `error.type` to capture all errors, regardless of whether they are defined within the domain-specific set or not.
 
-**[3] `gen_ai.event.id`:** when the source runtime provides a stable event identifier
+**[3] `event.id`:** when the source runtime provides a stable event identifier
 
-**[4] `gen_ai.event.parent.id`:** when the source runtime provides parent-child event relationships
+**[4] `event.id`:** This attribute represents an identifier assigned by the originating system, not by OpenTelemetry. It can be used to correlate events across log records or to deduplicate events from the same source.
 
-**[5] `gen_ai.event.parent.id`:** This attribute is intended for event graphs recorded by a GenAI runtime, such as a tool result pointing back to the tool call that produced it.
+**[5] `event.parent.id`:** when the source runtime provides parent-child event relationships
 
-**[6] `gen_ai.provider.name`:** The attribute SHOULD be set based on the instrumentation's best
+**[6] `event.parent.id`:** This attribute is intended for event graphs where the source runtime provides parent-child relationships between events, such as a tool result pointing back to the tool call that produced it.
+
+**[7] `gen_ai.provider.name`:** The attribute SHOULD be set based on the instrumentation's best
 knowledge and may differ from the actual model provider.
 
 Multiple providers, including Azure OpenAI, Gemini, and AI hosting platforms
@@ -171,15 +173,15 @@ should have the `gen_ai.provider.name` set to `aws.bedrock` and include
 applicable `aws.bedrock.*` attributes and are not expected to include
 `openai.*` attributes.
 
-**[7] `gen_ai.session.id`:** when the GenAI application maintains session context
+**[8] `gen_ai.session.id`:** when the GenAI application maintains session context
 
-**[8] `gen_ai.event.sequence`:** The value SHOULD be monotonically increasing within the same `gen_ai.turn.id`. It is not required to be continuous or persisted across sessions.
+**[9] `gen_ai.event.sequence`:** The value SHOULD be monotonically increasing within the same `gen_ai.turn.id`. It is not required to be continuous or persisted across sessions.
 
-**[9] `gen_ai.operation.name`:** If one of the predefined values applies, but specific system uses a different name it's RECOMMENDED to document it in the semantic conventions for specific GenAI system and use system-specific name in the instrumentation. If a different name is not documented, instrumentation libraries SHOULD use applicable predefined value.
+**[10] `gen_ai.operation.name`:** If one of the predefined values applies, but specific system uses a different name it's RECOMMENDED to document it in the semantic conventions for specific GenAI system and use system-specific name in the instrumentation. If a different name is not documented, instrumentation libraries SHOULD use applicable predefined value.
 
-**[10] `user.id`:** WARNING: this attribute may contain confidential identifiers. When `user.id` is sensitive, prefer `user.hash` to avoid leaking PII.
+**[11] `user.id`:** WARNING: this attribute may contain confidential identifiers. When `user.id` is sensitive, prefer `user.hash` to avoid leaking PII.
 
-**[11] `gen_ai.react.round`:** Indicates which round this ReAct step represents, starting from 1.
+**[12] `gen_ai.react.round`:** Indicates which round this ReAct step represents, starting from 1.
 Useful for tracking the total number of iterations required to reach a final result.
 
 ---
@@ -203,12 +205,12 @@ Useful for tracking the total number of iterations required to reach a final res
 | `generate_content` | Multimodal content generation operation such as [Gemini Generate Content](https://ai.google.dev/api/generate-content) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `invoke_agent` | Invoke GenAI agent | ![Development](https://img.shields.io/badge/-development-blue) |
 | `invoke_workflow` | Invoke GenAI workflow | ![Development](https://img.shields.io/badge/-development-blue) |
-| `react` | ReAct (Reasoning-Acting) step within a GenAI agent loop [12] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `react` | ReAct (Reasoning-Acting) step within a GenAI agent loop [13] | ![Development](https://img.shields.io/badge/-development-blue) |
 | `rerank` | Rerank documents based on relevance to a query | ![Development](https://img.shields.io/badge/-development-blue) |
 | `retrieval` | Retrieval operation such as [OpenAI Search Vector Store API](https://developers.openai.com/docs/api-reference/vector-stores/search) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `text_completion` | Text completions operation such as [OpenAI Completions API (Legacy)](https://developers.openai.com/docs/api-reference/completions) | ![Development](https://img.shields.io/badge/-development-blue) |
 
-**[12]:** This value is used for the ReAct step span that wraps individual reasoning-acting cycles within an agent loop. It is an Alibaba Cloud extension.
+**[13]:** This value is used for the ReAct step span that wraps individual reasoning-acting cycles within an agent loop. It is an Alibaba Cloud extension.
 
 ---
 
@@ -222,9 +224,9 @@ Useful for tracking the total number of iterations required to reach a final res
 | `azure.ai.openai` | [Azure OpenAI](https://azure.microsoft.com/products/ai-services/openai-service/) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `cohere` | [Cohere](https://cohere.com/) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `deepseek` | [DeepSeek](https://www.deepseek.com/) | ![Development](https://img.shields.io/badge/-development-blue) |
-| `gcp.gemini` | [Gemini](https://cloud.google.com/products/gemini) [13] | ![Development](https://img.shields.io/badge/-development-blue) |
-| `gcp.gen_ai` | Any Google generative AI endpoint [14] | ![Development](https://img.shields.io/badge/-development-blue) |
-| `gcp.vertex_ai` | [Vertex AI](https://cloud.google.com/vertex-ai) [15] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `gcp.gemini` | [Gemini](https://cloud.google.com/products/gemini) [14] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `gcp.gen_ai` | Any Google generative AI endpoint [15] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `gcp.vertex_ai` | [Vertex AI](https://cloud.google.com/vertex-ai) [16] | ![Development](https://img.shields.io/badge/-development-blue) |
 | `groq` | [Groq](https://groq.com/) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `ibm.watsonx.ai` | [IBM Watsonx AI](https://www.ibm.com/products/watsonx-ai) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `mistral_ai` | [Mistral AI](https://mistral.ai/) | ![Development](https://img.shields.io/badge/-development-blue) |
@@ -232,11 +234,11 @@ Useful for tracking the total number of iterations required to reach a final res
 | `perplexity` | [Perplexity](https://www.perplexity.ai/) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `x_ai` | [xAI](https://x.ai/) | ![Development](https://img.shields.io/badge/-development-blue) |
 
-**[13]:** Used when accessing the 'generativelanguage.googleapis.com' endpoint. Also known as the AI Studio API.
+**[14]:** Used when accessing the 'generativelanguage.googleapis.com' endpoint. Also known as the AI Studio API.
 
-**[14]:** May be used when specific backend is unknown.
+**[15]:** May be used when specific backend is unknown.
 
-**[15]:** Used when accessing the 'aiplatform.googleapis.com' endpoint.
+**[16]:** Used when accessing the 'aiplatform.googleapis.com' endpoint.
 
 <!-- prettier-ignore-end -->
 <!-- END AUTOGENERATED TEXT -->

@@ -1143,19 +1143,6 @@ groups:
           The value SHOULD be monotonically increasing within the same `gen_ai.turn.id`.
           It is not required to be continuous or persisted across sessions.
         examples: [4]
-      - id: gen_ai.event.id
-        stability: development
-        type: string
-        brief: The unique identifier of a GenAI log event in the source runtime.
-        examples: ['evt_01J2K3M4N5P6Q7R8S9T0']
-      - id: gen_ai.event.parent.id
-        stability: development
-        type: string
-        brief: The identifier of the parent GenAI log event in the source runtime.
-        note: >
-          This attribute is intended for event graphs recorded by a GenAI runtime,
-          such as a tool result pointing back to the tool call that produced it.
-        examples: ['evt_01J2K3M4N5P6Q7R8S9SZ']
       - id: gen_ai.event.original_name
         stability: development
         type: string

@@ -18,10 +18,10 @@ groups:
         requirement_level: recommended
       - ref: gen_ai.event.sequence
         requirement_level: recommended
-      - ref: gen_ai.event.id
+      - ref: event.id
         requirement_level:
           conditionally_required: when the source runtime provides a stable event identifier
-      - ref: gen_ai.event.parent.id
+      - ref: event.parent.id
         requirement_level:
           conditionally_required: when the source runtime provides parent-child event relationships
       - ref: gen_ai.event.original_name
