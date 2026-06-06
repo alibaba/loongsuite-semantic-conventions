@@ -19,6 +19,8 @@ exclude = [
   # excluding links to pull requests and issues is done for performance
   "^https://github.com/open-telemetry/semantic-conventions/(pull|issues)/\\d+$",
   "^https://github.com/open-telemetry/opentelemetry-specification/(pull|issues)/\\d+$",
+  # Fragment checks on pinned-version blob URLs fail without a GitHub token
+  "^https://github.com/open-telemetry/opentelemetry-specification/blob/v[^/]+/.*#",
   # TODO (lmolkova) treat timeout as not a failure?
   "^https://www.intersystems.com",
   "^https://gcc.gnu.org",
