@@ -456,9 +456,10 @@ requests.
 
 Instrumentations SHOULD record `gen_ai.input.messages_delta` by default
 and SHOULD prefer it over `gen_ai.input.messages` to reduce log volume.
-`gen_ai.input.messages` SHOULD be recorded when
-there is no previous request context (first request in a session) or
-the context changes in a non-append-only way (e.g. after compaction).
+For the first request in a session, the delta carries the full initial
+input — there is no need to use `gen_ai.input.messages` separately.
+`gen_ai.input.messages` SHOULD only be recorded when the context
+changes in a non-append-only way (e.g. after compaction).
 
 > [!WARNING]
 > This attribute may contain sensitive information.
@@ -581,10 +582,11 @@ Captures a GenAI model request, including the requested model, parameters, input
 
 Instrumentations SHOULD record `gen_ai.input.messages_delta` by default for
 agent logs, as it only captures new context (e.g. new user input or tool
-results) that is not already present in earlier request/response logs. They
-SHOULD also record `gen_ai.input.messages` when the full context cannot be
-reconstructed from the previous input messages, previous output messages,
-and the current delta.
+results) that is not already present in earlier request/response logs. For
+the first request in a session, the delta carries the full initial input.
+`gen_ai.input.messages` SHOULD only be recorded when the context changes
+in a non-append-only way (e.g. after compaction) and cannot be
+reconstructed from previous request/response logs and the current delta.
 
 When recording `gen_ai.input.messages` or `gen_ai.input.messages_delta`,
 instrumentations SHOULD separate system instructions into the dedicated
@@ -634,7 +636,7 @@ should have the `gen_ai.provider.name` set to `aws.bedrock` and include
 applicable `aws.bedrock.*` attributes and are not expected to include
 `openai.*` attributes.
 
-**[2] `gen_ai.input.messages`:** when the full context cannot be reconstructed from previous request/response logs and the current delta
+**[2] `gen_ai.input.messages`:** when the context changes in a non-append-only way (e.g. after compaction) and cannot be reconstructed from previous request/response logs and the current delta
 
 **[3] `gen_ai.input.messages`:** Instrumentations MUST follow [Input messages JSON schema](/docs/gen-ai/gen-ai-input-messages.json).
 When the attribute is recorded on events, it MUST be recorded in structured
@@ -670,9 +672,10 @@ requests.
 
 Instrumentations SHOULD record `gen_ai.input.messages_delta` by default
 and SHOULD prefer it over `gen_ai.input.messages` to reduce log volume.
-`gen_ai.input.messages` SHOULD be recorded when
-there is no previous request context (first request in a session) or
-the context changes in a non-append-only way (e.g. after compaction).
+For the first request in a session, the delta carries the full initial
+input — there is no need to use `gen_ai.input.messages` separately.
+`gen_ai.input.messages` SHOULD only be recorded when the context
+changes in a non-append-only way (e.g. after compaction).
 
 > [!WARNING]
 > This attribute may contain sensitive information.
