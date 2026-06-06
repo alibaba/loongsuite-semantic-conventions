@@ -1181,11 +1181,6 @@ groups:
         type: string
         brief: The channel through which the GenAI agent request entered the system.
         examples: ['ide_plugin', 'web', 'slack']
-      - id: gen_ai.request.id
-        stability: development
-        type: string
-        brief: The unique identifier assigned by the client for a GenAI request.
-        examples: ['req_4tH7jK2mN5pQ8rS1']
       - id: gen_ai.input.messages_delta
         stability: development
         type: any
