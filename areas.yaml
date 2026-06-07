@@ -80,7 +80,7 @@ areas:
       - area:process
     status:
       - accepting_contributions
-      - active
+      - inactive
 
   - name: "Semantic Conventions: Browser Instrumentation"
     owner:
