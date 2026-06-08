@@ -307,6 +307,9 @@ groups:
         requirement_level: recommended
       - ref: gen_ai.tool.call.arguments
         requirement_level: recommended
+      - ref: gen_ai.skill.name
+        requirement_level:
+          conditionally_required: if this tool execution loaded a skill
 
   - id: event.gen_ai.tool.result
     name: gen_ai.tool.result
