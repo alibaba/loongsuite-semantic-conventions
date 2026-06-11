@@ -207,6 +207,9 @@ groups:
         requirement_level: recommended
       - ref: gen_ai.request.presence_penalty
         requirement_level: recommended
+      - ref: gen_ai.request.reasoning.level
+        requirement_level:
+          recommended: When applicable.
       - ref: gen_ai.request.stop_sequences
         requirement_level: recommended
       - ref: gen_ai.request.temperature

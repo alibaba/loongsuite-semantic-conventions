@@ -160,6 +160,17 @@ groups:
         type: int
         brief: Requests with same seed value more likely to return same result.
         examples: [100]
+      - id: gen_ai.request.reasoning.level
+        stability: development
+        type: string
+        brief: >
+          The reasoning or thinking effort level requested for a GenAI model.
+        note: >
+          The value SHOULD be the exact string value sent to the provider.
+
+          Semantic conventions for individual providers SHOULD document
+          which input parameter maps to this attribute.
+        examples: ['low', 'medium', 'high']
       - id: gen_ai.response.id
         stability: development
         type: string
