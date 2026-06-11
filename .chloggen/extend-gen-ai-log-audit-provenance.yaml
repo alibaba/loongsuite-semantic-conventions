@@ -2,4 +2,3 @@ change_type: enhancement
 component: gen-ai-logs
 note: Add GenAI session and context compile audit provenance attributes, plus system instruction source schema support.
 issues: [32]
-subtext:

@@ -33,6 +33,12 @@ VERSIONED_OPA_CONTAINER_NO_REPO=$(shell cat dependencies.Dockerfile | awk '$$4==
 # Use pinned image digests in CI for reproducibility. Local development defaults
 # to tag-only image references so pre-pulled images can be used without Docker
 # trying to resolve the digest from the remote registry.
+#
+# NOTE: `USE_LOCAL_CONTAINER_TAGS` is derived from whether `CI` is *set* (i.e.
+# non-empty), not whether it is truthy. GitHub Actions always sets `CI=true`,
+# but environments that set `CI=false` (non-empty) will also be treated as CI
+# mode. To force local tag-only mode in such environments, explicitly override:
+#   make <target> USE_LOCAL_CONTAINER_TAGS=true
 USE_LOCAL_CONTAINER_TAGS ?= $(if $(CI),false,true)
 ifeq ($(USE_LOCAL_CONTAINER_TAGS),true)
 VERSIONED_WEAVER_CONTAINER_NO_REPO := $(word 1,$(subst @, ,$(VERSIONED_WEAVER_CONTAINER_NO_REPO)))

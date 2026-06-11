@@ -209,7 +209,7 @@ groups:
         requirement_level: recommended
       - ref: gen_ai.request.reasoning.level
         requirement_level:
-          recommended: When applicable.
+          conditionally_required: when the model supports configurable reasoning effort
       - ref: gen_ai.request.stop_sequences
         requirement_level: recommended
       - ref: gen_ai.request.temperature
