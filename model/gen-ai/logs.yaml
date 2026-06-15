@@ -16,8 +16,6 @@ groups:
         requirement_level: recommended
       - ref: gen_ai.step.id
         requirement_level: recommended
-      - ref: gen_ai.event.sequence
-        requirement_level: recommended
       - ref: event.id
         requirement_level:
           conditionally_required: when the source runtime provides a stable event identifier
@@ -140,17 +138,21 @@ groups:
       instructions, tool definitions, and context window information.
 
       When recording `gen_ai.input.messages` or `gen_ai.input.messages_delta`,
-      instrumentations SHOULD separate system instructions into the dedicated
-      `gen_ai.system_instructions` attribute and tool definitions into the
-      dedicated `gen_ai.tool.definitions` attribute, and exclude both from the
-      messages payload. This reduces data redundancy and keeps system
-      instruction and tool definition content consistent across events.
+      instrumentations SHOULD separate system and developer instructions into
+      the dedicated `gen_ai.system_instructions` attribute and tool definitions
+      into the dedicated `gen_ai.tool.definitions` attribute, and exclude both
+      from the messages payload. The `gen_ai.input.messages_hash` value hashes
+      only conversational messages, `gen_ai.system_instructions_hash` hashes
+      only `gen_ai.system_instructions`, and `gen_ai.tool.definitions_hash`
+      hashes only `gen_ai.tool.definitions`.
     attributes:
       - ref: gen_ai.context.compilation.id
         requirement_level: recommended
       - ref: gen_ai.input.messages
         requirement_level: recommended
       - ref: gen_ai.input.messages_delta
+        requirement_level: recommended
+      - ref: gen_ai.input.messages_hash
         requirement_level: recommended
       - ref: gen_ai.system_instructions
         requirement_level: recommended
@@ -182,16 +184,25 @@ groups:
       reconstructed from previous request/response logs and the current delta.
 
       When recording `gen_ai.input.messages` or `gen_ai.input.messages_delta`,
-      instrumentations SHOULD separate system instructions into the dedicated
-      `gen_ai.system_instructions` attribute and tool definitions into the
-      dedicated `gen_ai.tool.definitions` attribute, and exclude both from the
-      messages payload. This reduces data redundancy and keeps system
-      instruction and tool definition content consistent across events.
+      instrumentations SHOULD separate system and developer instructions into
+      the dedicated `gen_ai.system_instructions` attribute and tool definitions
+      into the dedicated `gen_ai.tool.definitions` attribute, and exclude both
+      from the messages payload. The `gen_ai.input.messages_hash` value hashes
+      only conversational messages, `gen_ai.system_instructions_hash` hashes
+      only `gen_ai.system_instructions`, and `gen_ai.tool.definitions_hash`
+      hashes only `gen_ai.tool.definitions`.
+
+      The request and response for one model operation SHOULD carry the same
+      `gen_ai.turn.id` and `gen_ai.step.id`. For ReAct-style agents, a step
+      represents one model operation; additional model operations should be
+      modeled as additional steps.
     attributes:
       - ref: gen_ai.provider.name
         requirement_level: required
       - ref: gen_ai.request.model
         requirement_level: required
+      - ref: gen_ai.turn.start
+        requirement_level: recommended
       - ref: gen_ai.output.type
         requirement_level:
           conditionally_required: if the request includes an output format
@@ -220,6 +231,8 @@ groups:
         requirement_level: recommended
       - ref: gen_ai.input.messages_delta
         requirement_level: recommended
+      - ref: gen_ai.input.messages_hash
+        requirement_level: recommended
       - ref: gen_ai.input.messages
         requirement_level:
           conditionally_required: when the context changes in a non-append-only way (e.g. after compaction) and cannot be reconstructed from previous request/response logs and the current delta
@@ -237,9 +250,16 @@ groups:
     brief: >
       Captures a GenAI model response, including generated messages, completion
       metadata, token usage, and cost.
+    note: >
+      The request and response for one model operation SHOULD carry the same
+      `gen_ai.turn.id` and `gen_ai.step.id`. For ReAct-style agents, a step
+      represents one model operation; additional model operations should be
+      modeled as additional steps.
     attributes:
       - ref: gen_ai.provider.name
         requirement_level: required
+      - ref: gen_ai.turn.end
+        requirement_level: recommended
       - ref: gen_ai.response.id
         requirement_level: recommended
       - ref: gen_ai.response.model
