@@ -250,11 +250,31 @@ groups:
     brief: >
       Captures a GenAI model response, including generated messages, completion
       metadata, token usage, and cost.
-    note: >
-      The request and response for one model operation SHOULD carry the same
-      `gen_ai.turn.id` and `gen_ai.step.id`. For ReAct-style agents, a step
-      represents one model operation; additional model operations should be
-      modeled as additional steps.
+    note: |
+      This event represents the terminal outcome of one model operation,
+      including successful responses, provider errors, timeouts, cancellations,
+      or failures after partial output. The request and response for one model
+      operation SHOULD carry the same `gen_ai.turn.id` and `gen_ai.step.id`.
+      For ReAct-style agents, a step represents one model operation; additional
+      model operations should be modeled as additional steps.
+
+      When the model operation fails, instrumentations MUST still emit
+      `gen_ai.model.response` to close the request/response pair. Failed
+      responses MUST set `error.type`, SHOULD set `error.message`, and SHOULD
+      set `gen_ai.response.finish_reasons` to `["error"]`. If no model output
+      was produced, instrumentations SHOULD omit `gen_ai.output.messages`. If
+      partial output was produced before the failure, instrumentations SHOULD
+      record it in `gen_ai.output.messages` and set the message
+      `finish_reason` to `"error"`.
+
+      Reasoning content from a model generation SHOULD be recorded as a
+      `reasoning` part in `gen_ai.output.messages.parts`. Reasoning and final
+      text from the same candidate SHOULD be represented as parts of the same
+      output message. A single model generation MUST NOT be split into multiple
+      `gen_ai.model.response` events only because reasoning and final text
+      arrived separately. Streaming or intermediate reasoning chunks SHOULD be
+      buffered into this terminal response, or represented by a future
+      streaming event convention.
     attributes:
       - ref: gen_ai.provider.name
         requirement_level: required
@@ -269,6 +289,11 @@ groups:
       - ref: gen_ai.response.time_to_first_token
         requirement_level: recommended
       - ref: gen_ai.response.reasoning_time
+        requirement_level: recommended
+      - ref: error.type
+        requirement_level:
+          conditionally_required: if the model operation failed
+      - ref: error.message
         requirement_level: recommended
       - ref: gen_ai.usage.input_tokens
         requirement_level: recommended

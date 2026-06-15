@@ -805,30 +805,55 @@ The event name MUST be `gen_ai.model.response`.
 
 Captures a GenAI model response, including generated messages, completion metadata, token usage, and cost.
 
-The request and response for one model operation SHOULD carry the same `gen_ai.turn.id` and `gen_ai.step.id`. For ReAct-style agents, a step represents one model operation; additional model operations should be modeled as additional steps.
+This event represents the terminal outcome of one model operation,
+including successful responses, provider errors, timeouts, cancellations,
+or failures after partial output. The request and response for one model
+operation SHOULD carry the same `gen_ai.turn.id` and `gen_ai.step.id`.
+For ReAct-style agents, a step represents one model operation; additional
+model operations should be modeled as additional steps.
+
+When the model operation fails, instrumentations MUST still emit
+`gen_ai.model.response` to close the request/response pair. Failed
+responses MUST set `error.type`, SHOULD set `error.message`, and SHOULD
+set `gen_ai.response.finish_reasons` to `["error"]`. If no model output
+was produced, instrumentations SHOULD omit `gen_ai.output.messages`. If
+partial output was produced before the failure, instrumentations SHOULD
+record it in `gen_ai.output.messages` and set the message
+`finish_reason` to `"error"`.
+
+Reasoning content from a model generation SHOULD be recorded as a
+`reasoning` part in `gen_ai.output.messages.parts`. Reasoning and final
+text from the same candidate SHOULD be represented as parts of the same
+output message. A single model generation MUST NOT be split into multiple
+`gen_ai.model.response` events only because reasoning and final text
+arrived separately. Streaming or intermediate reasoning chunks SHOULD be
+buffered into this terminal response, or represented by a future
+streaming event convention.
 
 **Attributes:**
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- |
 | [`gen_ai.provider.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The Generative AI provider as identified by the client or server instrumentation. [1] | `openai`; `gcp.gen_ai`; `gcp.vertex_ai` |
-| [`gen_ai.output.messages`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | any | Messages returned by the model where each message represents a specific model response (choice, candidate). [2] | [<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"role": "assistant",<br>&nbsp;&nbsp;&nbsp;&nbsp;"parts": [<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "text",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"content": "The weather in Paris is currently rainy with a temperature of 57°F."<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;],<br>&nbsp;&nbsp;&nbsp;&nbsp;"finish_reason": "stop"<br>&nbsp;&nbsp;}<br>] |
-| [`gen_ai.response.finish_reasons`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string[] | Array of reasons the model stopped generating tokens, corresponding to each generation received. | `["stop"]`; `["stop", "length"]` |
+| [`error.type`](/docs/registry/attributes/error.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` if the model operation failed | string | Describes a class of error the operation ended with. [2] | `timeout`; `java.net.UnknownHostException`; `server_certificate_invalid`; `500` |
+| [`error.message`](/docs/registry/attributes/error.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | A message providing more detail about an error in human-readable form. [3] | `Unexpected input type: string`; `The user has exceeded their storage quota` |
+| [`gen_ai.output.messages`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | any | Messages returned by the model where each message represents a specific model response (choice, candidate). [4] | [<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"role": "assistant",<br>&nbsp;&nbsp;&nbsp;&nbsp;"parts": [<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "text",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"content": "The weather in Paris is currently rainy with a temperature of 57°F."<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;],<br>&nbsp;&nbsp;&nbsp;&nbsp;"finish_reason": "stop"<br>&nbsp;&nbsp;}<br>] |
+| [`gen_ai.response.finish_reasons`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string[] | Array of reasons the model stopped generating tokens, corresponding to each generation received. | `["stop"]`; `["stop", "length"]`; `["error"]` |
 | [`gen_ai.response.id`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | The unique identifier for the completion. | `chatcmpl-123` |
 | [`gen_ai.response.model`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | The name of the model that generated the response. | `gpt-4-0613` |
 | [`gen_ai.response.reasoning_time`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | int | Time spent by a reasoning model before producing the final response, in milliseconds. | `1248` |
 | [`gen_ai.response.time_to_first_token`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | int | Time to receive the first token in a streaming GenAI response, in milliseconds. | `120` |
-| [`gen_ai.turn.end`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | boolean | Whether this event marks the logical end of a GenAI turn. [3] | `true` |
+| [`gen_ai.turn.end`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | boolean | Whether this event marks the logical end of a GenAI turn. [5] | `true` |
 | [`gen_ai.usage.cache_creation.input_cost`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | double | The cost of input tokens written to a provider-managed cache, in USD. | `0.0000192` |
-| [`gen_ai.usage.cache_creation.input_tokens`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | int | The number of input tokens written to a provider-managed cache. [4] | `25` |
+| [`gen_ai.usage.cache_creation.input_tokens`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | int | The number of input tokens written to a provider-managed cache. [6] | `25` |
 | [`gen_ai.usage.cache_read.input_cost`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | double | The cost of input tokens read from a provider-managed cache, in USD. | `0.0000768` |
-| [`gen_ai.usage.cache_read.input_tokens`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | int | The number of input tokens served from a provider-managed cache. [5] | `50` |
+| [`gen_ai.usage.cache_read.input_tokens`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | int | The number of input tokens served from a provider-managed cache. [7] | `50` |
 | [`gen_ai.usage.input_cost`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | double | The cost of input tokens for the GenAI operation, in USD. | `0.001536` |
-| [`gen_ai.usage.input_tokens`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | int | The number of tokens used in the GenAI input (prompt). [6] | `100` |
+| [`gen_ai.usage.input_tokens`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | int | The number of tokens used in the GenAI input (prompt). [8] | `100` |
 | [`gen_ai.usage.output_cost`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | double | The cost of output tokens for the GenAI operation, in USD. | `0.00384` |
 | [`gen_ai.usage.output_tokens`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | int | The number of tokens used in the GenAI response (completion). | `180` |
-| [`gen_ai.usage.total_cost`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | double | The total cost of the GenAI operation or session, in USD. [7] | `0.005376` |
-| [`gen_ai.usage.total_tokens`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | int | The total number of tokens used by a GenAI operation or session. [8] | `300` |
+| [`gen_ai.usage.total_cost`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | double | The total cost of the GenAI operation or session, in USD. [9] | `0.005376` |
+| [`gen_ai.usage.total_tokens`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | int | The total number of tokens used by a GenAI operation or session. [10] | `300` |
 
 **[1] `gen_ai.provider.name`:** The attribute SHOULD be set based on the instrumentation's best
 knowledge and may differ from the actual model provider.
@@ -849,7 +874,33 @@ should have the `gen_ai.provider.name` set to `aws.bedrock` and include
 applicable `aws.bedrock.*` attributes and are not expected to include
 `openai.*` attributes.
 
-**[2] `gen_ai.output.messages`:** Instrumentations MUST follow [Output messages JSON schema](/docs/gen-ai/gen-ai-output-messages.json)
+**[2] `error.type`:** The `error.type` SHOULD be predictable, and SHOULD have low cardinality.
+
+When `error.type` is set to a type (e.g., an exception type), its
+canonical class name identifying the type within the artifact SHOULD be used.
+
+Instrumentations SHOULD document the list of errors they report.
+
+The cardinality of `error.type` within one instrumentation library SHOULD be low.
+Telemetry consumers that aggregate data from multiple instrumentation libraries and applications
+should be prepared for `error.type` to have high cardinality at query time when no
+additional filters are applied.
+
+If the operation has completed successfully, instrumentations SHOULD NOT set `error.type`.
+
+If a specific domain defines its own set of error identifiers (such as HTTP or RPC status codes),
+it's RECOMMENDED to:
+
+- Use a domain-specific attribute
+- Set `error.type` to capture all errors, regardless of whether they are defined within the domain-specific set or not.
+
+**[3] `error.message`:** `error.message` should provide additional context and detail about an error.
+It is NOT RECOMMENDED to duplicate the value of `error.type` in `error.message`.
+It is also NOT RECOMMENDED to duplicate the value of `exception.message` in `error.message`.
+
+`error.message` is NOT RECOMMENDED for metrics or spans due to its unbounded cardinality and overlap with span status.
+
+**[4] `gen_ai.output.messages`:** Instrumentations MUST follow [Output messages JSON schema](/docs/gen-ai/gen-ai-output-messages.json)
 
 Each message represents a single output choice/candidate generated by
 the model. Each message corresponds to exactly one generation
@@ -869,20 +920,28 @@ output messages.
 See [Recording content on attributes](/docs/gen-ai/gen-ai-spans.md#recording-content-on-attributes)
 section for more details.
 
-**[3] `gen_ai.turn.end`:** This attribute SHOULD be set to `true` only on the event that marks the end of a turn. It SHOULD be omitted when false or unknown.
+**[5] `gen_ai.turn.end`:** This attribute SHOULD be set to `true` only on the event that marks the end of a turn. It SHOULD be omitted when false or unknown.
 
-**[4] `gen_ai.usage.cache_creation.input_tokens`:** The value SHOULD be included in `gen_ai.usage.input_tokens`.
+**[6] `gen_ai.usage.cache_creation.input_tokens`:** The value SHOULD be included in `gen_ai.usage.input_tokens`.
 
-**[5] `gen_ai.usage.cache_read.input_tokens`:** The value SHOULD be included in `gen_ai.usage.input_tokens`.
+**[7] `gen_ai.usage.cache_read.input_tokens`:** The value SHOULD be included in `gen_ai.usage.input_tokens`.
 
-**[6] `gen_ai.usage.input_tokens`:** This value SHOULD include all types of input tokens, including cached tokens.
+**[8] `gen_ai.usage.input_tokens`:** This value SHOULD include all types of input tokens, including cached tokens.
 Instrumentations SHOULD make a best effort to populate this value, using a total
 provided by the provider when available or, depending on the provider API,
 by summing different token types parsed from the provider output.
 
-**[7] `gen_ai.usage.total_cost`:** When recorded on a single request/response, this represents the cost of that operation. When recorded on a session-level event (e.g. `gen_ai.session.end`), it represents the aggregate cost across all operations in the session.
+**[9] `gen_ai.usage.total_cost`:** When recorded on a single request/response, this represents the cost of that operation. When recorded on a session-level event (e.g. `gen_ai.session.end`), it represents the aggregate cost across all operations in the session.
 
-**[8] `gen_ai.usage.total_tokens`:** When recorded on a single request/response, this represents the sum of input and output tokens for that operation. When recorded on a session-level event (e.g. `gen_ai.session.end`), it represents the aggregate token count across all operations in the session.
+**[10] `gen_ai.usage.total_tokens`:** When recorded on a single request/response, this represents the sum of input and output tokens for that operation. When recorded on a session-level event (e.g. `gen_ai.session.end`), it represents the aggregate token count across all operations in the session.
+
+---
+
+`error.type` has the following list of well-known values. If one of them applies, then the respective value MUST be used; otherwise, a custom value MAY be used.
+
+| Value | Description | Stability |
+| --- | --- | --- |
+| `_OTHER` | A fallback error value to be used when the instrumentation doesn't define a custom value. | ![Stable](https://img.shields.io/badge/-stable-lightgreen) |
 
 ---
 
@@ -896,9 +955,9 @@ by summing different token types parsed from the provider output.
 | `azure.ai.openai` | [Azure OpenAI](https://azure.microsoft.com/products/ai-services/openai-service/) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `cohere` | [Cohere](https://cohere.com/) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `deepseek` | [DeepSeek](https://www.deepseek.com/) | ![Development](https://img.shields.io/badge/-development-blue) |
-| `gcp.gemini` | [Gemini](https://cloud.google.com/products/gemini) [9] | ![Development](https://img.shields.io/badge/-development-blue) |
-| `gcp.gen_ai` | Any Google generative AI endpoint [10] | ![Development](https://img.shields.io/badge/-development-blue) |
-| `gcp.vertex_ai` | [Vertex AI](https://cloud.google.com/vertex-ai) [11] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `gcp.gemini` | [Gemini](https://cloud.google.com/products/gemini) [11] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `gcp.gen_ai` | Any Google generative AI endpoint [12] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `gcp.vertex_ai` | [Vertex AI](https://cloud.google.com/vertex-ai) [13] | ![Development](https://img.shields.io/badge/-development-blue) |
 | `groq` | [Groq](https://groq.com/) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `ibm.watsonx.ai` | [IBM Watsonx AI](https://www.ibm.com/products/watsonx-ai) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `mistral_ai` | [Mistral AI](https://mistral.ai/) | ![Development](https://img.shields.io/badge/-development-blue) |
@@ -906,11 +965,11 @@ by summing different token types parsed from the provider output.
 | `perplexity` | [Perplexity](https://www.perplexity.ai/) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `x_ai` | [xAI](https://x.ai/) | ![Development](https://img.shields.io/badge/-development-blue) |
 
-**[9]:** Used when accessing the 'generativelanguage.googleapis.com' endpoint. Also known as the AI Studio API.
+**[11]:** Used when accessing the 'generativelanguage.googleapis.com' endpoint. Also known as the AI Studio API.
 
-**[10]:** May be used when specific backend is unknown.
+**[12]:** May be used when specific backend is unknown.
 
-**[11]:** Used when accessing the 'aiplatform.googleapis.com' endpoint.
+**[13]:** Used when accessing the 'aiplatform.googleapis.com' endpoint.
 
 <!-- prettier-ignore-end -->
 <!-- END AUTOGENERATED TEXT -->
@@ -1316,6 +1375,55 @@ Example matching `gen_ai.model.response` log record:
     {
       "role": "assistant",
       "parts": [
+        {
+          "type": "text",
+          "content": "The weather in Paris is currently rainy with a temperature of 57°F."
+        }
+      ],
+      "finish_reason": "stop"
+    }
+  ]
+}
+```
+
+Example failed `gen_ai.model.response` log record:
+
+```json
+{
+  "event.name": "gen_ai.model.response",
+  "gen_ai.session.id": "sess_7Kp3mXq2nR8tYvWz",
+  "gen_ai.turn.id": "4f9b7d9e-1f65-4a6c-9c91-8f4e1a2b3c4d",
+  "gen_ai.step.id": "4f9b7d9e-1f65-4a6c-9c91-8f4e1a2b3c4d:s1",
+  "gen_ai.turn.end": true,
+  "gen_ai.provider.name": "openai",
+  "gen_ai.response.model": "gpt-4o",
+  "gen_ai.response.finish_reasons": ["error"],
+  "error.type": "timeout",
+  "error.message": "The model provider timed out before returning output."
+}
+```
+
+Example `gen_ai.model.response` log record with reasoning:
+
+```json
+{
+  "event.name": "gen_ai.model.response",
+  "gen_ai.session.id": "sess_7Kp3mXq2nR8tYvWz",
+  "gen_ai.turn.id": "4f9b7d9e-1f65-4a6c-9c91-8f4e1a2b3c4d",
+  "gen_ai.step.id": "4f9b7d9e-1f65-4a6c-9c91-8f4e1a2b3c4d:s1",
+  "gen_ai.turn.end": true,
+  "gen_ai.provider.name": "openai",
+  "gen_ai.response.id": "chatcmpl-124",
+  "gen_ai.response.model": "gpt-4o",
+  "gen_ai.response.finish_reasons": ["stop"],
+  "gen_ai.output.messages": [
+    {
+      "role": "assistant",
+      "parts": [
+        {
+          "type": "reasoning",
+          "content": "I need to combine the tool result with the user's question."
+        },
         {
           "type": "text",
           "content": "The weather in Paris is currently rainy with a temperature of 57°F."
