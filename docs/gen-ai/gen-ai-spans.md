@@ -163,7 +163,7 @@ Additional output format details may be recorded in the future in the `gen_ai.ou
 
 **[10] `server.port`:** When observed from the client side, and when communicating through an intermediary, `server.port` SHOULD represent the server port behind any intermediaries, for example proxies, if it's available.
 
-**[11] `gen_ai.response.finish_reasons`:** This attribute is the authoritative source for model response finish reasons. When `gen_ai.output.messages` is also recorded, `gen_ai.response.finish_reasons[i]` MUST correspond to `gen_ai.output.messages[i]` by candidate index. Instrumentations SHOULD NOT duplicate finish reasons in `gen_ai.output.messages`.
+**[11] `gen_ai.response.finish_reasons`:** This attribute is the authoritative source for model response finish reasons. When `gen_ai.output.messages` is also recorded, `gen_ai.response.finish_reasons` MUST have the same length as `gen_ai.output.messages`, and `gen_ai.response.finish_reasons[i]` MUST correspond to `gen_ai.output.messages[i]` by candidate index. Instrumentations SHOULD NOT duplicate finish reasons in `gen_ai.output.messages`.
 
 **[12] `gen_ai.response.model`:** If available. The name of the GenAI model that provided the response. If the model is supplied by a vendor, then the value must be the exact name of the model actually used. If the model is a fine-tuned custom model, the value should have a more specific name than the base model that's been fine-tuned.
 
@@ -218,8 +218,9 @@ and response timing metadata.
 
 Finish reasons SHOULD be recorded in `gen_ai.response.finish_reasons`.
 When `gen_ai.output.messages` is also recorded,
-`gen_ai.response.finish_reasons[i]` MUST correspond to
-`gen_ai.output.messages[i]` by candidate index.
+`gen_ai.response.finish_reasons` MUST have the same length as
+`gen_ai.output.messages`, and `gen_ai.response.finish_reasons[i]` MUST
+correspond to `gen_ai.output.messages[i]` by candidate index.
 
 When the attribute is recorded on events, it MUST be recorded in structured
 form. When recorded on spans, it MAY be recorded as a JSON string if structured

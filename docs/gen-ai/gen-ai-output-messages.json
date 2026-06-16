@@ -245,7 +245,7 @@
                         }
                     ],
                     "deprecated": true,
-                    "description": "Deprecated compatibility field for the reason this candidate finished. Instrumentations SHOULD record finish reasons in gen_ai.response.finish_reasons instead; consumers MUST prefer gen_ai.response.finish_reasons when both are present.",
+                    "description": "Deprecated compatibility field for the reason this candidate finished. This field exists only for backwards compatibility. Instrumentations SHOULD NOT set this field when gen_ai.response.finish_reasons is recorded; consumers MUST prefer gen_ai.response.finish_reasons when both are present.",
                     "title": "Finish Reason"
                 }
             },

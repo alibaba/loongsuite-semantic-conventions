@@ -177,9 +177,11 @@ groups:
         note: >
           This attribute is the authoritative source for model response finish
           reasons. When `gen_ai.output.messages` is also recorded,
-          `gen_ai.response.finish_reasons[i]` MUST correspond to
-          `gen_ai.output.messages[i]` by candidate index. Instrumentations SHOULD
-          NOT duplicate finish reasons in `gen_ai.output.messages`.
+          `gen_ai.response.finish_reasons` MUST have the same length as
+          `gen_ai.output.messages`, and `gen_ai.response.finish_reasons[i]` MUST
+          correspond to `gen_ai.output.messages[i]` by candidate index.
+          Instrumentations SHOULD NOT duplicate finish reasons in
+          `gen_ai.output.messages`.
         examples:
           - [stop]
           - [stop, length]
@@ -782,8 +784,9 @@ groups:
 
           Finish reasons SHOULD be recorded in `gen_ai.response.finish_reasons`.
           When `gen_ai.output.messages` is also recorded,
-          `gen_ai.response.finish_reasons[i]` MUST correspond to
-          `gen_ai.output.messages[i]` by candidate index.
+          `gen_ai.response.finish_reasons` MUST have the same length as
+          `gen_ai.output.messages`, and `gen_ai.response.finish_reasons[i]` MUST
+          correspond to `gen_ai.output.messages[i]` by candidate index.
 
           When the attribute is recorded on events, it MUST be recorded in structured
           form. When recorded on spans, it MAY be recorded as a JSON string if structured

@@ -339,7 +339,7 @@ Additional output format details may be recorded in the future in the `gen_ai.ou
 
 **[11] `server.port`:** When observed from the client side, and when communicating through an intermediary, `server.port` SHOULD represent the server port behind any intermediaries, for example proxies, if it's available.
 
-**[12] `gen_ai.response.finish_reasons`:** This attribute is the authoritative source for model response finish reasons. When `gen_ai.output.messages` is also recorded, `gen_ai.response.finish_reasons[i]` MUST correspond to `gen_ai.output.messages[i]` by candidate index. Instrumentations SHOULD NOT duplicate finish reasons in `gen_ai.output.messages`.
+**[12] `gen_ai.response.finish_reasons`:** This attribute is the authoritative source for model response finish reasons. When `gen_ai.output.messages` is also recorded, `gen_ai.response.finish_reasons` MUST have the same length as `gen_ai.output.messages`, and `gen_ai.response.finish_reasons[i]` MUST correspond to `gen_ai.output.messages[i]` by candidate index. Instrumentations SHOULD NOT duplicate finish reasons in `gen_ai.output.messages`.
 
 **[13] `gen_ai.usage.cache_creation.input_tokens`:** The value SHOULD be included in `gen_ai.usage.input_tokens`.
 
@@ -386,8 +386,9 @@ and response timing metadata.
 
 Finish reasons SHOULD be recorded in `gen_ai.response.finish_reasons`.
 When `gen_ai.output.messages` is also recorded,
-`gen_ai.response.finish_reasons[i]` MUST correspond to
-`gen_ai.output.messages[i]` by candidate index.
+`gen_ai.response.finish_reasons` MUST have the same length as
+`gen_ai.output.messages`, and `gen_ai.response.finish_reasons[i]` MUST
+correspond to `gen_ai.output.messages[i]` by candidate index.
 
 When the attribute is recorded on events, it MUST be recorded in structured
 form. When recorded on spans, it MAY be recorded as a JSON string if structured
@@ -660,7 +661,7 @@ Additional output format details may be recorded in the future in the `gen_ai.ou
 
 **[10] `gen_ai.span_kind_name`:** Dedicated GenAI span classification attribute for the `alibaba_group` dialect. See the dialect switch documentation in `gen_ai.span_kind_name` for details.
 
-**[11] `gen_ai.response.finish_reasons`:** This attribute is the authoritative source for model response finish reasons. When `gen_ai.output.messages` is also recorded, `gen_ai.response.finish_reasons[i]` MUST correspond to `gen_ai.output.messages[i]` by candidate index. Instrumentations SHOULD NOT duplicate finish reasons in `gen_ai.output.messages`.
+**[11] `gen_ai.response.finish_reasons`:** This attribute is the authoritative source for model response finish reasons. When `gen_ai.output.messages` is also recorded, `gen_ai.response.finish_reasons` MUST have the same length as `gen_ai.output.messages`, and `gen_ai.response.finish_reasons[i]` MUST correspond to `gen_ai.output.messages[i]` by candidate index. Instrumentations SHOULD NOT duplicate finish reasons in `gen_ai.output.messages`.
 
 **[12] `gen_ai.usage.cache_creation.input_tokens`:** The value SHOULD be included in `gen_ai.usage.input_tokens`.
 
@@ -705,8 +706,9 @@ and response timing metadata.
 
 Finish reasons SHOULD be recorded in `gen_ai.response.finish_reasons`.
 When `gen_ai.output.messages` is also recorded,
-`gen_ai.response.finish_reasons[i]` MUST correspond to
-`gen_ai.output.messages[i]` by candidate index.
+`gen_ai.response.finish_reasons` MUST have the same length as
+`gen_ai.output.messages`, and `gen_ai.response.finish_reasons[i]` MUST
+correspond to `gen_ai.output.messages[i]` by candidate index.
 
 When the attribute is recorded on events, it MUST be recorded in structured
 form. When recorded on spans, it MAY be recorded as a JSON string if structured
@@ -946,8 +948,9 @@ and response timing metadata.
 
 Finish reasons SHOULD be recorded in `gen_ai.response.finish_reasons`.
 When `gen_ai.output.messages` is also recorded,
-`gen_ai.response.finish_reasons[i]` MUST correspond to
-`gen_ai.output.messages[i]` by candidate index.
+`gen_ai.response.finish_reasons` MUST have the same length as
+`gen_ai.output.messages`, and `gen_ai.response.finish_reasons[i]` MUST
+correspond to `gen_ai.output.messages[i]` by candidate index.
 
 When the attribute is recorded on events, it MUST be recorded in structured
 form. When recorded on spans, it MAY be recorded as a JSON string if structured

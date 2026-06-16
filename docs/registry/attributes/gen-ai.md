@@ -135,8 +135,9 @@ and response timing metadata.
 
 Finish reasons SHOULD be recorded in `gen_ai.response.finish_reasons`.
 When `gen_ai.output.messages` is also recorded,
-`gen_ai.response.finish_reasons[i]` MUST correspond to
-`gen_ai.output.messages[i]` by candidate index.
+`gen_ai.response.finish_reasons` MUST have the same length as
+`gen_ai.output.messages`, and `gen_ai.response.finish_reasons[i]` MUST
+correspond to `gen_ai.output.messages[i]` by candidate index.
 
 When the attribute is recorded on events, it MUST be recorded in structured
 form. When recorded on spans, it MAY be recorded as a JSON string if structured
@@ -240,7 +241,7 @@ format is not supported and SHOULD be recorded in structured form otherwise.
 
 **[22] `gen_ai.response.candidate.token_ids`:** The values SHOULD align with `gen_ai.response.candidate.decoded_tokens`.
 
-**[23] `gen_ai.response.finish_reasons`:** This attribute is the authoritative source for model response finish reasons. When `gen_ai.output.messages` is also recorded, `gen_ai.response.finish_reasons[i]` MUST correspond to `gen_ai.output.messages[i]` by candidate index. Instrumentations SHOULD NOT duplicate finish reasons in `gen_ai.output.messages`.
+**[23] `gen_ai.response.finish_reasons`:** This attribute is the authoritative source for model response finish reasons. When `gen_ai.output.messages` is also recorded, `gen_ai.response.finish_reasons` MUST have the same length as `gen_ai.output.messages`, and `gen_ai.response.finish_reasons[i]` MUST correspond to `gen_ai.output.messages[i]` by candidate index. Instrumentations SHOULD NOT duplicate finish reasons in `gen_ai.output.messages`.
 
 **[24] `gen_ai.response.per_token_new_tokens`:** This attribute is primarily intended for multi-token prediction systems.
 
