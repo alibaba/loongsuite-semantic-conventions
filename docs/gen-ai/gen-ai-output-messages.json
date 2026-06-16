@@ -244,14 +244,14 @@
                             "type": "string"
                         }
                     ],
-                    "description": "Reason for finishing the generation.",
+                    "deprecated": true,
+                    "description": "Deprecated compatibility field for the reason this candidate finished. Instrumentations SHOULD record finish reasons in gen_ai.response.finish_reasons instead; consumers MUST prefer gen_ai.response.finish_reasons when both are present.",
                     "title": "Finish Reason"
                 }
             },
             "required": [
                 "role",
-                "parts",
-                "finish_reason"
+                "parts"
             ],
             "title": "OutputMessage",
             "type": "object"

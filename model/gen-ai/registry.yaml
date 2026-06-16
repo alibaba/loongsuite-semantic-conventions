@@ -174,9 +174,16 @@ groups:
         stability: development
         type: string[]
         brief: Array of reasons the model stopped generating tokens, corresponding to each generation received.
+        note: >
+          This attribute is the authoritative source for model response finish
+          reasons. When `gen_ai.output.messages` is also recorded,
+          `gen_ai.response.finish_reasons[i]` MUST correspond to
+          `gen_ai.output.messages[i]` by candidate index. Instrumentations SHOULD
+          NOT duplicate finish reasons in `gen_ai.output.messages`.
         examples:
           - [stop]
           - [stop, length]
+          - [error]
       - id: gen_ai.usage.input_tokens
         stability: development
         type: int
@@ -656,6 +663,9 @@ groups:
           allows to provide system instructions or messages separately from the
           chat history.
 
+          When `gen_ai.system_instructions` is recorded, instrumentations SHOULD NOT
+          duplicate the same system or developer instructions in `gen_ai.input.messages`.
+
           Instructions that are part of the chat history SHOULD be recorded in
           `gen_ai.input.messages` attribute instead.
 
@@ -703,6 +713,9 @@ groups:
           format is not supported and SHOULD be recorded in structured form otherwise.
 
           Messages MUST be provided in the order they were sent to the model.
+          When system or developer instructions are recorded in
+          `gen_ai.system_instructions`, instrumentations SHOULD NOT duplicate
+          the same instructions in `gen_ai.input.messages`.
           Instrumentations MAY provide a way for users to filter or truncate
           input messages.
 
@@ -760,6 +773,18 @@ groups:
           (choice/candidate) and vice versa - one choice cannot be split across
           multiple messages or one message cannot contain parts from multiple choices.
 
+          `gen_ai.output.messages` SHOULD only contain generated content parts
+          needed to replay or inspect the candidate content. Instrumentations SHOULD
+          NOT duplicate response envelope metadata in `gen_ai.output.messages` when
+          that metadata is represented by normalized attributes. This includes
+          finish reasons, token usage, costs, response identifiers, model names,
+          and response timing metadata.
+
+          Finish reasons SHOULD be recorded in `gen_ai.response.finish_reasons`.
+          When `gen_ai.output.messages` is also recorded,
+          `gen_ai.response.finish_reasons[i]` MUST correspond to
+          `gen_ai.output.messages[i]` by candidate index.
+
           When the attribute is recorded on events, it MUST be recorded in structured
           form. When recorded on spans, it MAY be recorded as a JSON string if structured
           format is not supported and SHOULD be recorded in structured form otherwise.
@@ -782,8 +807,7 @@ groups:
                       "type": "text",
                       "content": "The weather in Paris is currently rainy with a temperature of 57°F."
                     }
-                  ],
-                  "finish_reason": "stop"
+                  ]
                 }
               ]
       - id: gen_ai.evaluation.name

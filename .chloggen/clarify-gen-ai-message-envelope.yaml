@@ -1,0 +1,4 @@
+change_type: enhancement
+component: gen-ai
+note: Clarify that GenAI message attributes capture replayable content while response metadata and system instructions use normalized attributes.
+issues: [36]
