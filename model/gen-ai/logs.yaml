@@ -38,8 +38,6 @@ groups:
         requirement_level: recommended
       - ref: gen_ai.agent.parent.invocation.id
         requirement_level: recommended
-      - ref: gen_ai.agent.channel
-        requirement_level: opt_in
       - ref: gen_ai.response.id
         requirement_level: recommended
       - ref: gen_ai.provider.name
@@ -124,8 +122,6 @@ groups:
       - ref: gen_ai.system_instructions
         requirement_level: recommended
       - ref: gen_ai.tool.definitions
-        requirement_level: recommended
-      - ref: gen_ai.context.window_size
         requirement_level: recommended
 
   - id: event.gen_ai.model.response

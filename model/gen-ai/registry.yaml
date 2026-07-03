@@ -1175,11 +1175,6 @@ groups:
           with the parent-side agent invocation, even when the callee does not
           know the caller's own invocation identifier.
         examples: ['agent_invocation_01J2K3M4N5']
-      - id: gen_ai.agent.channel
-        stability: development
-        type: string
-        brief: The channel through which the GenAI agent request entered the system.
-        examples: ['ide_plugin', 'web', 'slack']
       - id: gen_ai.input.messages_delta
         stability: development
         type: any
@@ -1242,11 +1237,6 @@ groups:
           When recorded on a single request/response, this represents the sum
           of input and output tokens for that operation.
         examples: [300]
-      - id: gen_ai.context.window_size
-        stability: development
-        type: int
-        brief: The context window size available to the GenAI operation, in tokens.
-        examples: [200000]
       - id: gen_ai.tool.call.exec.id
         stability: development
         type: string
