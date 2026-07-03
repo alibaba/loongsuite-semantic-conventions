@@ -252,10 +252,9 @@ Instructions that are part of the chat history SHOULD be recorded in
 `gen_ai.input.messages` attribute instead.
 
 To reduce data duplication, instrumentations SHOULD only record this
-attribute when the value of `gen_ai.system_instructions_hash` differs
-from the previous request in the same session. When the hash is
-unchanged, the payload is identical to the previously recorded value and
-can be omitted.
+attribute on the first request where system instructions apply and
+when the system instructions change. It SHOULD NOT be repeated on
+later requests when unchanged.
 
 Instrumentations MUST follow [System instructions JSON schema](/docs/gen-ai/gen-ai-system-instructions.json).
 
@@ -278,10 +277,9 @@ to the instrumentation, the instrumentation SHOULD do the best effort to
 deserialize it to an array. When recorded on spans, it MAY be recorded as a JSON string if structured format is not supported and SHOULD be recorded in structured form otherwise.
 
 To reduce data duplication, instrumentations SHOULD only record this
-attribute when the value of `gen_ai.tool.definitions_hash` differs from
-the previous request in the same session. When the hash is unchanged,
-the payload is identical to the previously recorded value and can be
-omitted.
+attribute on the first request where tool definitions apply and when
+the tool definitions change. It SHOULD NOT be repeated on later
+requests when unchanged.
 
 Since this attribute could be large, it's NOT RECOMMENDED to populate
 it by default. Instrumentations MAY provide a way to enable

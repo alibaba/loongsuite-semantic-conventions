@@ -14,13 +14,3 @@ groups:
           system, not by OpenTelemetry. It can be used to correlate events
           across log records or to deduplicate events from the same source.
         examples: ['evt_01J2K3M4N5P6Q7R8S9T0']
-      - id: event.parent.id
-        stability: development
-        type: string
-        brief: >
-          The identifier of the parent event in the source runtime.
-        note: >
-          This attribute is intended for event graphs where the source runtime
-          provides parent-child relationships between events, such as a tool
-          result pointing back to the tool call that produced it.
-        examples: ['evt_01J2K3M4N5P6Q7R8S9SZ']

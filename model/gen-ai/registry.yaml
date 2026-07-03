@@ -394,6 +394,21 @@ groups:
         type: string
         brief: Human-readable name of the GenAI agent provided by the application.
         examples: ["Math Tutor", "Fiction Writer"]
+      - id: gen_ai.agent.peer.id
+        stability: development
+        type: string
+        brief: The unique identifier of the peer GenAI agent in an agent-to-agent interaction.
+        note: >
+          This attribute describes the other agent in the immediate interaction,
+          such as the agent being invoked, addressed, or returning a result.
+          `gen_ai.agent.id` describes the agent performing the operation
+          represented by the telemetry item.
+        examples: ['asst_5j66UpCpwteGg4YSxUnt7lPY']
+      - id: gen_ai.agent.peer.name
+        stability: development
+        type: string
+        brief: Human-readable name of the peer GenAI agent in an agent-to-agent interaction.
+        examples: ["Math Tutor", "Fiction Writer"]
       - id: gen_ai.agent.description
         stability: development
         type: string
@@ -484,10 +499,9 @@ groups:
           deserialize it to an array. When recorded on spans, it MAY be recorded as a JSON string if structured format is not supported and SHOULD be recorded in structured form otherwise.
 
           To reduce data duplication, instrumentations SHOULD only record this
-          attribute when the value of `gen_ai.tool.definitions_hash` differs from
-          the previous request in the same session. When the hash is unchanged,
-          the payload is identical to the previously recorded value and can be
-          omitted.
+          attribute on the first request where tool definitions apply and when
+          the tool definitions change. It SHOULD NOT be repeated on later
+          requests when unchanged.
 
           Since this attribute could be large, it's NOT RECOMMENDED to populate
           it by default. Instrumentations MAY provide a way to enable
@@ -677,10 +691,9 @@ groups:
           `gen_ai.input.messages` attribute instead.
 
           To reduce data duplication, instrumentations SHOULD only record this
-          attribute when the value of `gen_ai.system_instructions_hash` differs
-          from the previous request in the same session. When the hash is
-          unchanged, the payload is identical to the previously recorded value and
-          can be omitted.
+          attribute on the first request where system instructions apply and
+          when the system instructions change. It SHOULD NOT be repeated on
+          later requests when unchanged.
 
           Instrumentations MUST follow [System instructions JSON schema](/docs/gen-ai/gen-ai-system-instructions.json).
 
@@ -1090,60 +1103,14 @@ groups:
         type: string
         brief: The unique identifier for a user session or conversation context managed by a GenAI agent or application.
         examples: ['sess_7Kp3mXq2nR8tYvWz']
-      - id: gen_ai.session.trigger
-        stability: development
-        type:
-          members:
-            - id: user_message
-              value: "user_message"
-              brief: 'The session was initiated by a user message.'
-              stability: development
-            - id: schedule
-              value: "schedule"
-              brief: 'The session was initiated by a scheduled trigger.'
-              stability: development
-            - id: webhook
-              value: "webhook"
-              brief: 'The session was initiated by an incoming webhook.'
-              stability: development
-            - id: agent_invocation
-              value: "agent_invocation"
-              brief: 'The session was initiated by another agent invocation.'
-              stability: development
-            - id: other
-              value: "other"
-              brief: 'The session was initiated by another trigger.'
-              stability: development
-        brief: How the GenAI session was initiated.
-        note: >
-          This attribute identifies the input boundary that caused a GenAI
-          session to start. If the trigger type is known and is not covered by
-          another well-known value, `other` SHOULD be used.
-        examples: ['user_message', 'schedule', 'agent_invocation']
-      - id: gen_ai.session.parent.id
-        stability: development
-        type: string
-        brief: The session id of the parent session, when this session was created from another session.
-        note: >
-          This attribute SHOULD be recorded when a GenAI session is created as
-          part of another session, such as an agent invoking a sub-agent.
-        examples: ['sess_parent_4Yx7mN9pQ2']
-      - id: gen_ai.session.capabilities_hash
-        stability: development
-        type: string
-        brief: Stable hash of the set of tools, skills, or plugins enabled at session start.
-        note: >
-          The hash can be used for low-cost drift detection across sessions.
-          Instrumentations SHOULD use stable JSON serialization before hashing.
-        examples: ['6b4d5f2a9c3e7b10']
       - id: gen_ai.turn.id
         stability: development
         type: string
         brief: The unique identifier for one user input and the agent work needed to produce a final response or stop.
         note: >
           This attribute is the primary correlation key for reconstructing a
-          GenAI turn across context compilation, model request and response,
-          tool calls, human review, and final output events. If the
+          GenAI turn across model request and response, tool calls, context
+          compaction, agent invocation, and final output events. If the
           agent/runtime already emits a turn identifier, instrumentation SHOULD
           use it directly. Otherwise, instrumentation SHOULD generate an opaque
           UUID-like identifier at the user-input boundary. Generated turn
@@ -1197,7 +1164,16 @@ groups:
       - id: gen_ai.agent.invocation.id
         stability: development
         type: string
-        brief: The unique identifier for an agent invocation.
+        brief: The unique identifier for the agent invocation represented by the telemetry item.
+        examples: ['agent_invocation_01J2K3M4N5']
+      - id: gen_ai.agent.parent.invocation.id
+        stability: development
+        type: string
+        brief: The unique identifier for the parent agent invocation that created or delegated work to this agent.
+        note: >
+          This attribute allows logs emitted by a callee agent to correlate
+          with the parent-side agent invocation, even when the callee does not
+          know the caller's own invocation identifier.
         examples: ['agent_invocation_01J2K3M4N5']
       - id: gen_ai.agent.channel
         stability: development
@@ -1247,35 +1223,6 @@ groups:
                   ]
                 }
               ]
-      - id: gen_ai.input.messages_hash
-        stability: development
-        type: string
-        brief: A hash of the conversational model input messages.
-        note: >
-          The hash can be used to validate deduplication and reconstruction of
-          `gen_ai.input.messages_delta`. Instrumentations SHOULD use stable JSON
-          serialization before hashing. This hash covers only conversational
-          messages and excludes `gen_ai.system_instructions` and
-          `gen_ai.tool.definitions`.
-        examples: ['a3f2d1e8b7c6a5f4']
-      - id: gen_ai.system_instructions_hash
-        stability: development
-        type: string
-        brief: A hash of the complete system instructions payload.
-        note: >
-          The hash can be used to detect silent drift of system prompts.
-          Instrumentations SHOULD use stable JSON serialization before hashing.
-          This hash covers only `gen_ai.system_instructions`.
-        examples: ['4f7b1d0c8a2e9f65']
-      - id: gen_ai.tool.definitions_hash
-        stability: development
-        type: string
-        brief: A hash of the complete tool definitions payload available at compile time.
-        note: >
-          The hash can be used to detect silent drift of tool definitions.
-          Instrumentations SHOULD use stable JSON serialization before hashing.
-          This hash covers only `gen_ai.tool.definitions`.
-        examples: ['9d1e2f3a4b5c6d70']
       - id: gen_ai.response.time_to_first_token
         stability: development
         type: int
@@ -1290,83 +1237,11 @@ groups:
         stability: development
         type: int
         brief: >
-          The total number of tokens used by a GenAI operation or session.
+          The total number of tokens used by a GenAI operation.
         note: >
           When recorded on a single request/response, this represents the sum
-          of input and output tokens for that operation. When recorded on a
-          session-level event (e.g. `gen_ai.session.end`), it represents the
-          aggregate token count across all operations in the session.
+          of input and output tokens for that operation.
         examples: [300]
-      - id: gen_ai.usage.input_cost
-        stability: development
-        type: double
-        brief: The cost of input tokens for the GenAI operation, in USD.
-        examples: [0.001536]
-      - id: gen_ai.usage.output_cost
-        stability: development
-        type: double
-        brief: The cost of output tokens for the GenAI operation, in USD.
-        examples: [0.00384]
-      - id: gen_ai.usage.cache_read.input_cost
-        stability: development
-        type: double
-        brief: The cost of input tokens read from a provider-managed cache, in USD.
-        examples: [0.0000768]
-      - id: gen_ai.usage.cache_creation.input_cost
-        stability: development
-        type: double
-        brief: The cost of input tokens written to a provider-managed cache, in USD.
-        examples: [0.0000192]
-      - id: gen_ai.usage.total_cost
-        stability: development
-        type: double
-        brief: >
-          The total cost of the GenAI operation or session, in USD.
-        note: >
-          When recorded on a single request/response, this represents the cost
-          of that operation. When recorded on a session-level event
-          (e.g. `gen_ai.session.end`), it represents the aggregate cost across
-          all operations in the session.
-        examples: [0.005376]
-      - id: gen_ai.context.compilation.id
-        stability: development
-        type: string
-        brief: The unique identifier for a compiled GenAI context snapshot.
-        examples: ['ctx_compile_01J2K3M4N5']
-      - id: gen_ai.context.compile.trigger
-        stability: development
-        type:
-          members:
-            - id: user_message
-              value: "user_message"
-              brief: 'The context was compiled after a user message.'
-              stability: development
-            - id: tool_result
-              value: "tool_result"
-              brief: 'The context was compiled after a tool result.'
-              stability: development
-            - id: subagent_yield
-              value: "subagent_yield"
-              brief: 'The context was compiled after a sub-agent yielded a result.'
-              stability: development
-            - id: compaction
-              value: "compaction"
-              brief: 'The context was compiled after context compaction.'
-              stability: development
-            - id: model_retry
-              value: "model_retry"
-              brief: 'The context was compiled for a model retry.'
-              stability: development
-            - id: other
-              value: "other"
-              brief: 'The context was compiled for another reason.'
-              stability: development
-        brief: What caused this context to be compiled.
-        note: >
-          This attribute determines the input boundary for prompt-injection
-          analysis. If the trigger type is known and is not covered by another
-          well-known value, `other` SHOULD be used.
-        examples: ['user_message', 'tool_result', 'model_retry']
       - id: gen_ai.context.compaction_ratio
         stability: development
         type: double
@@ -1380,51 +1255,6 @@ groups:
         type: int
         brief: The context window size available to the GenAI operation, in tokens.
         examples: [200000]
-      - id: gen_ai.session.end.reason
-        stability: development
-        type:
-          members:
-            - id: completed
-              value: "completed"
-              brief: 'The GenAI session completed normally.'
-              stability: development
-            - id: cancelled
-              value: "cancelled"
-              brief: 'The GenAI session was cancelled before normal completion.'
-              stability: development
-            - id: timeout
-              value: "timeout"
-              brief: 'The GenAI session ended because it timed out.'
-              stability: development
-            - id: error
-              value: "error"
-              brief: 'The GenAI session ended with an error.'
-              stability: development
-        brief: The reason why a GenAI session ended.
-        examples: ['completed', 'cancelled', 'timeout', 'error']
-      - id: gen_ai.session.duration
-        stability: development
-        type: int
-        brief: The duration of the GenAI session, in milliseconds.
-        examples: [18432]
-      - id: gen_ai.human.operation
-        stability: development
-        type:
-          members:
-            - id: approve
-              value: "approve"
-              brief: 'A human approved the agent action.'
-              stability: development
-            - id: deny
-              value: "deny"
-              brief: 'A human denied the agent action.'
-              stability: development
-            - id: stop
-              value: "stop"
-              brief: 'A human stopped the current turn or agent execution.'
-              stability: development
-        brief: The human review or intervention operation.
-        examples: ['approve', 'deny', 'stop']
       - id: gen_ai.tool.call.exec.id
         stability: development
         type: string
@@ -1435,51 +1265,3 @@ groups:
         type: int
         brief: The duration of the tool execution, in milliseconds.
         examples: [843]
-      - id: gen_ai.model.change.previous_model
-        stability: development
-        type: string
-        brief: The model used before a runtime model change.
-        examples: ['gpt-4o']
-      - id: gen_ai.model.change.new_model
-        stability: development
-        type: string
-        brief: The model selected after a runtime model change.
-        examples: ['claude-3-5-sonnet']
-      - id: gen_ai.model.change.reason
-        stability: development
-        type:
-          members:
-            - id: user
-              value: "user"
-              brief: 'A user requested the model change.'
-              stability: development
-            - id: policy
-              value: "policy"
-              brief: 'A runtime or governance policy selected the model change.'
-              stability: development
-            - id: fallback
-              value: "fallback"
-              brief: 'The model change happened as part of fallback handling.'
-              stability: development
-        brief: The reason why the GenAI runtime changed models.
-        examples: ['user', 'policy', 'fallback']
-      - id: gen_ai.coding.git.domain
-        stability: development
-        type: string
-        brief: The Git service domain for a coding-agent operation.
-        examples: ['github.com', 'code.alibaba-inc.com']
-      - id: gen_ai.coding.git.repo
-        stability: development
-        type: string
-        brief: The Git repository identifier for a coding-agent operation.
-        examples: ['arms/semantic-conventions']
-      - id: gen_ai.coding.git.branch
-        stability: development
-        type: string
-        brief: The Git branch name for a coding-agent operation.
-        examples: ['main']
-      - id: gen_ai.coding.workspace.root
-        stability: development
-        type: string
-        brief: The workspace root path for a coding-agent operation.
-        examples: ['/workspace/project']

@@ -19,9 +19,6 @@ groups:
       - ref: event.id
         requirement_level:
           conditionally_required: when the source runtime provides a stable event identifier
-      - ref: event.parent.id
-        requirement_level:
-          conditionally_required: when the source runtime provides parent-child event relationships
       - ref: gen_ai.event.original_name
         requirement_level: opt_in
       - ref: gen_ai.react.round
@@ -36,6 +33,10 @@ groups:
       - ref: gen_ai.agent.name
         requirement_level: recommended
       - ref: gen_ai.agent.type
+        requirement_level: recommended
+      - ref: gen_ai.agent.parent.id
+        requirement_level: recommended
+      - ref: gen_ai.agent.parent.invocation.id
         requirement_level: recommended
       - ref: gen_ai.agent.channel
         requirement_level: opt_in
@@ -52,120 +53,6 @@ groups:
       - ref: error.message
         requirement_level:
           conditionally_required: if additional error details are available
-
-  - id: attributes.gen_ai.logs.coding_agent
-    type: attribute_group
-    stability: development
-    brief: >
-      Coding-agent attributes for GenAI log events.
-    note: >
-      These attributes are intended for GenAI agents that operate on source code
-      workspaces or Git repositories.
-    attributes:
-      - ref: gen_ai.coding.git.domain
-        requirement_level: recommended
-      - ref: gen_ai.coding.git.repo
-        requirement_level: recommended
-      - ref: gen_ai.coding.git.branch
-        requirement_level: recommended
-      - ref: gen_ai.coding.workspace.root
-        requirement_level: recommended
-
-  - id: event.gen_ai.session.start
-    name: gen_ai.session.start
-    type: event
-    stability: development
-    brief: >
-      Captures the start of a GenAI application, agent, or conversation session.
-    attributes:
-      - ref: gen_ai.session.id
-        requirement_level: required
-      - ref: gen_ai.session.trigger
-        requirement_level: recommended
-      - ref: gen_ai.session.parent.id
-        requirement_level:
-          conditionally_required: when this session was created from another session
-      - ref: gen_ai.session.capabilities_hash
-        requirement_level: opt_in
-      - ref: gen_ai.agent.id
-        requirement_level: recommended
-      - ref: gen_ai.agent.name
-        requirement_level: recommended
-      - ref: gen_ai.agent.type
-        requirement_level: recommended
-      - ref: gen_ai.agent.channel
-        requirement_level: recommended
-      - ref: user.id
-        requirement_level: recommended
-
-  - id: event.gen_ai.session.end
-    name: gen_ai.session.end
-    type: event
-    stability: development
-    brief: >
-      Captures the end of a GenAI application, agent, or conversation session.
-    attributes:
-      - ref: gen_ai.session.id
-        requirement_level: required
-      - ref: gen_ai.session.end.reason
-        requirement_level: recommended
-      - ref: gen_ai.session.duration
-        requirement_level: recommended
-      - ref: gen_ai.usage.input_tokens
-        requirement_level: recommended
-      - ref: gen_ai.usage.output_tokens
-        requirement_level: recommended
-      - ref: gen_ai.usage.total_tokens
-        requirement_level: recommended
-      - ref: gen_ai.usage.total_cost
-        requirement_level: recommended
-      - ref: error.type
-        requirement_level:
-          conditionally_required: if the session ended with an error
-      - ref: error.message
-        requirement_level:
-          conditionally_required: if additional error details are available
-
-  - id: event.gen_ai.context.compile
-    name: gen_ai.context.compile
-    type: event
-    stability: development
-    brief: >
-      Captures the complete GenAI context assembled before model submission.
-    note: |
-      This event represents the audit boundary before a model request is
-      submitted. It can include the assembled input messages, system
-      instructions, tool definitions, and context window information.
-
-      When recording `gen_ai.input.messages` or `gen_ai.input.messages_delta`,
-      instrumentations SHOULD separate system and developer instructions into
-      the dedicated `gen_ai.system_instructions` attribute and tool definitions
-      into the dedicated `gen_ai.tool.definitions` attribute, and exclude both
-      from the messages payload. The `gen_ai.input.messages_hash` value hashes
-      only conversational messages, `gen_ai.system_instructions_hash` hashes
-      only `gen_ai.system_instructions`, and `gen_ai.tool.definitions_hash`
-      hashes only `gen_ai.tool.definitions`.
-    attributes:
-      - ref: gen_ai.context.compilation.id
-        requirement_level: recommended
-      - ref: gen_ai.input.messages
-        requirement_level: recommended
-      - ref: gen_ai.input.messages_delta
-        requirement_level: recommended
-      - ref: gen_ai.input.messages_hash
-        requirement_level: recommended
-      - ref: gen_ai.system_instructions
-        requirement_level: recommended
-      - ref: gen_ai.system_instructions_hash
-        requirement_level: recommended
-      - ref: gen_ai.tool.definitions
-        requirement_level: recommended
-      - ref: gen_ai.tool.definitions_hash
-        requirement_level: recommended
-      - ref: gen_ai.context.compile.trigger
-        requirement_level: recommended
-      - ref: gen_ai.context.window_size
-        requirement_level: recommended
 
   - id: event.gen_ai.model.request
     name: gen_ai.model.request
@@ -187,10 +74,10 @@ groups:
       instrumentations SHOULD separate system and developer instructions into
       the dedicated `gen_ai.system_instructions` attribute and tool definitions
       into the dedicated `gen_ai.tool.definitions` attribute, and exclude both
-      from the messages payload. The `gen_ai.input.messages_hash` value hashes
-      only conversational messages, `gen_ai.system_instructions_hash` hashes
-      only `gen_ai.system_instructions`, and `gen_ai.tool.definitions_hash`
-      hashes only `gen_ai.tool.definitions`.
+      from the messages payload. `gen_ai.system_instructions` and
+      `gen_ai.tool.definitions` SHOULD be recorded on the first request where
+      they apply and whenever their value changes. They SHOULD NOT be repeated
+      on later requests when unchanged.
 
       The request and response for one model operation SHOULD carry the same
       `gen_ai.turn.id` and `gen_ai.step.id`. For ReAct-style agents, a step
@@ -231,8 +118,6 @@ groups:
         requirement_level: recommended
       - ref: gen_ai.input.messages_delta
         requirement_level: recommended
-      - ref: gen_ai.input.messages_hash
-        requirement_level: recommended
       - ref: gen_ai.input.messages
         requirement_level:
           conditionally_required: when the context changes in a non-append-only way (e.g. after compaction) and cannot be reconstructed from previous request/response logs and the current delta
@@ -249,7 +134,7 @@ groups:
     stability: development
     brief: >
       Captures a GenAI model response, including generated messages, completion
-      metadata, token usage, and cost.
+      metadata, and token usage.
     note: |
       This event represents the terminal outcome of one model operation,
       including successful responses, provider errors, timeouts, cancellations,
@@ -305,33 +190,8 @@ groups:
         requirement_level: recommended
       - ref: gen_ai.usage.cache_read.input_tokens
         requirement_level: recommended
-      - ref: gen_ai.usage.input_cost
-        requirement_level: recommended
-      - ref: gen_ai.usage.output_cost
-        requirement_level: recommended
-      - ref: gen_ai.usage.cache_creation.input_cost
-        requirement_level: recommended
-      - ref: gen_ai.usage.cache_read.input_cost
-        requirement_level: recommended
-      - ref: gen_ai.usage.total_cost
-        requirement_level: recommended
       - ref: gen_ai.output.messages
         requirement_level: recommended
-
-  - id: event.gen_ai.model.change
-    name: gen_ai.model.change
-    type: event
-    stability: development
-    brief: >
-      Captures a runtime model change in a GenAI session or agent execution.
-    attributes:
-      - ref: gen_ai.model.change.reason
-        requirement_level: required
-      - ref: gen_ai.model.change.new_model
-        requirement_level: required
-      - ref: gen_ai.model.change.previous_model
-        requirement_level:
-          conditionally_required: if a previous model was selected
 
   - id: event.gen_ai.tool.call
     name: gen_ai.tool.call
@@ -377,22 +237,6 @@ groups:
       - ref: gen_ai.tool.call.duration
         requirement_level: recommended
 
-  - id: event.gen_ai.human.review
-    name: gen_ai.human.review
-    type: event
-    stability: development
-    brief: >
-      Captures a human review, approval, denial, or intervention in GenAI agent execution.
-    attributes:
-      - ref: gen_ai.human.operation
-        requirement_level: required
-      - ref: gen_ai.tool.call.id
-        requirement_level:
-          conditionally_required: if the review applies to a tool call
-      - ref: gen_ai.tool.call.exec.id
-        requirement_level:
-          conditionally_required: if the review applies to a tool execution attempt
-
   - id: event.gen_ai.context.compact
     name: gen_ai.context.compact
     type: event
@@ -414,15 +258,13 @@ groups:
     brief: >
       Captures invocation or delegation of work to another GenAI agent.
     attributes:
-      - ref: gen_ai.agent.parent.id
+      - ref: gen_ai.agent.peer.id
+        requirement_level: recommended
+      - ref: gen_ai.agent.peer.name
         requirement_level: recommended
       - ref: gen_ai.agent.invocation.id
         requirement_level: recommended
-      - ref: gen_ai.agent.id
-        requirement_level: recommended
-      - ref: gen_ai.agent.name
-        requirement_level: recommended
-      - ref: gen_ai.agent.type
+      - ref: gen_ai.input.messages
         requirement_level: recommended
 
   - id: event.gen_ai.agent.result
@@ -430,13 +272,13 @@ groups:
     type: event
     stability: development
     brief: >
-      Captures the result returned by a child GenAI agent.
+      Captures the result returned by another GenAI agent.
     attributes:
-      - ref: gen_ai.agent.parent.id
+      - ref: gen_ai.agent.peer.id
+        requirement_level: recommended
+      - ref: gen_ai.agent.peer.name
         requirement_level: recommended
       - ref: gen_ai.agent.invocation.id
-        requirement_level: recommended
-      - ref: gen_ai.agent.id
         requirement_level: recommended
       - ref: gen_ai.output.messages
         requirement_level: recommended
