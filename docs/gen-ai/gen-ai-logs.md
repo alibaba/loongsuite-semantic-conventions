@@ -885,7 +885,7 @@ previous output messages that contained the tool call + this delta.
         {
           "type": "tool_call_response",
           "id": "call_VSPygqKTWdrhaFErNvMV18Yl",
-          "result": "rainy, 57 F"
+          "result": "rainy, 57°F"
         }
       ]
     }
@@ -915,7 +915,7 @@ Example matching `gen_ai.model.response` log record:
       "parts": [
         {
           "type": "text",
-          "content": "The weather in Paris is currently rainy with a temperature of 57 F."
+          "content": "The weather in Paris is currently rainy with a temperature of 57°F."
         }
       ],
       "finish_reason": "stop"
