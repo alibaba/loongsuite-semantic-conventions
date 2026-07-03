@@ -1,4 +1,4 @@
 change_type: enhancement
-component: gen_ai
+component: gen-ai
 note: "Use peer-side attributes and boundary-specific invocation ids on GenAI agent invoke and result events."
-issues: [243]
+issues: [32]

@@ -943,5 +943,4 @@ Example failed `gen_ai.model.response` log record:
 }
 ```
 
-
 [DocumentStatus]: https://opentelemetry.io/docs/specs/otel/document-status
