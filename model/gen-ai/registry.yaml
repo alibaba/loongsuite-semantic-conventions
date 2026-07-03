@@ -1110,7 +1110,7 @@ groups:
         note: >
           This attribute is the primary correlation key for reconstructing a
           GenAI turn across model request and response, tool calls, context
-          compaction, agent invocation, and final output events. If the
+          changes, agent invocation, and final output events. If the
           agent/runtime already emits a turn identifier, instrumentation SHOULD
           use it directly. Otherwise, instrumentation SHOULD generate an opaque
           UUID-like identifier at the user-input boundary. Generated turn
@@ -1205,7 +1205,7 @@ groups:
           For the first request in a session, the delta carries the full initial
           input — there is no need to use `gen_ai.input.messages` separately.
           `gen_ai.input.messages` SHOULD only be recorded when the context
-          changes in a non-append-only way (e.g. after compaction).
+          changes in a non-append-only way.
 
           > [!WARNING]
           > This attribute may contain sensitive information.
@@ -1242,14 +1242,6 @@ groups:
           When recorded on a single request/response, this represents the sum
           of input and output tokens for that operation.
         examples: [300]
-      - id: gen_ai.context.compaction_ratio
-        stability: development
-        type: double
-        brief: The ratio of compacted context tokens to original context tokens.
-        note: >
-          The value SHOULD be between 0 and 1 when both original and compacted
-          token counts are known.
-        examples: [0.42]
       - id: gen_ai.context.window_size
         stability: development
         type: int

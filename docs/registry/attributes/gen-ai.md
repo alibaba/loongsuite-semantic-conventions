@@ -26,102 +26,99 @@ This document defines the attributes used to describe telemetry in the context o
 | <a id="gen-ai-agent-peer-name" href="#gen-ai-agent-peer-name">`gen_ai.agent.peer.name`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | Human-readable name of the peer GenAI agent in an agent-to-agent interaction. | `Math Tutor`; `Fiction Writer` |
 | <a id="gen-ai-agent-type" href="#gen-ai-agent-type">`gen_ai.agent.type`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The product or runtime type of the GenAI agent. | `qoder`; `cursor`; `cowork` |
 | <a id="gen-ai-agent-version" href="#gen-ai-agent-version">`gen_ai.agent.version`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The version of the GenAI agent. | `1.0.0`; `2025-05-01` |
-| <a id="gen-ai-context-compaction-ratio" href="#gen-ai-context-compaction-ratio">`gen_ai.context.compaction_ratio`</a> | ![Development](https://img.shields.io/badge/-development-blue) | double | The ratio of compacted context tokens to original context tokens. [3] | `0.42` |
 | <a id="gen-ai-context-window-size" href="#gen-ai-context-window-size">`gen_ai.context.window_size`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | The context window size available to the GenAI operation, in tokens. | `200000` |
 | <a id="gen-ai-conversation-id" href="#gen-ai-conversation-id">`gen_ai.conversation.id`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The unique identifier for a conversation (session, thread), used to store and correlate messages within this conversation. | `conv_5j66UpCpwteGg4YSxUnt7lPY` |
-| <a id="gen-ai-data-source-id" href="#gen-ai-data-source-id">`gen_ai.data_source.id`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The data source identifier. [4] | `H7STPQYOND` |
+| <a id="gen-ai-data-source-id" href="#gen-ai-data-source-id">`gen_ai.data_source.id`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The data source identifier. [3] | `H7STPQYOND` |
 | <a id="gen-ai-embeddings-dimension-count" href="#gen-ai-embeddings-dimension-count">`gen_ai.embeddings.dimension.count`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | The number of dimensions the resulting output embeddings should have. | `512`; `1024` |
 | <a id="gen-ai-evaluation-explanation" href="#gen-ai-evaluation-explanation">`gen_ai.evaluation.explanation`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | A free-form explanation for the assigned score provided by the evaluator. | `The response is factually accurate but lacks sufficient detail to fully address the question.` |
 | <a id="gen-ai-evaluation-name" href="#gen-ai-evaluation-name">`gen_ai.evaluation.name`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The name of the evaluation metric used for the GenAI response. | `Relevance`; `IntentResolution` |
-| <a id="gen-ai-evaluation-score-label" href="#gen-ai-evaluation-score-label">`gen_ai.evaluation.score.label`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | Human readable label for evaluation. [5] | `relevant`; `not_relevant`; `correct`; `incorrect`; `pass`; `fail` |
+| <a id="gen-ai-evaluation-score-label" href="#gen-ai-evaluation-score-label">`gen_ai.evaluation.score.label`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | Human readable label for evaluation. [4] | `relevant`; `not_relevant`; `correct`; `incorrect`; `pass`; `fail` |
 | <a id="gen-ai-evaluation-score-value" href="#gen-ai-evaluation-score-value">`gen_ai.evaluation.score.value`</a> | ![Development](https://img.shields.io/badge/-development-blue) | double | The evaluation score returned by the evaluator. | `4.0` |
 | <a id="gen-ai-event-original-name" href="#gen-ai-event-original-name">`gen_ai.event.original_name`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The original event name reported by the source GenAI runtime before semantic convention normalization. | `model.fallback_step`; `context.compiled` |
-| <a id="gen-ai-input-messages" href="#gen-ai-input-messages">`gen_ai.input.messages`</a> | ![Development](https://img.shields.io/badge/-development-blue) | any | The chat history provided to the model as an input. [6] | [<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"role": "user",<br>&nbsp;&nbsp;&nbsp;&nbsp;"parts": [<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "text",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"content": "Weather in Paris?"<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;]<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"role": "assistant",<br>&nbsp;&nbsp;&nbsp;&nbsp;"parts": [<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "tool_call",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"id": "call_VSPygqKTWdrhaFErNvMV18Yl",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"name": "get_weather",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"arguments": {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"location": "Paris"<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;]<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"role": "tool",<br>&nbsp;&nbsp;&nbsp;&nbsp;"parts": [<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "tool_call_response",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"id": "call_VSPygqKTWdrhaFErNvMV18Yl",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"result": "rainy, 57°F"<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;]<br>&nbsp;&nbsp;}<br>] |
-| <a id="gen-ai-input-messages-delta" href="#gen-ai-input-messages-delta">`gen_ai.input.messages_delta`</a> | ![Development](https://img.shields.io/badge/-development-blue) | any | New messages appended to the model input since the previous request's input messages and output messages combined. [7] | [<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"role": "tool",<br>&nbsp;&nbsp;&nbsp;&nbsp;"parts": [<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "tool_call_response",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"id": "call_VSPygqKTWdrhaFErNvMV18Yl",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"result": "rainy, 57°F"<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;]<br>&nbsp;&nbsp;}<br>] |
+| <a id="gen-ai-input-messages" href="#gen-ai-input-messages">`gen_ai.input.messages`</a> | ![Development](https://img.shields.io/badge/-development-blue) | any | The chat history provided to the model as an input. [5] | [<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"role": "user",<br>&nbsp;&nbsp;&nbsp;&nbsp;"parts": [<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "text",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"content": "Weather in Paris?"<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;]<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"role": "assistant",<br>&nbsp;&nbsp;&nbsp;&nbsp;"parts": [<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "tool_call",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"id": "call_VSPygqKTWdrhaFErNvMV18Yl",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"name": "get_weather",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"arguments": {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"location": "Paris"<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;]<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"role": "tool",<br>&nbsp;&nbsp;&nbsp;&nbsp;"parts": [<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "tool_call_response",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"id": "call_VSPygqKTWdrhaFErNvMV18Yl",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"result": "rainy, 57°F"<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;]<br>&nbsp;&nbsp;}<br>] |
+| <a id="gen-ai-input-messages-delta" href="#gen-ai-input-messages-delta">`gen_ai.input.messages_delta`</a> | ![Development](https://img.shields.io/badge/-development-blue) | any | New messages appended to the model input since the previous request's input messages and output messages combined. [6] | [<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"role": "tool",<br>&nbsp;&nbsp;&nbsp;&nbsp;"parts": [<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "tool_call_response",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"id": "call_VSPygqKTWdrhaFErNvMV18Yl",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"result": "rainy, 57°F"<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;]<br>&nbsp;&nbsp;}<br>] |
 | <a id="gen-ai-iteration-batch-size" href="#gen-ai-iteration-batch-size">`gen_ai.iteration.batch_size`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | The batch size of the decode iteration associated with the event. | `32` |
-| <a id="gen-ai-iteration-per-token-batch-size" href="#gen-ai-iteration-per-token-batch-size">`gen_ai.iteration.per_token_batch_size`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int[] | Batch size for the decode iteration associated with each output token. [8] | `[32, 32, 28]` |
-| <a id="gen-ai-iteration-per-token-cumulative-count" href="#gen-ai-iteration-per-token-cumulative-count">`gen_ai.iteration.per_token_cumulative_count`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int[] | Cumulative number of tokens generated by the engine or scheduler for each output token. [9] | `[4096, 4097, 4098]` |
-| <a id="gen-ai-iteration-per-token-waiting-requests" href="#gen-ai-iteration-per-token-waiting-requests">`gen_ai.iteration.per_token_waiting_requests`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int[] | Number of requests waiting in the scheduler queue when each output token was scheduled. [10] | `[120, 98, 105]` |
+| <a id="gen-ai-iteration-per-token-batch-size" href="#gen-ai-iteration-per-token-batch-size">`gen_ai.iteration.per_token_batch_size`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int[] | Batch size for the decode iteration associated with each output token. [7] | `[32, 32, 28]` |
+| <a id="gen-ai-iteration-per-token-cumulative-count" href="#gen-ai-iteration-per-token-cumulative-count">`gen_ai.iteration.per_token_cumulative_count`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int[] | Cumulative number of tokens generated by the engine or scheduler for each output token. [8] | `[4096, 4097, 4098]` |
+| <a id="gen-ai-iteration-per-token-waiting-requests" href="#gen-ai-iteration-per-token-waiting-requests">`gen_ai.iteration.per_token_waiting_requests`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int[] | Number of requests waiting in the scheduler queue when each output token was scheduled. [9] | `[120, 98, 105]` |
 | <a id="gen-ai-iteration-total-tokens" href="#gen-ai-iteration-total-tokens">`gen_ai.iteration.total_tokens`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | The cumulative number of tokens generated by the engine or scheduler when the associated token event was recorded. | `4096` |
 | <a id="gen-ai-iteration-waiting-requests" href="#gen-ai-iteration-waiting-requests">`gen_ai.iteration.waiting_requests`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | The number of requests waiting in the scheduler queue for the decode iteration associated with the event. | `120` |
-| <a id="gen-ai-operation-name" href="#gen-ai-operation-name">`gen_ai.operation.name`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The name of the operation being performed. [11] | `chat`; `generate_content`; `text_completion` |
-| <a id="gen-ai-output-messages" href="#gen-ai-output-messages">`gen_ai.output.messages`</a> | ![Development](https://img.shields.io/badge/-development-blue) | any | Messages returned by the model where each message represents a specific model response (choice, candidate). [12] | [<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"role": "assistant",<br>&nbsp;&nbsp;&nbsp;&nbsp;"parts": [<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "text",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"content": "The weather in Paris is currently rainy with a temperature of 57°F."<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;],<br>&nbsp;&nbsp;&nbsp;&nbsp;"finish_reason": "stop"<br>&nbsp;&nbsp;}<br>] |
-| <a id="gen-ai-output-type" href="#gen-ai-output-type">`gen_ai.output.type`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | Represents the content type requested by the client. [13] | `text`; `json`; `image` |
+| <a id="gen-ai-operation-name" href="#gen-ai-operation-name">`gen_ai.operation.name`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The name of the operation being performed. [10] | `chat`; `generate_content`; `text_completion` |
+| <a id="gen-ai-output-messages" href="#gen-ai-output-messages">`gen_ai.output.messages`</a> | ![Development](https://img.shields.io/badge/-development-blue) | any | Messages returned by the model where each message represents a specific model response (choice, candidate). [11] | [<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"role": "assistant",<br>&nbsp;&nbsp;&nbsp;&nbsp;"parts": [<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "text",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"content": "The weather in Paris is currently rainy with a temperature of 57°F."<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;],<br>&nbsp;&nbsp;&nbsp;&nbsp;"finish_reason": "stop"<br>&nbsp;&nbsp;}<br>] |
+| <a id="gen-ai-output-type" href="#gen-ai-output-type">`gen_ai.output.type`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | Represents the content type requested by the client. [12] | `text`; `json`; `image` |
 | <a id="gen-ai-prompt-name" href="#gen-ai-prompt-name">`gen_ai.prompt.name`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The name of the prompt that uniquely identifies it. | `analyze-code` |
-| <a id="gen-ai-provider-name" href="#gen-ai-provider-name">`gen_ai.provider.name`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The Generative AI provider as identified by the client or server instrumentation. [14] | `openai`; `gcp.gen_ai`; `gcp.vertex_ai` |
-| <a id="gen-ai-react-finish-reason" href="#gen-ai-react-finish-reason">`gen_ai.react.finish_reason`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The reason why this ReAct iteration ended. [15] | `stop`; `tool_calls` |
-| <a id="gen-ai-react-round" href="#gen-ai-react-round">`gen_ai.react.round`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | The round number (1-based) of the current ReAct iteration within the agent loop. [16] | `1`; `2`; `3` |
+| <a id="gen-ai-provider-name" href="#gen-ai-provider-name">`gen_ai.provider.name`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The Generative AI provider as identified by the client or server instrumentation. [13] | `openai`; `gcp.gen_ai`; `gcp.vertex_ai` |
+| <a id="gen-ai-react-finish-reason" href="#gen-ai-react-finish-reason">`gen_ai.react.finish_reason`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The reason why this ReAct iteration ended. [14] | `stop`; `tool_calls` |
+| <a id="gen-ai-react-round" href="#gen-ai-react-round">`gen_ai.react.round`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | The round number (1-based) of the current ReAct iteration within the agent loop. [15] | `1`; `2`; `3` |
 | <a id="gen-ai-request-choice-count" href="#gen-ai-request-choice-count">`gen_ai.request.choice.count`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | The target number of candidate completions to return. | `3` |
-| <a id="gen-ai-request-encoding-formats" href="#gen-ai-request-encoding-formats">`gen_ai.request.encoding_formats`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string[] | The encoding formats requested in an embeddings operation, if specified. [17] | `["base64"]`; `["float", "binary"]` |
+| <a id="gen-ai-request-encoding-formats" href="#gen-ai-request-encoding-formats">`gen_ai.request.encoding_formats`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string[] | The encoding formats requested in an embeddings operation, if specified. [16] | `["base64"]`; `["float", "binary"]` |
 | <a id="gen-ai-request-frequency-penalty" href="#gen-ai-request-frequency-penalty">`gen_ai.request.frequency_penalty`</a> | ![Development](https://img.shields.io/badge/-development-blue) | double | The frequency penalty setting for the GenAI request. | `0.1` |
 | <a id="gen-ai-request-max-tokens" href="#gen-ai-request-max-tokens">`gen_ai.request.max_tokens`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | The maximum number of tokens the model generates for a request. | `100` |
 | <a id="gen-ai-request-model" href="#gen-ai-request-model">`gen_ai.request.model`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The name of the GenAI model a request is being made to. | `gpt-4` |
 | <a id="gen-ai-request-presence-penalty" href="#gen-ai-request-presence-penalty">`gen_ai.request.presence_penalty`</a> | ![Development](https://img.shields.io/badge/-development-blue) | double | The presence penalty setting for the GenAI request. | `0.1` |
-| <a id="gen-ai-request-reasoning-level" href="#gen-ai-request-reasoning-level">`gen_ai.request.reasoning.level`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The reasoning or thinking effort level requested for a GenAI model. [18] | `low`; `medium`; `high` |
+| <a id="gen-ai-request-reasoning-level" href="#gen-ai-request-reasoning-level">`gen_ai.request.reasoning.level`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The reasoning or thinking effort level requested for a GenAI model. [17] | `low`; `medium`; `high` |
 | <a id="gen-ai-request-seed" href="#gen-ai-request-seed">`gen_ai.request.seed`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | Requests with same seed value more likely to return same result. | `100` |
 | <a id="gen-ai-request-stop-sequences" href="#gen-ai-request-stop-sequences">`gen_ai.request.stop_sequences`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string[] | List of sequences that the model will use to stop generating further tokens. | `["forest", "lived"]` |
 | <a id="gen-ai-request-temperature" href="#gen-ai-request-temperature">`gen_ai.request.temperature`</a> | ![Development](https://img.shields.io/badge/-development-blue) | double | The temperature setting for the GenAI request. | `0.0` |
 | <a id="gen-ai-request-top-k" href="#gen-ai-request-top-k">`gen_ai.request.top_k`</a> | ![Development](https://img.shields.io/badge/-development-blue) | double | The top_k sampling setting for the GenAI request. | `1.0` |
 | <a id="gen-ai-request-top-p" href="#gen-ai-request-top-p">`gen_ai.request.top_p`</a> | ![Development](https://img.shields.io/badge/-development-blue) | double | The top_p sampling setting for the GenAI request. | `1.0` |
-| <a id="gen-ai-rerank-input-documents" href="#gen-ai-rerank-input-documents">`gen_ai.rerank.input_documents`</a> | ![Development](https://img.shields.io/badge/-development-blue) | any | List of input documents for a rerank operation. [19] | [<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"id": "doc_001",<br>&nbsp;&nbsp;&nbsp;&nbsp;"text": "Document about machine learning"<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"id": "doc_002",<br>&nbsp;&nbsp;&nbsp;&nbsp;"text": "Document about quantum computing"<br>&nbsp;&nbsp;}<br>] |
-| <a id="gen-ai-rerank-output-documents" href="#gen-ai-rerank-output-documents">`gen_ai.rerank.output_documents`</a> | ![Development](https://img.shields.io/badge/-development-blue) | any | List of output documents from a rerank operation in relevance order. [20] | [<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"index": 0,<br>&nbsp;&nbsp;&nbsp;&nbsp;"relevance_score": 0.95,<br>&nbsp;&nbsp;&nbsp;&nbsp;"id": "doc_001",<br>&nbsp;&nbsp;&nbsp;&nbsp;"text": "Document about machine learning"<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"index": 2,<br>&nbsp;&nbsp;&nbsp;&nbsp;"relevance_score": 0.82,<br>&nbsp;&nbsp;&nbsp;&nbsp;"id": "doc_003",<br>&nbsp;&nbsp;&nbsp;&nbsp;"text": "Document about AI"<br>&nbsp;&nbsp;}<br>] |
-| <a id="gen-ai-rerank-query-text" href="#gen-ai-rerank-query-text">`gen_ai.rerank.query.text`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The query used for reranking documents. [21] | `What is machine learning?` |
-| <a id="gen-ai-response-candidate-decoded-tokens" href="#gen-ai-response-candidate-decoded-tokens">`gen_ai.response.candidate.decoded_tokens`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string[] | Candidate decoded token strings associated with an output token event. [22] | `["Hello", "Hi"]` |
-| <a id="gen-ai-response-candidate-logprobs" href="#gen-ai-response-candidate-logprobs">`gen_ai.response.candidate.logprobs`</a> | ![Development](https://img.shields.io/badge/-development-blue) | double[] | Log probabilities for candidate tokens associated with an output token event. [23] | `[-0.12, -1.03]` |
-| <a id="gen-ai-response-candidate-per-position-decoded-tokens" href="#gen-ai-response-candidate-per-position-decoded-tokens">`gen_ai.response.candidate.per_position_decoded_tokens`</a> | ![Development](https://img.shields.io/badge/-development-blue) | any | Candidate decoded token strings for each generated token position. [24] | [<br>&nbsp;&nbsp;["Hello", "Hello", "Hi"],<br>&nbsp;&nbsp;["there", "world", "there"]<br>] |
-| <a id="gen-ai-response-candidate-per-position-logprobs" href="#gen-ai-response-candidate-per-position-logprobs">`gen_ai.response.candidate.per_position_logprobs`</a> | ![Development](https://img.shields.io/badge/-development-blue) | any | Candidate token log probabilities for each generated token position. [25] | [<br>&nbsp;&nbsp;[-1.03, -0.12, -1.03],<br>&nbsp;&nbsp;[-0.05, -0.05, -2.11]<br>] |
-| <a id="gen-ai-response-candidate-per-position-token-ids" href="#gen-ai-response-candidate-per-position-token-ids">`gen_ai.response.candidate.per_position_token_ids`</a> | ![Development](https://img.shields.io/badge/-development-blue) | any | Candidate token identifiers for each generated token position. [26] | [<br>&nbsp;&nbsp;[15043, 15043, 1723],<br>&nbsp;&nbsp;[1052, 995, 1052]<br>] |
-| <a id="gen-ai-response-candidate-token-ids" href="#gen-ai-response-candidate-token-ids">`gen_ai.response.candidate.token_ids`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int[] | Candidate token identifiers associated with an output token event. [27] | `[15043, 1723]` |
+| <a id="gen-ai-rerank-input-documents" href="#gen-ai-rerank-input-documents">`gen_ai.rerank.input_documents`</a> | ![Development](https://img.shields.io/badge/-development-blue) | any | List of input documents for a rerank operation. [18] | [<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"id": "doc_001",<br>&nbsp;&nbsp;&nbsp;&nbsp;"text": "Document about machine learning"<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"id": "doc_002",<br>&nbsp;&nbsp;&nbsp;&nbsp;"text": "Document about quantum computing"<br>&nbsp;&nbsp;}<br>] |
+| <a id="gen-ai-rerank-output-documents" href="#gen-ai-rerank-output-documents">`gen_ai.rerank.output_documents`</a> | ![Development](https://img.shields.io/badge/-development-blue) | any | List of output documents from a rerank operation in relevance order. [19] | [<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"index": 0,<br>&nbsp;&nbsp;&nbsp;&nbsp;"relevance_score": 0.95,<br>&nbsp;&nbsp;&nbsp;&nbsp;"id": "doc_001",<br>&nbsp;&nbsp;&nbsp;&nbsp;"text": "Document about machine learning"<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"index": 2,<br>&nbsp;&nbsp;&nbsp;&nbsp;"relevance_score": 0.82,<br>&nbsp;&nbsp;&nbsp;&nbsp;"id": "doc_003",<br>&nbsp;&nbsp;&nbsp;&nbsp;"text": "Document about AI"<br>&nbsp;&nbsp;}<br>] |
+| <a id="gen-ai-rerank-query-text" href="#gen-ai-rerank-query-text">`gen_ai.rerank.query.text`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The query used for reranking documents. [20] | `What is machine learning?` |
+| <a id="gen-ai-response-candidate-decoded-tokens" href="#gen-ai-response-candidate-decoded-tokens">`gen_ai.response.candidate.decoded_tokens`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string[] | Candidate decoded token strings associated with an output token event. [21] | `["Hello", "Hi"]` |
+| <a id="gen-ai-response-candidate-logprobs" href="#gen-ai-response-candidate-logprobs">`gen_ai.response.candidate.logprobs`</a> | ![Development](https://img.shields.io/badge/-development-blue) | double[] | Log probabilities for candidate tokens associated with an output token event. [22] | `[-0.12, -1.03]` |
+| <a id="gen-ai-response-candidate-per-position-decoded-tokens" href="#gen-ai-response-candidate-per-position-decoded-tokens">`gen_ai.response.candidate.per_position_decoded_tokens`</a> | ![Development](https://img.shields.io/badge/-development-blue) | any | Candidate decoded token strings for each generated token position. [23] | [<br>&nbsp;&nbsp;["Hello", "Hello", "Hi"],<br>&nbsp;&nbsp;["there", "world", "there"]<br>] |
+| <a id="gen-ai-response-candidate-per-position-logprobs" href="#gen-ai-response-candidate-per-position-logprobs">`gen_ai.response.candidate.per_position_logprobs`</a> | ![Development](https://img.shields.io/badge/-development-blue) | any | Candidate token log probabilities for each generated token position. [24] | [<br>&nbsp;&nbsp;[-1.03, -0.12, -1.03],<br>&nbsp;&nbsp;[-0.05, -0.05, -2.11]<br>] |
+| <a id="gen-ai-response-candidate-per-position-token-ids" href="#gen-ai-response-candidate-per-position-token-ids">`gen_ai.response.candidate.per_position_token_ids`</a> | ![Development](https://img.shields.io/badge/-development-blue) | any | Candidate token identifiers for each generated token position. [25] | [<br>&nbsp;&nbsp;[15043, 15043, 1723],<br>&nbsp;&nbsp;[1052, 995, 1052]<br>] |
+| <a id="gen-ai-response-candidate-token-ids" href="#gen-ai-response-candidate-token-ids">`gen_ai.response.candidate.token_ids`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int[] | Candidate token identifiers associated with an output token event. [26] | `[15043, 1723]` |
 | <a id="gen-ai-response-finish-reasons" href="#gen-ai-response-finish-reasons">`gen_ai.response.finish_reasons`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string[] | Array of reasons the model stopped generating tokens, corresponding to each generation received. | `["stop"]`; `["stop", "length"]` |
 | <a id="gen-ai-response-id" href="#gen-ai-response-id">`gen_ai.response.id`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The unique identifier for the completion. | `chatcmpl-123` |
 | <a id="gen-ai-response-model" href="#gen-ai-response-model">`gen_ai.response.model`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The name of the model that generated the response. | `gpt-4-0613` |
-| <a id="gen-ai-response-per-token-new-tokens" href="#gen-ai-response-per-token-new-tokens">`gen_ai.response.per_token_new_tokens`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int[] | Number of newly generated tokens associated with each recorded output token position. [28] | `[2, 3, 1]` |
-| <a id="gen-ai-response-per-token-time-to-generate" href="#gen-ai-response-per-token-time-to-generate">`gen_ai.response.per_token_time_to_generate`</a> | ![Development](https://img.shields.io/badge/-development-blue) | double[] | Time elapsed from span start to each token generation, in seconds. [29] | `[0.0031, 0.0059, 0.0088]` |
-| <a id="gen-ai-response-per-token-time-to-schedule" href="#gen-ai-response-per-token-time-to-schedule">`gen_ai.response.per_token_time_to_schedule`</a> | ![Development](https://img.shields.io/badge/-development-blue) | double[] | Time elapsed from span start to each token scheduling, in seconds. [30] | `[0.001, 0.004, 0.007]` |
+| <a id="gen-ai-response-per-token-new-tokens" href="#gen-ai-response-per-token-new-tokens">`gen_ai.response.per_token_new_tokens`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int[] | Number of newly generated tokens associated with each recorded output token position. [27] | `[2, 3, 1]` |
+| <a id="gen-ai-response-per-token-time-to-generate" href="#gen-ai-response-per-token-time-to-generate">`gen_ai.response.per_token_time_to_generate`</a> | ![Development](https://img.shields.io/badge/-development-blue) | double[] | Time elapsed from span start to each token generation, in seconds. [28] | `[0.0031, 0.0059, 0.0088]` |
+| <a id="gen-ai-response-per-token-time-to-schedule" href="#gen-ai-response-per-token-time-to-schedule">`gen_ai.response.per_token_time_to_schedule`</a> | ![Development](https://img.shields.io/badge/-development-blue) | double[] | Time elapsed from span start to each token scheduling, in seconds. [29] | `[0.001, 0.004, 0.007]` |
 | <a id="gen-ai-response-reasoning-time" href="#gen-ai-response-reasoning-time">`gen_ai.response.reasoning_time`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | Time spent by a reasoning model before producing the final response, in milliseconds. | `1248` |
 | <a id="gen-ai-response-time-to-first-token" href="#gen-ai-response-time-to-first-token">`gen_ai.response.time_to_first_token`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | Time to receive the first token in a streaming GenAI response, in milliseconds. | `120` |
-| <a id="gen-ai-retrieval-documents" href="#gen-ai-retrieval-documents">`gen_ai.retrieval.documents`</a> | ![Development](https://img.shields.io/badge/-development-blue) | any | The documents retrieved. [31] | [<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"id": "doc_123",<br>&nbsp;&nbsp;&nbsp;&nbsp;"score": 0.95<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"id": "doc_456",<br>&nbsp;&nbsp;&nbsp;&nbsp;"score": 0.87<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"id": "doc_789",<br>&nbsp;&nbsp;&nbsp;&nbsp;"score": 0.82<br>&nbsp;&nbsp;}<br>] |
-| <a id="gen-ai-retrieval-query-text" href="#gen-ai-retrieval-query-text">`gen_ai.retrieval.query.text`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The query text used for retrieval. [32] | `What is the capital of France?`; `weather in Paris` |
+| <a id="gen-ai-retrieval-documents" href="#gen-ai-retrieval-documents">`gen_ai.retrieval.documents`</a> | ![Development](https://img.shields.io/badge/-development-blue) | any | The documents retrieved. [30] | [<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"id": "doc_123",<br>&nbsp;&nbsp;&nbsp;&nbsp;"score": 0.95<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"id": "doc_456",<br>&nbsp;&nbsp;&nbsp;&nbsp;"score": 0.87<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"id": "doc_789",<br>&nbsp;&nbsp;&nbsp;&nbsp;"score": 0.82<br>&nbsp;&nbsp;}<br>] |
+| <a id="gen-ai-retrieval-query-text" href="#gen-ai-retrieval-query-text">`gen_ai.retrieval.query.text`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The query text used for retrieval. [31] | `What is the capital of France?`; `weather in Paris` |
 | <a id="gen-ai-session-id" href="#gen-ai-session-id">`gen_ai.session.id`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The unique identifier for a user session or conversation context managed by a GenAI agent or application. | `sess_7Kp3mXq2nR8tYvWz` |
 | <a id="gen-ai-skill-description" href="#gen-ai-skill-description">`gen_ai.skill.description`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | Free-form description of the GenAI skill provided by the application. | `Execute code review on GitHub repositories` |
 | <a id="gen-ai-skill-id" href="#gen-ai-skill-id">`gen_ai.skill.id`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The unique identifier of the GenAI skill being invoked. | `skill_29bbe8a7` |
 | <a id="gen-ai-skill-name" href="#gen-ai-skill-name">`gen_ai.skill.name`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The name of the GenAI skill being invoked. | `code_review`; `change_workitem` |
 | <a id="gen-ai-skill-version" href="#gen-ai-skill-version">`gen_ai.skill.version`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The version of the GenAI skill being invoked. | `0.2.0`; `v2.1.0` |
-| <a id="gen-ai-span-kind" href="#gen-ai-span-kind">`gen_ai.span.kind`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The type of GenAI operation being performed. [33] | `LLM`; `RETRIEVER`; `EMBEDDING`; `TOOL`; `AGENT` |
-| <a id="gen-ai-span-kind-name" href="#gen-ai-span-kind-name">`gen_ai.span_kind_name`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The type of GenAI operation being performed. [34] | `LLM`; `RETRIEVER`; `EMBEDDING`; `TOOL`; `AGENT` |
-| <a id="gen-ai-step-id" href="#gen-ai-step-id">`gen_ai.step.id`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The unique identifier for one step within a GenAI agent turn. [35] | `4f9b7d9e-1f65-4a6c-9c91-8f4e1a2b3c4d:s1` |
-| <a id="gen-ai-system-instructions" href="#gen-ai-system-instructions">`gen_ai.system_instructions`</a> | ![Development](https://img.shields.io/badge/-development-blue) | any | The system message or instructions provided to the GenAI model separately from the chat history. [36] | [<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"type": "text",<br>&nbsp;&nbsp;&nbsp;&nbsp;"content": "You are an Agent that greet users, always use greetings tool to respond"<br>&nbsp;&nbsp;}<br>]; [<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"type": "text",<br>&nbsp;&nbsp;&nbsp;&nbsp;"content": "You are a language translator."<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"type": "text",<br>&nbsp;&nbsp;&nbsp;&nbsp;"content": "Your mission is to translate text in English to French."<br>&nbsp;&nbsp;}<br>] |
+| <a id="gen-ai-span-kind" href="#gen-ai-span-kind">`gen_ai.span.kind`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The type of GenAI operation being performed. [32] | `LLM`; `RETRIEVER`; `EMBEDDING`; `TOOL`; `AGENT` |
+| <a id="gen-ai-span-kind-name" href="#gen-ai-span-kind-name">`gen_ai.span_kind_name`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The type of GenAI operation being performed. [33] | `LLM`; `RETRIEVER`; `EMBEDDING`; `TOOL`; `AGENT` |
+| <a id="gen-ai-step-id" href="#gen-ai-step-id">`gen_ai.step.id`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The unique identifier for one step within a GenAI agent turn. [34] | `4f9b7d9e-1f65-4a6c-9c91-8f4e1a2b3c4d:s1` |
+| <a id="gen-ai-system-instructions" href="#gen-ai-system-instructions">`gen_ai.system_instructions`</a> | ![Development](https://img.shields.io/badge/-development-blue) | any | The system message or instructions provided to the GenAI model separately from the chat history. [35] | [<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"type": "text",<br>&nbsp;&nbsp;&nbsp;&nbsp;"content": "You are an Agent that greet users, always use greetings tool to respond"<br>&nbsp;&nbsp;}<br>]; [<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"type": "text",<br>&nbsp;&nbsp;&nbsp;&nbsp;"content": "You are a language translator."<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"type": "text",<br>&nbsp;&nbsp;&nbsp;&nbsp;"content": "Your mission is to translate text in English to French."<br>&nbsp;&nbsp;}<br>] |
 | <a id="gen-ai-token-type" href="#gen-ai-token-type">`gen_ai.token.type`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The type of token being counted. | `input`; `output` |
-| <a id="gen-ai-tool-call-arguments" href="#gen-ai-tool-call-arguments">`gen_ai.tool.call.arguments`</a> | ![Development](https://img.shields.io/badge/-development-blue) | any | Parameters passed to the tool call. [37] | {<br>&nbsp;&nbsp;&nbsp;&nbsp;"location": "San Francisco?",<br>&nbsp;&nbsp;&nbsp;&nbsp;"date": "2025-10-01"<br>} |
+| <a id="gen-ai-tool-call-arguments" href="#gen-ai-tool-call-arguments">`gen_ai.tool.call.arguments`</a> | ![Development](https://img.shields.io/badge/-development-blue) | any | Parameters passed to the tool call. [36] | {<br>&nbsp;&nbsp;&nbsp;&nbsp;"location": "San Francisco?",<br>&nbsp;&nbsp;&nbsp;&nbsp;"date": "2025-10-01"<br>} |
 | <a id="gen-ai-tool-call-duration" href="#gen-ai-tool-call-duration">`gen_ai.tool.call.duration`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | The duration of the tool execution, in milliseconds. | `843` |
 | <a id="gen-ai-tool-call-exec-id" href="#gen-ai-tool-call-exec-id">`gen_ai.tool.call.exec.id`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The unique identifier assigned by the tool execution system for a tool call attempt. | `exec_9f3a2b1c4d5e6f70` |
 | <a id="gen-ai-tool-call-id" href="#gen-ai-tool-call-id">`gen_ai.tool.call.id`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The tool call identifier. | `call_mszuSIzqtI65i1wAUOE8w5H4` |
-| <a id="gen-ai-tool-call-result" href="#gen-ai-tool-call-result">`gen_ai.tool.call.result`</a> | ![Development](https://img.shields.io/badge/-development-blue) | any | The result returned by the tool call (if any and if execution was successful). [38] | {<br>&nbsp;&nbsp;"temperature_range": {<br>&nbsp;&nbsp;&nbsp;&nbsp;"high": 75,<br>&nbsp;&nbsp;&nbsp;&nbsp;"low": 60<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;"conditions": "sunny"<br>} |
-| <a id="gen-ai-tool-definitions" href="#gen-ai-tool-definitions">`gen_ai.tool.definitions`</a> | ![Development](https://img.shields.io/badge/-development-blue) | any | The list of source system tool definitions available to the GenAI agent or model. [39] | [<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"type": "function",<br>&nbsp;&nbsp;&nbsp;&nbsp;"name": "get_current_weather",<br>&nbsp;&nbsp;&nbsp;&nbsp;"description": "Get the current weather in a given location",<br>&nbsp;&nbsp;&nbsp;&nbsp;"parameters": {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "object",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"properties": {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"location": {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "string",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"description": "The city and state, e.g. San Francisco, CA"<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"unit": {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "string",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"enum": [<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"celsius",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"fahrenheit"<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"required": [<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"location",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"unit"<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;}<br>] |
+| <a id="gen-ai-tool-call-result" href="#gen-ai-tool-call-result">`gen_ai.tool.call.result`</a> | ![Development](https://img.shields.io/badge/-development-blue) | any | The result returned by the tool call (if any and if execution was successful). [37] | {<br>&nbsp;&nbsp;"temperature_range": {<br>&nbsp;&nbsp;&nbsp;&nbsp;"high": 75,<br>&nbsp;&nbsp;&nbsp;&nbsp;"low": 60<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;"conditions": "sunny"<br>} |
+| <a id="gen-ai-tool-definitions" href="#gen-ai-tool-definitions">`gen_ai.tool.definitions`</a> | ![Development](https://img.shields.io/badge/-development-blue) | any | The list of source system tool definitions available to the GenAI agent or model. [38] | [<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"type": "function",<br>&nbsp;&nbsp;&nbsp;&nbsp;"name": "get_current_weather",<br>&nbsp;&nbsp;&nbsp;&nbsp;"description": "Get the current weather in a given location",<br>&nbsp;&nbsp;&nbsp;&nbsp;"parameters": {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "object",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"properties": {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"location": {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "string",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"description": "The city and state, e.g. San Francisco, CA"<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"unit": {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "string",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"enum": [<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"celsius",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"fahrenheit"<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"required": [<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"location",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"unit"<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;}<br>] |
 | <a id="gen-ai-tool-description" href="#gen-ai-tool-description">`gen_ai.tool.description`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The tool description. | `Multiply two numbers` |
 | <a id="gen-ai-tool-name" href="#gen-ai-tool-name">`gen_ai.tool.name`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | Name of the tool utilized by the agent. | `Flights` |
-| <a id="gen-ai-tool-type" href="#gen-ai-tool-type">`gen_ai.tool.type`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | Type of the tool utilized by the agent [40] | `function`; `extension`; `datastore` |
-| <a id="gen-ai-turn-end" href="#gen-ai-turn-end">`gen_ai.turn.end`</a> | ![Development](https://img.shields.io/badge/-development-blue) | boolean | Whether this event marks the logical end of a GenAI turn. [41] | `true` |
-| <a id="gen-ai-turn-id" href="#gen-ai-turn-id">`gen_ai.turn.id`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The unique identifier for one user input and the agent work needed to produce a final response or stop. [42] | `4f9b7d9e-1f65-4a6c-9c91-8f4e1a2b3c4d` |
-| <a id="gen-ai-turn-start" href="#gen-ai-turn-start">`gen_ai.turn.start`</a> | ![Development](https://img.shields.io/badge/-development-blue) | boolean | Whether this event marks the logical start of a GenAI turn. [43] | `true` |
-| <a id="gen-ai-usage-cache-creation-input-tokens" href="#gen-ai-usage-cache-creation-input-tokens">`gen_ai.usage.cache_creation.input_tokens`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | The number of input tokens written to a provider-managed cache. [44] | `25` |
-| <a id="gen-ai-usage-cache-read-input-tokens" href="#gen-ai-usage-cache-read-input-tokens">`gen_ai.usage.cache_read.input_tokens`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | The number of input tokens served from a provider-managed cache. [45] | `50` |
-| <a id="gen-ai-usage-input-tokens" href="#gen-ai-usage-input-tokens">`gen_ai.usage.input_tokens`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | The number of tokens used in the GenAI input (prompt). [46] | `100` |
+| <a id="gen-ai-tool-type" href="#gen-ai-tool-type">`gen_ai.tool.type`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | Type of the tool utilized by the agent [39] | `function`; `extension`; `datastore` |
+| <a id="gen-ai-turn-end" href="#gen-ai-turn-end">`gen_ai.turn.end`</a> | ![Development](https://img.shields.io/badge/-development-blue) | boolean | Whether this event marks the logical end of a GenAI turn. [40] | `true` |
+| <a id="gen-ai-turn-id" href="#gen-ai-turn-id">`gen_ai.turn.id`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The unique identifier for one user input and the agent work needed to produce a final response or stop. [41] | `4f9b7d9e-1f65-4a6c-9c91-8f4e1a2b3c4d` |
+| <a id="gen-ai-turn-start" href="#gen-ai-turn-start">`gen_ai.turn.start`</a> | ![Development](https://img.shields.io/badge/-development-blue) | boolean | Whether this event marks the logical start of a GenAI turn. [42] | `true` |
+| <a id="gen-ai-usage-cache-creation-input-tokens" href="#gen-ai-usage-cache-creation-input-tokens">`gen_ai.usage.cache_creation.input_tokens`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | The number of input tokens written to a provider-managed cache. [43] | `25` |
+| <a id="gen-ai-usage-cache-read-input-tokens" href="#gen-ai-usage-cache-read-input-tokens">`gen_ai.usage.cache_read.input_tokens`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | The number of input tokens served from a provider-managed cache. [44] | `50` |
+| <a id="gen-ai-usage-input-tokens" href="#gen-ai-usage-input-tokens">`gen_ai.usage.input_tokens`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | The number of tokens used in the GenAI input (prompt). [45] | `100` |
 | <a id="gen-ai-usage-output-tokens" href="#gen-ai-usage-output-tokens">`gen_ai.usage.output_tokens`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | The number of tokens used in the GenAI response (completion). | `180` |
-| <a id="gen-ai-usage-total-tokens" href="#gen-ai-usage-total-tokens">`gen_ai.usage.total_tokens`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | The total number of tokens used by a GenAI operation. [47] | `300` |
-| <a id="gen-ai-workflow-name" href="#gen-ai-workflow-name">`gen_ai.workflow.name`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | Human-readable name of the GenAI workflow provided by the application. [48] | `multi_agent_rag`; `customer_support_pipeline` |
+| <a id="gen-ai-usage-total-tokens" href="#gen-ai-usage-total-tokens">`gen_ai.usage.total_tokens`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | The total number of tokens used by a GenAI operation. [46] | `300` |
+| <a id="gen-ai-workflow-name" href="#gen-ai-workflow-name">`gen_ai.workflow.name`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | Human-readable name of the GenAI workflow provided by the application. [47] | `multi_agent_rag`; `customer_support_pipeline` |
 
 **[1] `gen_ai.agent.parent.invocation.id`:** This attribute allows logs emitted by a callee agent to correlate with the parent-side agent invocation, even when the callee does not know the caller's own invocation identifier.
 
 **[2] `gen_ai.agent.peer.id`:** This attribute describes the other agent in the immediate interaction, such as the agent being invoked, addressed, or returning a result. `gen_ai.agent.id` describes the agent performing the operation represented by the telemetry item.
 
-**[3] `gen_ai.context.compaction_ratio`:** The value SHOULD be between 0 and 1 when both original and compacted token counts are known.
+**[3] `gen_ai.data_source.id`:** Data sources are used by AI agents and RAG applications to store grounding data. A data source may be an external database, object store, document collection, website, or any other storage system used by the GenAI agent or application. The `gen_ai.data_source.id` SHOULD match the identifier used by the GenAI system rather than a name specific to the external storage, such as a database or object store. Semantic conventions referencing `gen_ai.data_source.id` MAY also leverage additional attributes, such as `db.*`, to further identify and describe the data source.
 
-**[4] `gen_ai.data_source.id`:** Data sources are used by AI agents and RAG applications to store grounding data. A data source may be an external database, object store, document collection, website, or any other storage system used by the GenAI agent or application. The `gen_ai.data_source.id` SHOULD match the identifier used by the GenAI system rather than a name specific to the external storage, such as a database or object store. Semantic conventions referencing `gen_ai.data_source.id` MAY also leverage additional attributes, such as `db.*`, to further identify and describe the data source.
+**[4] `gen_ai.evaluation.score.label`:** This attribute provides a human-readable interpretation of the evaluation score produced by an evaluator. For example, a score value of 1 could mean "relevant" in one evaluation system and "not relevant" in another, depending on the scoring range and evaluator. The label SHOULD have low cardinality. Possible values depend on the evaluation metric and evaluator used; implementations SHOULD document the possible values.
 
-**[5] `gen_ai.evaluation.score.label`:** This attribute provides a human-readable interpretation of the evaluation score produced by an evaluator. For example, a score value of 1 could mean "relevant" in one evaluation system and "not relevant" in another, depending on the scoring range and evaluator. The label SHOULD have low cardinality. Possible values depend on the evaluation metric and evaluator used; implementations SHOULD document the possible values.
-
-**[6] `gen_ai.input.messages`:** Instrumentations MUST follow [Input messages JSON schema](/docs/gen-ai/gen-ai-input-messages.json).
+**[5] `gen_ai.input.messages`:** Instrumentations MUST follow [Input messages JSON schema](/docs/gen-ai/gen-ai-input-messages.json).
 When the attribute is recorded on events, it MUST be recorded in structured
 form. When recorded on spans, it MAY be recorded as a JSON string if structured
 format is not supported and SHOULD be recorded in structured form otherwise.
@@ -136,7 +133,7 @@ input messages.
 See [Recording content on attributes](/docs/gen-ai/gen-ai-spans.md#recording-content-on-attributes)
 section for more details.
 
-**[7] `gen_ai.input.messages_delta`:** Instrumentations MUST follow [Input messages JSON schema](/docs/gen-ai/gen-ai-input-messages.json).
+**[6] `gen_ai.input.messages_delta`:** Instrumentations MUST follow [Input messages JSON schema](/docs/gen-ai/gen-ai-input-messages.json).
 This attribute is intended for logs or events where structured values can be recorded.
 
 In typical agent loops the complete input context for request N is the
@@ -154,20 +151,20 @@ and SHOULD prefer it over `gen_ai.input.messages` to reduce log volume.
 For the first request in a session, the delta carries the full initial
 input — there is no need to use `gen_ai.input.messages` separately.
 `gen_ai.input.messages` SHOULD only be recorded when the context
-changes in a non-append-only way (e.g. after compaction).
+changes in a non-append-only way.
 
 > [!WARNING]
 > This attribute may contain sensitive information.
 
-**[8] `gen_ai.iteration.per_token_batch_size`:** There SHOULD be one value per generated output token position.
+**[7] `gen_ai.iteration.per_token_batch_size`:** There SHOULD be one value per generated output token position.
 
-**[9] `gen_ai.iteration.per_token_cumulative_count`:** There SHOULD be one value per generated output token position.
+**[8] `gen_ai.iteration.per_token_cumulative_count`:** There SHOULD be one value per generated output token position.
 
-**[10] `gen_ai.iteration.per_token_waiting_requests`:** There SHOULD be one value per generated output token position.
+**[9] `gen_ai.iteration.per_token_waiting_requests`:** There SHOULD be one value per generated output token position.
 
-**[11] `gen_ai.operation.name`:** If one of the predefined values applies, but specific system uses a different name it's RECOMMENDED to document it in the semantic conventions for specific GenAI system and use system-specific name in the instrumentation. If a different name is not documented, instrumentation libraries SHOULD use applicable predefined value.
+**[10] `gen_ai.operation.name`:** If one of the predefined values applies, but specific system uses a different name it's RECOMMENDED to document it in the semantic conventions for specific GenAI system and use system-specific name in the instrumentation. If a different name is not documented, instrumentation libraries SHOULD use applicable predefined value.
 
-**[12] `gen_ai.output.messages`:** Instrumentations MUST follow [Output messages JSON schema](/docs/gen-ai/gen-ai-output-messages.json)
+**[11] `gen_ai.output.messages`:** Instrumentations MUST follow [Output messages JSON schema](/docs/gen-ai/gen-ai-output-messages.json)
 
 Each message represents a single output choice/candidate generated by
 the model. Each message corresponds to exactly one generation
@@ -187,11 +184,11 @@ output messages.
 See [Recording content on attributes](/docs/gen-ai/gen-ai-spans.md#recording-content-on-attributes)
 section for more details.
 
-**[13] `gen_ai.output.type`:** This attribute SHOULD be used when the client requests output of a specific type. The model may return zero or more outputs of this type.
+**[12] `gen_ai.output.type`:** This attribute SHOULD be used when the client requests output of a specific type. The model may return zero or more outputs of this type.
 This attribute specifies the output modality and not the actual output format. For example, if an image is requested, the actual output could be a URL pointing to an image file.
 Additional output format details may be recorded in the future in the `gen_ai.output.{type}.*` attributes.
 
-**[14] `gen_ai.provider.name`:** The attribute SHOULD be set based on the instrumentation's best
+**[13] `gen_ai.provider.name`:** The attribute SHOULD be set based on the instrumentation's best
 knowledge and may differ from the actual model provider.
 
 Multiple providers, including Azure OpenAI, Gemini, and AI hosting platforms
@@ -210,18 +207,18 @@ should have the `gen_ai.provider.name` set to `aws.bedrock` and include
 applicable `aws.bedrock.*` attributes and are not expected to include
 `openai.*` attributes.
 
-**[15] `gen_ai.react.finish_reason`:** Indicates why a ReAct step concluded. Common values include `stop`
+**[14] `gen_ai.react.finish_reason`:** Indicates why a ReAct step concluded. Common values include `stop`
 (model produced a final answer) and `tool_calls` (model invoked a tool).
 
-**[16] `gen_ai.react.round`:** Indicates which round this ReAct step represents, starting from 1.
+**[15] `gen_ai.react.round`:** Indicates which round this ReAct step represents, starting from 1.
 Useful for tracking the total number of iterations required to reach a final result.
 
-**[17] `gen_ai.request.encoding_formats`:** In some GenAI systems the encoding formats are called embedding types. Also, some GenAI systems only accept a single format per request.
+**[16] `gen_ai.request.encoding_formats`:** In some GenAI systems the encoding formats are called embedding types. Also, some GenAI systems only accept a single format per request.
 
-**[18] `gen_ai.request.reasoning.level`:** The value SHOULD be the exact string value sent to the provider.
+**[17] `gen_ai.request.reasoning.level`:** The value SHOULD be the exact string value sent to the provider.
 Semantic conventions for individual providers SHOULD document which input parameter maps to this attribute.
 
-**[19] `gen_ai.rerank.input_documents`:** Instrumentations MUST follow [Rerank input documents JSON schema](/docs/gen-ai/gen-ai-rerank-input-documents.json).
+**[18] `gen_ai.rerank.input_documents`:** Instrumentations MUST follow [Rerank input documents JSON schema](/docs/gen-ai/gen-ai-rerank-input-documents.json).
 When the attribute is recorded on events, it MUST be recorded in structured
 form. When recorded on spans, it MAY be recorded as a JSON string if structured
 format is not supported and SHOULD be recorded in structured form otherwise.
@@ -235,7 +232,7 @@ Each document object MAY contain the following optional properties:
 > [!Warning]
 > This attribute may contain sensitive information.
 
-**[20] `gen_ai.rerank.output_documents`:** Instrumentations MUST follow [Rerank output documents JSON schema](/docs/gen-ai/gen-ai-rerank-output-documents.json).
+**[19] `gen_ai.rerank.output_documents`:** Instrumentations MUST follow [Rerank output documents JSON schema](/docs/gen-ai/gen-ai-rerank-output-documents.json).
 When the attribute is recorded on events, it MUST be recorded in structured
 form. When recorded on spans, it MAY be recorded as a JSON string if structured
 format is not supported and SHOULD be recorded in structured form otherwise.
@@ -247,45 +244,45 @@ Each document object MAY contain the following optional properties:
 `id` (string): A unique identifier matching the input document,
 `text` (string): The text content of the document.
 
-**[21] `gen_ai.rerank.query.text`:** The text of the query being used to rerank the documents.
+**[20] `gen_ai.rerank.query.text`:** The text of the query being used to rerank the documents.
 
 > [!Warning]
 > This attribute may contain sensitive information.
 
-**[22] `gen_ai.response.candidate.decoded_tokens`:** The values SHOULD be ordered by rank with the emitted token first when it is known.
+**[21] `gen_ai.response.candidate.decoded_tokens`:** The values SHOULD be ordered by rank with the emitted token first when it is known.
 
-**[23] `gen_ai.response.candidate.logprobs`:** The values SHOULD align with `gen_ai.response.candidate.decoded_tokens` and `gen_ai.response.candidate.token_ids`.
+**[22] `gen_ai.response.candidate.logprobs`:** The values SHOULD align with `gen_ai.response.candidate.decoded_tokens` and `gen_ai.response.candidate.token_ids`.
 
-**[24] `gen_ai.response.candidate.per_position_decoded_tokens`:** It's expected to be an array of arrays where the outer array indexes
+**[23] `gen_ai.response.candidate.per_position_decoded_tokens`:** It's expected to be an array of arrays where the outer array indexes
 the generated token position and the inner array contains candidate
 token strings ordered by rank with the emitted token first.
 
 When recorded on spans, it MAY be recorded as a JSON string if structured
 format is not supported and SHOULD be recorded in structured form otherwise.
 
-**[25] `gen_ai.response.candidate.per_position_logprobs`:** It's expected to be an array of arrays where the outer array indexes
+**[24] `gen_ai.response.candidate.per_position_logprobs`:** It's expected to be an array of arrays where the outer array indexes
 the generated token position and the inner array contains candidate
 token log probabilities aligned with `gen_ai.response.candidate.per_position_token_ids`.
 
 When recorded on spans, it MAY be recorded as a JSON string if structured
 format is not supported and SHOULD be recorded in structured form otherwise.
 
-**[26] `gen_ai.response.candidate.per_position_token_ids`:** It's expected to be an array of arrays where the outer array indexes
+**[25] `gen_ai.response.candidate.per_position_token_ids`:** It's expected to be an array of arrays where the outer array indexes
 the generated token position and the inner array contains candidate
 token identifiers aligned with `gen_ai.response.candidate.per_position_decoded_tokens`.
 
 When recorded on spans, it MAY be recorded as a JSON string if structured
 format is not supported and SHOULD be recorded in structured form otherwise.
 
-**[27] `gen_ai.response.candidate.token_ids`:** The values SHOULD align with `gen_ai.response.candidate.decoded_tokens`.
+**[26] `gen_ai.response.candidate.token_ids`:** The values SHOULD align with `gen_ai.response.candidate.decoded_tokens`.
 
-**[28] `gen_ai.response.per_token_new_tokens`:** This attribute is primarily intended for multi-token prediction systems.
+**[27] `gen_ai.response.per_token_new_tokens`:** This attribute is primarily intended for multi-token prediction systems.
 
-**[29] `gen_ai.response.per_token_time_to_generate`:** Array values are aligned with output token positions. Each value represents the relative timestamp when that token was generated.
+**[28] `gen_ai.response.per_token_time_to_generate`:** Array values are aligned with output token positions. Each value represents the relative timestamp when that token was generated.
 
-**[30] `gen_ai.response.per_token_time_to_schedule`:** Array values are aligned with output token positions. Each value represents the relative timestamp when that token was scheduled.
+**[29] `gen_ai.response.per_token_time_to_schedule`:** Array values are aligned with output token positions. Each value represents the relative timestamp when that token was scheduled.
 
-**[31] `gen_ai.retrieval.documents`:** Instrumentations MUST follow [Retrieval documents JSON schema](/docs/gen-ai/gen-ai-retrieval-documents.json).
+**[30] `gen_ai.retrieval.documents`:** Instrumentations MUST follow [Retrieval documents JSON schema](/docs/gen-ai/gen-ai-retrieval-documents.json).
 When the attribute is recorded on events, it MUST be recorded in structured
 form. When recorded on spans, it MAY be recorded as a JSON string if structured
 format is not supported and SHOULD be recorded in structured form otherwise.
@@ -293,12 +290,12 @@ format is not supported and SHOULD be recorded in structured form otherwise.
 Each document object SHOULD contain at least the following properties:
 `id` (string): A unique identifier for the document, `score` (double): The relevance score of the document
 
-**[32] `gen_ai.retrieval.query.text`:**
+**[31] `gen_ai.retrieval.query.text`:**
 
 > [!Warning]
 > This attribute may contain sensitive information.
 
-**[33] `gen_ai.span.kind`:** `gen_ai.span.kind` is a dedicated GenAI span classification attribute, distinct from OTel's standard `SpanKind`.
+**[32] `gen_ai.span.kind`:** `gen_ai.span.kind` is a dedicated GenAI span classification attribute, distinct from OTel's standard `SpanKind`.
 Due to existing widespread usage, there are no plans to remove this attribute in the short term.
 Instrumentation probes should continue to record this field, and server-side consumers can also derive equivalent
 logic from `gen_ai.operation.name` using the mapping below.
@@ -328,7 +325,7 @@ This attribute is conditionally required. Instrumentations SHOULD implement a di
 - `alibaba_cloud` (default): Collect using `gen_ai.span.kind`.
 - `alibaba_group`: Collect using `gen_ai.span_kind_name` instead.
 
-**[34] `gen_ai.span_kind_name`:** `gen_ai.span_kind_name` is an alias of `gen_ai.span.kind` for the `alibaba_group` semantic convention dialect.
+**[33] `gen_ai.span_kind_name`:** `gen_ai.span_kind_name` is an alias of `gen_ai.span.kind` for the `alibaba_group` semantic convention dialect.
 Instrumentations SHOULD implement a dialect switch controlled by `loongsuite.semconv.dialect.name`
 (environment variable: `LOONGSUITE_SEMCONV_DIALECT_NAME`):
 
@@ -337,9 +334,9 @@ Instrumentations SHOULD implement a dialect switch controlled by `loongsuite.sem
 
 The enum values and their meaning are identical to `gen_ai.span.kind`.
 
-**[35] `gen_ai.step.id`:** This attribute is the operation-level correlation key within a turn. The request and response for one model operation SHOULD carry the same `gen_ai.turn.id` and `gen_ai.step.id`. If the agent/runtime already emits a step identifier, instrumentation SHOULD use it directly. Otherwise, instrumentation SHOULD generate a turn-scoped identifier. For ReAct-style agents, a step represents one model operation; additional model operations should be modeled as additional steps.
+**[34] `gen_ai.step.id`:** This attribute is the operation-level correlation key within a turn. The request and response for one model operation SHOULD carry the same `gen_ai.turn.id` and `gen_ai.step.id`. If the agent/runtime already emits a step identifier, instrumentation SHOULD use it directly. Otherwise, instrumentation SHOULD generate a turn-scoped identifier. For ReAct-style agents, a step represents one model operation; additional model operations should be modeled as additional steps.
 
-**[36] `gen_ai.system_instructions`:** This attribute SHOULD be used when the corresponding provider or API
+**[35] `gen_ai.system_instructions`:** This attribute SHOULD be used when the corresponding provider or API
 allows to provide system instructions or messages separately from the
 chat history.
 
@@ -365,7 +362,7 @@ system instructions.
 See [Recording content on attributes](/docs/gen-ai/gen-ai-spans.md#recording-content-on-attributes)
 section for more details.
 
-**[37] `gen_ai.tool.call.arguments`:**
+**[36] `gen_ai.tool.call.arguments`:**
 
 > [!WARNING]
 > This attribute may contain sensitive information.
@@ -374,7 +371,7 @@ It's expected to be an object - in case a serialized string is available
 to the instrumentation, the instrumentation SHOULD do the best effort to
 deserialize it to an object. When recorded on spans, it MAY be recorded as a JSON string if structured format is not supported and SHOULD be recorded in structured form otherwise.
 
-**[38] `gen_ai.tool.call.result`:**
+**[37] `gen_ai.tool.call.result`:**
 
 > [!WARNING]
 > This attribute may contain sensitive information.
@@ -383,7 +380,7 @@ It's expected to be an object - in case a serialized string is available
 to the instrumentation, the instrumentation SHOULD do the best effort to
 deserialize it to an object. When recorded on spans, it MAY be recorded as a JSON string if structured format is not supported and SHOULD be recorded in structured form otherwise.
 
-**[39] `gen_ai.tool.definitions`:** The value of this attribute matches source system tool definition format.
+**[38] `gen_ai.tool.definitions`:** The value of this attribute matches source system tool definition format.
 
 It's expected to be an array of objects where each object represents a tool definition. In case a serialized string is available
 to the instrumentation, the instrumentation SHOULD do the best effort to
@@ -398,30 +395,30 @@ Since this attribute could be large, it's NOT RECOMMENDED to populate
 it by default. Instrumentations MAY provide a way to enable
 populating this attribute.
 
-**[40] `gen_ai.tool.type`:** Extension: A tool executed on the agent-side to directly call external APIs, bridging the gap between the agent and real-world systems.
+**[39] `gen_ai.tool.type`:** Extension: A tool executed on the agent-side to directly call external APIs, bridging the gap between the agent and real-world systems.
   Agent-side operations involve actions that are performed by the agent on the server or within the agent's controlled environment.
 Function: A tool executed on the client-side, where the agent generates parameters for a predefined function, and the client executes the logic.
   Client-side operations are actions taken on the user's end or within the client application.
 Datastore: A tool used by the agent to access and query structured or unstructured external data for retrieval-augmented tasks or knowledge updates.
 
-**[41] `gen_ai.turn.end`:** This attribute SHOULD be set to `true` only on the event that marks the end of a turn. It SHOULD be omitted when false or unknown.
+**[40] `gen_ai.turn.end`:** This attribute SHOULD be set to `true` only on the event that marks the end of a turn. It SHOULD be omitted when false or unknown.
 
-**[42] `gen_ai.turn.id`:** This attribute is the primary correlation key for reconstructing a GenAI turn across model request and response, tool calls, context compaction, agent invocation, and final output events. If the agent/runtime already emits a turn identifier, instrumentation SHOULD use it directly. Otherwise, instrumentation SHOULD generate an opaque UUID-like identifier at the user-input boundary. Generated turn identifiers SHOULD NOT be derived from long-lived session ordinals, such as `session.id:t1`.
+**[41] `gen_ai.turn.id`:** This attribute is the primary correlation key for reconstructing a GenAI turn across model request and response, tool calls, context changes, agent invocation, and final output events. If the agent/runtime already emits a turn identifier, instrumentation SHOULD use it directly. Otherwise, instrumentation SHOULD generate an opaque UUID-like identifier at the user-input boundary. Generated turn identifiers SHOULD NOT be derived from long-lived session ordinals, such as `session.id:t1`.
 
-**[43] `gen_ai.turn.start`:** This attribute SHOULD be set to `true` only on the event that marks the start of a turn. It SHOULD be omitted when false or unknown.
+**[42] `gen_ai.turn.start`:** This attribute SHOULD be set to `true` only on the event that marks the start of a turn. It SHOULD be omitted when false or unknown.
 
-**[44] `gen_ai.usage.cache_creation.input_tokens`:** The value SHOULD be included in `gen_ai.usage.input_tokens`.
+**[43] `gen_ai.usage.cache_creation.input_tokens`:** The value SHOULD be included in `gen_ai.usage.input_tokens`.
 
-**[45] `gen_ai.usage.cache_read.input_tokens`:** The value SHOULD be included in `gen_ai.usage.input_tokens`.
+**[44] `gen_ai.usage.cache_read.input_tokens`:** The value SHOULD be included in `gen_ai.usage.input_tokens`.
 
-**[46] `gen_ai.usage.input_tokens`:** This value SHOULD include all types of input tokens, including cached tokens.
+**[45] `gen_ai.usage.input_tokens`:** This value SHOULD include all types of input tokens, including cached tokens.
 Instrumentations SHOULD make a best effort to populate this value, using a total
 provided by the provider when available or, depending on the provider API,
 by summing different token types parsed from the provider output.
 
-**[47] `gen_ai.usage.total_tokens`:** When recorded on a single request/response, this represents the sum of input and output tokens for that operation.
+**[46] `gen_ai.usage.total_tokens`:** When recorded on a single request/response, this represents the sum of input and output tokens for that operation.
 
-**[48] `gen_ai.workflow.name`:** This attribute can be populated in different frameworks eg: name of the first chain in LangChain OR name of the crew in CrewAI.
+**[47] `gen_ai.workflow.name`:** This attribute can be populated in different frameworks eg: name of the first chain in LangChain OR name of the crew in CrewAI.
 
 ---
 
@@ -436,12 +433,12 @@ by summing different token types parsed from the provider output.
 | `generate_content` | Multimodal content generation operation such as [Gemini Generate Content](https://ai.google.dev/api/generate-content) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `invoke_agent` | Invoke GenAI agent | ![Development](https://img.shields.io/badge/-development-blue) |
 | `invoke_workflow` | Invoke GenAI workflow | ![Development](https://img.shields.io/badge/-development-blue) |
-| `react` | ReAct (Reasoning-Acting) step within a GenAI agent loop [49] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `react` | ReAct (Reasoning-Acting) step within a GenAI agent loop [48] | ![Development](https://img.shields.io/badge/-development-blue) |
 | `rerank` | Rerank documents based on relevance to a query | ![Development](https://img.shields.io/badge/-development-blue) |
 | `retrieval` | Retrieval operation such as [OpenAI Search Vector Store API](https://developers.openai.com/docs/api-reference/vector-stores/search) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `text_completion` | Text completions operation such as [OpenAI Completions API (Legacy)](https://developers.openai.com/docs/api-reference/completions) | ![Development](https://img.shields.io/badge/-development-blue) |
 
-**[49]:** This value is used for the ReAct step span that wraps individual reasoning-acting cycles within an agent loop. It is an Alibaba Cloud extension.
+**[48]:** This value is used for the ReAct step span that wraps individual reasoning-acting cycles within an agent loop. It is an Alibaba Cloud extension.
 
 ---
 
@@ -466,9 +463,9 @@ by summing different token types parsed from the provider output.
 | `azure.ai.openai` | [Azure OpenAI](https://azure.microsoft.com/products/ai-services/openai-service/) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `cohere` | [Cohere](https://cohere.com/) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `deepseek` | [DeepSeek](https://www.deepseek.com/) | ![Development](https://img.shields.io/badge/-development-blue) |
-| `gcp.gemini` | [Gemini](https://cloud.google.com/products/gemini) [50] | ![Development](https://img.shields.io/badge/-development-blue) |
-| `gcp.gen_ai` | Any Google generative AI endpoint [51] | ![Development](https://img.shields.io/badge/-development-blue) |
-| `gcp.vertex_ai` | [Vertex AI](https://cloud.google.com/vertex-ai) [52] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `gcp.gemini` | [Gemini](https://cloud.google.com/products/gemini) [49] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `gcp.gen_ai` | Any Google generative AI endpoint [50] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `gcp.vertex_ai` | [Vertex AI](https://cloud.google.com/vertex-ai) [51] | ![Development](https://img.shields.io/badge/-development-blue) |
 | `groq` | [Groq](https://groq.com/) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `ibm.watsonx.ai` | [IBM Watsonx AI](https://www.ibm.com/products/watsonx-ai) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `mistral_ai` | [Mistral AI](https://mistral.ai/) | ![Development](https://img.shields.io/badge/-development-blue) |
@@ -476,11 +473,11 @@ by summing different token types parsed from the provider output.
 | `perplexity` | [Perplexity](https://www.perplexity.ai/) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `x_ai` | [xAI](https://x.ai/) | ![Development](https://img.shields.io/badge/-development-blue) |
 
-**[50]:** Used when accessing the 'generativelanguage.googleapis.com' endpoint. Also known as the AI Studio API.
+**[49]:** Used when accessing the 'generativelanguage.googleapis.com' endpoint. Also known as the AI Studio API.
 
-**[51]:** May be used when specific backend is unknown.
+**[50]:** May be used when specific backend is unknown.
 
-**[52]:** Used when accessing the 'aiplatform.googleapis.com' endpoint.
+**[51]:** Used when accessing the 'aiplatform.googleapis.com' endpoint.
 
 ---
 
@@ -551,9 +548,9 @@ Describes deprecated `gen_ai` attributes.
 | `azure.ai.openai` | Azure OpenAI | ![Development](https://img.shields.io/badge/-development-blue) |
 | `cohere` | Cohere | ![Development](https://img.shields.io/badge/-development-blue) |
 | `deepseek` | DeepSeek | ![Development](https://img.shields.io/badge/-development-blue) |
-| `gcp.gemini` | Gemini [53] | ![Development](https://img.shields.io/badge/-development-blue) |
-| `gcp.gen_ai` | Any Google generative AI endpoint [54] | ![Development](https://img.shields.io/badge/-development-blue) |
-| `gcp.vertex_ai` | Vertex AI [55] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `gcp.gemini` | Gemini [52] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `gcp.gen_ai` | Any Google generative AI endpoint [53] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `gcp.vertex_ai` | Vertex AI [54] | ![Development](https://img.shields.io/badge/-development-blue) |
 | `groq` | Groq | ![Development](https://img.shields.io/badge/-development-blue) |
 | `ibm.watsonx.ai` | IBM Watsonx AI | ![Development](https://img.shields.io/badge/-development-blue) |
 | `mistral_ai` | Mistral AI | ![Development](https://img.shields.io/badge/-development-blue) |
@@ -561,11 +558,11 @@ Describes deprecated `gen_ai` attributes.
 | `perplexity` | Perplexity | ![Development](https://img.shields.io/badge/-development-blue) |
 | `xai` | xAI | ![Development](https://img.shields.io/badge/-development-blue) |
 
-**[53]:** This refers to the 'generativelanguage.googleapis.com' endpoint. Also known as the AI Studio API. May use common attributes prefixed with 'gcp.gen_ai.'.
+**[52]:** This refers to the 'generativelanguage.googleapis.com' endpoint. Also known as the AI Studio API. May use common attributes prefixed with 'gcp.gen_ai.'.
 
-**[54]:** May be used when specific backend is unknown. May use common attributes prefixed with 'gcp.gen_ai.'.
+**[53]:** May be used when specific backend is unknown. May use common attributes prefixed with 'gcp.gen_ai.'.
 
-**[55]:** This refers to the 'aiplatform.googleapis.com' endpoint. May use common attributes prefixed with 'gcp.gen_ai.'.
+**[54]:** This refers to the 'aiplatform.googleapis.com' endpoint. May use common attributes prefixed with 'gcp.gen_ai.'.
 
 ## Deprecated OpenAI GenAI Attributes
 

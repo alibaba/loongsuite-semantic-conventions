@@ -67,7 +67,7 @@ groups:
       results) that is not already present in earlier request/response logs. For
       the first request in a session, the delta carries the full initial input.
       `gen_ai.input.messages` SHOULD only be recorded when the context changes
-      in a non-append-only way (e.g. after compaction) and cannot be
+      in a non-append-only way and cannot be
       reconstructed from previous request/response logs and the current delta.
 
       When recording `gen_ai.input.messages` or `gen_ai.input.messages_delta`,
@@ -120,7 +120,7 @@ groups:
         requirement_level: recommended
       - ref: gen_ai.input.messages
         requirement_level:
-          conditionally_required: when the context changes in a non-append-only way (e.g. after compaction) and cannot be reconstructed from previous request/response logs and the current delta
+          conditionally_required: when the context changes in a non-append-only way and cannot be reconstructed from previous request/response logs and the current delta
       - ref: gen_ai.system_instructions
         requirement_level: recommended
       - ref: gen_ai.tool.definitions
@@ -235,20 +235,6 @@ groups:
       - ref: gen_ai.tool.call.result
         requirement_level: recommended
       - ref: gen_ai.tool.call.duration
-        requirement_level: recommended
-
-  - id: event.gen_ai.context.compact
-    name: gen_ai.context.compact
-    type: event
-    stability: development
-    brief: >
-      Captures context compaction performed by a GenAI agent.
-    attributes:
-      - ref: gen_ai.context.compaction_ratio
-        requirement_level: recommended
-      - ref: gen_ai.context.window_size
-        requirement_level: recommended
-      - ref: gen_ai.input.messages
         requirement_level: recommended
 
   - id: event.gen_ai.agent.invoke
