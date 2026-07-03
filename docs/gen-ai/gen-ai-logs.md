@@ -39,7 +39,7 @@ form when supported by the logging pipeline.
 
 A GenAI log record uses `event.name` to identify the event semantics.
 
-| `event.name` | Description |
+| [`event.name`](/docs/registry/attributes/event.md) | Description |
 | --- | --- |
 | `gen_ai.model.request` | A model request, including model, parameters, tools, and input messages or deltas. |
 | `gen_ai.model.response` | A model response, including generated messages, finish reasons, and token usage. |

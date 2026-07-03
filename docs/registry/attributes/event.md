@@ -12,5 +12,8 @@ Describes generic event attributes.
 | Key | Stability | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- |
 | <a id="event-id" href="#event-id">`event.id`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The unique identifier of an event in the source runtime. [1] | `evt_01J2K3M4N5P6Q7R8S9T0` |
+| <a id="event-name" href="#event-name">`event.name`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The semantic identifier of an event. [2] | `gen_ai.model.request` |
 
 **[1] `event.id`:** This attribute represents an identifier assigned by the originating system, not by OpenTelemetry. It can be used to correlate events across log records or to deduplicate events from the same source.
+
+**[2] `event.name`:** When recorded on log records, this value identifies the event semantics and MUST match the event name defined by the applicable semantic convention.
