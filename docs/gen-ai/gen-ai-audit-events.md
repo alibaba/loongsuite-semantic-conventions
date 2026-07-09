@@ -48,9 +48,8 @@ A GenAI audit event uses `event.name` to identify the event semantics.
 | `gen_ai.agent.invoke` | Invocation or delegation of work to another GenAI agent. |
 | `gen_ai.agent.result` | A result returned by another GenAI agent. |
 
-Earlier Alibaba internal drafts used unqualified names such as `llm.request`.
-Instrumentation SHOULD emit the fully-qualified `gen_ai.*` names defined in
-this document.
+Earlier drafts used unqualified names such as `llm.request`. Instrumentation
+SHOULD emit the fully-qualified `gen_ai.*` names defined in this document.
 
 ## ID hierarchy
 
@@ -280,10 +279,10 @@ have the prior audit events needed to reconstruct the full input context
 from previous request/response audit events and the current delta.
 
 When recording `gen_ai.input.messages` or `gen_ai.input.messages_delta`,
-instrumentations SHOULD separate system and developer instructions into
-the dedicated `gen_ai.system_instructions` attribute and tool definitions
-into the dedicated `gen_ai.tool.definitions` attribute, and exclude both
-from the messages payload. `gen_ai.system_instructions` and
+instrumentations SHOULD separate system instructions into the dedicated
+`gen_ai.system_instructions` attribute and tool definitions into the
+dedicated `gen_ai.tool.definitions` attribute, and exclude both from the
+messages payload. `gen_ai.system_instructions` and
 `gen_ai.tool.definitions` SHOULD be recorded on the first request where
 they apply and whenever their value changes. They SHOULD NOT be repeated
 on later requests when unchanged.
@@ -831,7 +830,7 @@ that full context on every request can create large duplicate audit events.
 messages since the previous request/response pair.
 
 When recording `gen_ai.input.messages` or `gen_ai.input.messages_delta`,
-instrumentations SHOULD separate system and developer instructions into
+instrumentations SHOULD separate system instructions into
 `gen_ai.system_instructions` and tool definitions into
 `gen_ai.tool.definitions`, and exclude both from the messages payload.
 `gen_ai.system_instructions` and `gen_ai.tool.definitions` SHOULD be recorded on

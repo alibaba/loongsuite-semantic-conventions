@@ -71,10 +71,10 @@ groups:
       from previous request/response audit events and the current delta.
 
       When recording `gen_ai.input.messages` or `gen_ai.input.messages_delta`,
-      instrumentations SHOULD separate system and developer instructions into
-      the dedicated `gen_ai.system_instructions` attribute and tool definitions
-      into the dedicated `gen_ai.tool.definitions` attribute, and exclude both
-      from the messages payload. `gen_ai.system_instructions` and
+      instrumentations SHOULD separate system instructions into the dedicated
+      `gen_ai.system_instructions` attribute and tool definitions into the
+      dedicated `gen_ai.tool.definitions` attribute, and exclude both from the
+      messages payload. `gen_ai.system_instructions` and
       `gen_ai.tool.definitions` SHOULD be recorded on the first request where
       they apply and whenever their value changes. They SHOULD NOT be repeated
       on later requests when unchanged.
