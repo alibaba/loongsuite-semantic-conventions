@@ -63,12 +63,12 @@ groups:
       Instrumentations SHOULD record `gen_ai.input.messages_delta` by default for
       agent audit events, as it only captures new context (e.g. new user input
       or tool results) that is not already present in earlier request/response
-      audit events. For the first request in a session, the delta carries the
-      full initial input.
+      audit events when those prior audit events are available to consumers. For
+      the first request in a session, the delta carries the full initial input.
       `gen_ai.input.messages` SHOULD only be recorded when the context changes
-      in a non-append-only way and cannot be
-      reconstructed from previous request/response audit events and the current
-      delta.
+      in a non-append-only way, or when instrumentation cannot assume consumers
+      have the prior audit events needed to reconstruct the full input context
+      from previous request/response audit events and the current delta.
 
       When recording `gen_ai.input.messages` or `gen_ai.input.messages_delta`,
       instrumentations SHOULD separate system and developer instructions into

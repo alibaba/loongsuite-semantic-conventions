@@ -108,7 +108,7 @@ This document defines the attributes used to describe telemetry in the context o
 | <a id="gen-ai-usage-total-tokens" href="#gen-ai-usage-total-tokens">`gen_ai.usage.total_tokens`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | The total number of tokens used by a GenAI operation. [46] | `300` |
 | <a id="gen-ai-workflow-name" href="#gen-ai-workflow-name">`gen_ai.workflow.name`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | Human-readable name of the GenAI workflow provided by the application. [47] | `multi_agent_rag`; `customer_support_pipeline` |
 
-**[1] `gen_ai.agent.parent.invocation.id`:** This attribute allows logs emitted by a callee agent to correlate with the parent-side agent invocation, even when the callee does not know the caller's own invocation identifier.
+**[1] `gen_ai.agent.parent.invocation.id`:** This attribute allows audit events emitted by a callee agent to correlate with the parent-side agent invocation, even when the callee does not know the caller's own invocation identifier.
 
 **[2] `gen_ai.agent.peer.id`:** This attribute describes the other agent in the immediate interaction, such as the agent being invoked, addressed, or returning a result. `gen_ai.agent.id` describes the agent performing the operation represented by the telemetry item.
 
@@ -138,8 +138,9 @@ In typical agent loops the complete input context for request N is the
 full accumulated conversation:
 `input[N] = input[1] + output[1] + ... + input[N-1] + output[N-1] + new_context`.
 Where `new_context` is the new user input or tool call result that
-appeared after the last model response. Because all prior input and
-output messages are already recorded in earlier audit events,
+appeared after the last model response. When prior audit events for
+the session are available to consumers, and all prior input and output
+messages are recorded in those events,
 `messages_delta` only needs to carry `new_context` — the truly new
 portion. This avoids recording duplicate content across successive
 requests.
@@ -148,8 +149,10 @@ Instrumentations SHOULD record `gen_ai.input.messages_delta` by default
 and SHOULD prefer it over `gen_ai.input.messages` to reduce telemetry volume.
 For the first request in a session, the delta carries the full initial
 input — there is no need to use `gen_ai.input.messages` separately.
-`gen_ai.input.messages` SHOULD only be recorded when the context
-changes in a non-append-only way.
+`gen_ai.input.messages` SHOULD be recorded when the context changes
+in a non-append-only way, or when instrumentation cannot assume
+consumers have the prior audit events needed to reconstruct the full
+input context.
 
 > [!WARNING]
 > This attribute may contain sensitive information.

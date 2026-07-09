@@ -19,13 +19,6 @@ exclude = [
   # excluding links to pull requests and issues is done for performance
   "^https://github.com/open-telemetry/semantic-conventions/(pull|issues)/\\d+$",
   "^https://github.com/open-telemetry/opentelemetry-specification/(pull|issues)/\\d+$",
-  # Fragment checks on GitHub blob URLs fail without a token (lychee cannot render the page)
-  "^https://github.com/open-telemetry/.*/blob/.*#",
-  # GitHub README fragment anchors are dynamic and lychee cannot resolve them
-  # reliably without authentication (e.g. markdownlint#optionsresultversion).
-  "^https://github\\.com/DavidAnson/markdownlint#",
-  # GitHub org team pages often return 502 without authentication
-  "^https://github.com/orgs/open-telemetry/teams/",
   # TODO (lmolkova) treat timeout as not a failure?
   "^https://www.intersystems.com",
   "^https://gcc.gnu.org",

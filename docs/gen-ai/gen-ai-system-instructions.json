@@ -136,16 +136,7 @@
             "type": "string"
         },
         "SystemInstructionSource": {
-            "description": "The source that contributed a system instruction item.",
-            "enum": [
-                "persona",
-                "policy",
-                "tool_catalog",
-                "skill_catalog",
-                "workspace_file",
-                "developer",
-                "other"
-            ],
+            "description": "The source that contributed a system instruction item. Well-known values include `persona`, `policy`, `tool_catalog`, `skill_catalog`, `workspace_file`, `developer`, and `other`.",
             "title": "SystemInstructionSource",
             "type": "string"
         },

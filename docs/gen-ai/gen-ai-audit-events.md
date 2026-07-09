@@ -183,7 +183,7 @@ applicable `aws.bedrock.*` attributes and are not expected to include
 
 **[6] `gen_ai.session.id`:** when the GenAI application maintains session context
 
-**[7] `gen_ai.agent.parent.invocation.id`:** This attribute allows logs emitted by a callee agent to correlate with the parent-side agent invocation, even when the callee does not know the caller's own invocation identifier.
+**[7] `gen_ai.agent.parent.invocation.id`:** This attribute allows audit events emitted by a callee agent to correlate with the parent-side agent invocation, even when the callee does not know the caller's own invocation identifier.
 
 **[8] `gen_ai.operation.name`:** If one of the predefined values applies, but specific system uses a different name it's RECOMMENDED to document it in the semantic conventions for specific GenAI system and use system-specific name in the instrumentation. If a different name is not documented, instrumentation libraries SHOULD use applicable predefined value.
 
@@ -272,12 +272,12 @@ Captures a GenAI model request, including the requested model, parameters, input
 Instrumentations SHOULD record `gen_ai.input.messages_delta` by default for
 agent audit events, as it only captures new context (e.g. new user input
 or tool results) that is not already present in earlier request/response
-audit events. For the first request in a session, the delta carries the
-full initial input.
+audit events when those prior audit events are available to consumers. For
+the first request in a session, the delta carries the full initial input.
 `gen_ai.input.messages` SHOULD only be recorded when the context changes
-in a non-append-only way and cannot be
-reconstructed from previous request/response audit events and the current
-delta.
+in a non-append-only way, or when instrumentation cannot assume consumers
+have the prior audit events needed to reconstruct the full input context
+from previous request/response audit events and the current delta.
 
 When recording `gen_ai.input.messages` or `gen_ai.input.messages_delta`,
 instrumentations SHOULD separate system and developer instructions into
@@ -368,8 +368,9 @@ In typical agent loops the complete input context for request N is the
 full accumulated conversation:
 `input[N] = input[1] + output[1] + ... + input[N-1] + output[N-1] + new_context`.
 Where `new_context` is the new user input or tool call result that
-appeared after the last model response. Because all prior input and
-output messages are already recorded in earlier audit events,
+appeared after the last model response. When prior audit events for
+the session are available to consumers, and all prior input and output
+messages are recorded in those events,
 `messages_delta` only needs to carry `new_context` — the truly new
 portion. This avoids recording duplicate content across successive
 requests.
@@ -378,8 +379,10 @@ Instrumentations SHOULD record `gen_ai.input.messages_delta` by default
 and SHOULD prefer it over `gen_ai.input.messages` to reduce telemetry volume.
 For the first request in a session, the delta carries the full initial
 input — there is no need to use `gen_ai.input.messages` separately.
-`gen_ai.input.messages` SHOULD only be recorded when the context
-changes in a non-append-only way.
+`gen_ai.input.messages` SHOULD be recorded when the context changes
+in a non-append-only way, or when instrumentation cannot assume
+consumers have the prior audit events needed to reconstruct the full
+input context.
 
 > [!WARNING]
 > This attribute may contain sensitive information.

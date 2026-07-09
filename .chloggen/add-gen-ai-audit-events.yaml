@@ -1,4 +1,4 @@
-change_type: new_component
+change_type: enhancement
 component: gen-ai
 note: Add semantic conventions for GenAI behavior audit events.
 issues: [32]
