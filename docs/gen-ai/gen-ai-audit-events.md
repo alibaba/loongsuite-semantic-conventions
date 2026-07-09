@@ -48,9 +48,6 @@ A GenAI audit event uses `event.name` to identify the event semantics.
 | `gen_ai.agent.invoke` | Invocation or delegation of work to another GenAI agent. |
 | `gen_ai.agent.result` | A result returned by another GenAI agent. |
 
-Earlier drafts used unqualified names such as `llm.request`. Instrumentation
-SHOULD emit the fully-qualified `gen_ai.*` names defined in this document.
-
 ## ID hierarchy
 
 GenAI audit events SHOULD preserve the following relationship when the
