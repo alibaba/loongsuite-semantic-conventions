@@ -9,10 +9,6 @@
                     "title": "Type",
                     "type": "string"
                 },
-                "source": {
-                    "$ref": "#/$defs/SystemInstructionSource",
-                    "description": "The source that contributed this system instruction item."
-                },
                 "mime_type": {
                     "anyOf": [
                         {
@@ -63,10 +59,6 @@
                     "title": "Type",
                     "type": "string"
                 },
-                "source": {
-                    "$ref": "#/$defs/SystemInstructionSource",
-                    "description": "The source that contributed this system instruction item."
-                },
                 "mime_type": {
                     "anyOf": [
                         {
@@ -114,10 +106,6 @@
                     "description": "The type of the content captured in this part.",
                     "title": "Type",
                     "type": "string"
-                },
-                "source": {
-                    "$ref": "#/$defs/SystemInstructionSource",
-                    "description": "The source that contributed this system instruction item."
                 }
             },
             "required": [
@@ -135,11 +123,6 @@
             "title": "Modality",
             "type": "string"
         },
-        "SystemInstructionSource": {
-            "description": "The source that contributed a system instruction item. Well-known values include `persona`, `policy`, `tool_catalog`, `skill_catalog`, `workspace_file`, `developer`, and `other`.",
-            "title": "SystemInstructionSource",
-            "type": "string"
-        },
         "ReasoningPart": {
             "additionalProperties": true,
             "description": "Represents reasoning/thinking content received from the model.",
@@ -149,10 +132,6 @@
                     "description": "The type of the content captured in this part.",
                     "title": "Type",
                     "type": "string"
-                },
-                "source": {
-                    "$ref": "#/$defs/SystemInstructionSource",
-                    "description": "The source that contributed this system instruction item."
                 },
                 "content": {
                     "description": "Reasoning/thinking content received from the model.",
@@ -177,10 +156,6 @@
                     "title": "Type",
                     "type": "string"
                 },
-                "source": {
-                    "$ref": "#/$defs/SystemInstructionSource",
-                    "description": "The source that contributed this system instruction item."
-                },
                 "content": {
                     "description": "Text content sent to or received from the model.",
                     "title": "Content",
@@ -203,10 +178,6 @@
                     "description": "The type of the content captured in this part.",
                     "title": "Type",
                     "type": "string"
-                },
-                "source": {
-                    "$ref": "#/$defs/SystemInstructionSource",
-                    "description": "The source that contributed this system instruction item."
                 },
                 "id": {
                     "anyOf": [
@@ -249,10 +220,6 @@
                     "title": "Type",
                     "type": "string"
                 },
-                "source": {
-                    "$ref": "#/$defs/SystemInstructionSource",
-                    "description": "The source that contributed this system instruction item."
-                },
                 "id": {
                     "anyOf": [
                         {
@@ -287,10 +254,6 @@
                     "description": "The type of the content captured in this part.",
                     "title": "Type",
                     "type": "string"
-                },
-                "source": {
-                    "$ref": "#/$defs/SystemInstructionSource",
-                    "description": "The source that contributed this system instruction item."
                 },
                 "mime_type": {
                     "anyOf": [

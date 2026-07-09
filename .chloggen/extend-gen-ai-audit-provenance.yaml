@@ -1,4 +1,4 @@
 change_type: enhancement
 component: gen-ai
-note: Add GenAI session, turn, and step audit correlation attributes, plus system instruction source schema support.
+note: Add GenAI session, turn, and step audit correlation attributes.
 issues: [31]
