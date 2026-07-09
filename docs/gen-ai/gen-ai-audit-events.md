@@ -516,8 +516,8 @@ streaming event convention.
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- |
 | [`gen_ai.provider.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The Generative AI provider as identified by the client or server instrumentation. [1] | `openai`; `gcp.gen_ai`; `gcp.vertex_ai` |
-| [`error.type`](/docs/registry/attributes/error.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` if the model operation failed | string | Describes a class of error the operation ended with. [2] | `timeout`; `java.net.UnknownHostException`; `server_certificate_invalid`; `500` |
-| [`error.message`](/docs/registry/attributes/error.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | A message providing more detail about an error in human-readable form. [3] | `Unexpected input type: string`; `The user has exceeded their storage quota` |
+| [`error.message`](/docs/registry/attributes/error.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` if additional error details are available | string | A message providing more detail about an error in human-readable form. [2] | `Unexpected input type: string`; `The user has exceeded their storage quota` |
+| [`error.type`](/docs/registry/attributes/error.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` if the model operation failed | string | Describes a class of error the operation ended with. [3] | `timeout`; `java.net.UnknownHostException`; `server_certificate_invalid`; `500` |
 | [`gen_ai.output.messages`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | any | Messages returned by the model where each message represents a specific model response (choice, candidate). [4] | [<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;"role": "assistant",<br>&nbsp;&nbsp;&nbsp;&nbsp;"parts": [<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "text",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"content": "The weather in Paris is currently rainy with a temperature of 57°F."<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;],<br>&nbsp;&nbsp;&nbsp;&nbsp;"finish_reason": "stop"<br>&nbsp;&nbsp;}<br>] |
 | [`gen_ai.response.finish_reasons`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string[] | Array of reasons the model stopped generating tokens, corresponding to each generation received. | `["stop"]`; `["stop", "length"]` |
 | [`gen_ai.response.id`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | The unique identifier for the completion. | `chatcmpl-123` |
@@ -550,7 +550,13 @@ should have the `gen_ai.provider.name` set to `aws.bedrock` and include
 applicable `aws.bedrock.*` attributes and are not expected to include
 `openai.*` attributes.
 
-**[2] `error.type`:** The `error.type` SHOULD be predictable, and SHOULD have low cardinality.
+**[2] `error.message`:** `error.message` should provide additional context and detail about an error.
+It is NOT RECOMMENDED to duplicate the value of `error.type` in `error.message`.
+It is also NOT RECOMMENDED to duplicate the value of `exception.message` in `error.message`.
+
+`error.message` is NOT RECOMMENDED for metrics or spans due to its unbounded cardinality and overlap with span status.
+
+**[3] `error.type`:** The `error.type` SHOULD be predictable, and SHOULD have low cardinality.
 
 When `error.type` is set to a type (e.g., an exception type), its
 canonical class name identifying the type within the artifact SHOULD be used.
@@ -569,12 +575,6 @@ it's RECOMMENDED to:
 
 - Use a domain-specific attribute
 - Set `error.type` to capture all errors, regardless of whether they are defined within the domain-specific set or not.
-
-**[3] `error.message`:** `error.message` should provide additional context and detail about an error.
-It is NOT RECOMMENDED to duplicate the value of `error.type` in `error.message`.
-It is also NOT RECOMMENDED to duplicate the value of `exception.message` in `error.message`.
-
-`error.message` is NOT RECOMMENDED for metrics or spans due to its unbounded cardinality and overlap with span status.
 
 **[4] `gen_ai.output.messages`:** Instrumentations MUST follow [Output messages JSON schema](/docs/gen-ai/gen-ai-output-messages.json)
 
