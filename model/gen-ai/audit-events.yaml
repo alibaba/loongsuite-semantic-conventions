@@ -1,11 +1,11 @@
 groups:
-  - id: attributes.gen_ai.logs.common
+  - id: attributes.gen_ai.audit_events.common
     type: attribute_group
     stability: development
     brief: >
-      Common attributes for GenAI log events.
+      Common attributes for GenAI audit events.
     note: |
-      These attributes MAY be recorded on any GenAI log event when applicable.
+      These attributes MAY be recorded on any GenAI audit event when applicable.
       Event-specific semantic convention groups below define the additional
       attributes that are expected for each `event.name`.
     attributes:
@@ -61,12 +61,14 @@ groups:
       input messages, and tool definitions.
     note: |
       Instrumentations SHOULD record `gen_ai.input.messages_delta` by default for
-      agent logs, as it only captures new context (e.g. new user input or tool
-      results) that is not already present in earlier request/response logs. For
-      the first request in a session, the delta carries the full initial input.
+      agent audit events, as it only captures new context (e.g. new user input
+      or tool results) that is not already present in earlier request/response
+      audit events. For the first request in a session, the delta carries the
+      full initial input.
       `gen_ai.input.messages` SHOULD only be recorded when the context changes
       in a non-append-only way and cannot be
-      reconstructed from previous request/response logs and the current delta.
+      reconstructed from previous request/response audit events and the current
+      delta.
 
       When recording `gen_ai.input.messages` or `gen_ai.input.messages_delta`,
       instrumentations SHOULD separate system and developer instructions into
@@ -118,7 +120,10 @@ groups:
         requirement_level: recommended
       - ref: gen_ai.input.messages
         requirement_level:
-          conditionally_required: when the context changes in a non-append-only way and cannot be reconstructed from previous request/response logs and the current delta
+          conditionally_required: >
+            when the context changes in a non-append-only way and cannot be
+            reconstructed from previous request/response audit events and the
+            current delta
       - ref: gen_ai.system_instructions
         requirement_level: recommended
       - ref: gen_ai.tool.definitions

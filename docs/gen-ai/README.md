@@ -30,7 +30,7 @@ linkTitle: Generative AI
 Semantic conventions for Generative AI operations are defined for the following signals:
 
 * [Events](gen-ai-events.md): Semantic Conventions for Generative AI inputs and outputs - *events*.
-* [Logs](gen-ai-logs.md): Semantic Conventions for Generative AI behavior events - *logs*.
+* [Audit events](gen-ai-audit-events.md): Semantic Conventions for Generative AI behavior audit events - *events*.
 * [Metrics](gen-ai-metrics.md): Semantic Conventions for Generative AI operations - *metrics*.
 * [Model spans](gen-ai-spans.md): Semantic Conventions for Generative AI model operations - *spans*.
 * [Agent spans](gen-ai-agent-spans.md): Semantic Conventions for Generative AI agent operations - *spans*.

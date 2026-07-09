@@ -132,20 +132,20 @@ See [Recording content on attributes](/docs/gen-ai/gen-ai-spans.md#recording-con
 section for more details.
 
 **[6] `gen_ai.input.messages_delta`:** Instrumentations MUST follow [Input messages JSON schema](/docs/gen-ai/gen-ai-input-messages.json).
-This attribute is intended for logs or events where structured values can be recorded.
+This attribute is intended for audit events where structured values can be recorded.
 
 In typical agent loops the complete input context for request N is the
 full accumulated conversation:
 `input[N] = input[1] + output[1] + ... + input[N-1] + output[N-1] + new_context`.
 Where `new_context` is the new user input or tool call result that
 appeared after the last model response. Because all prior input and
-output messages are already recorded in earlier log events,
+output messages are already recorded in earlier audit events,
 `messages_delta` only needs to carry `new_context` — the truly new
 portion. This avoids recording duplicate content across successive
 requests.
 
 Instrumentations SHOULD record `gen_ai.input.messages_delta` by default
-and SHOULD prefer it over `gen_ai.input.messages` to reduce log volume.
+and SHOULD prefer it over `gen_ai.input.messages` to reduce telemetry volume.
 For the first request in a session, the delta carries the full initial
 input — there is no need to use `gen_ai.input.messages` separately.
 `gen_ai.input.messages` SHOULD only be recorded when the context
