@@ -56,4 +56,4 @@ groups:
         brief: >
           Array of user roles at the time of the event.
         examples:
-          - [admin, reporting_user]
+          - ['admin', 'reporting_user']

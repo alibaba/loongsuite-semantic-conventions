@@ -9,6 +9,9 @@ groups:
       Event-specific semantic convention groups below define the additional
       attributes that are expected for each `event.name`.
     attributes:
+      - ref: event.name
+        requirement_level:
+          conditionally_required: when the event name is not otherwise represented by the telemetry data model
       - ref: gen_ai.session.id
         requirement_level:
           conditionally_required: when the GenAI application maintains session context
@@ -43,8 +46,10 @@ groups:
       - ref: gen_ai.provider.name
         requirement_level:
           conditionally_required: for model-provider operations
-      - ref: user.id
+      - ref: user.hash
         requirement_level: recommended
+      - ref: user.id
+        requirement_level: opt_in
       - ref: error.type
         requirement_level:
           conditionally_required: if the operation ended in an error
@@ -171,10 +176,6 @@ groups:
       - ref: gen_ai.response.model
         requirement_level: recommended
       - ref: gen_ai.response.finish_reasons
-        requirement_level: recommended
-      - ref: gen_ai.response.time_to_first_token
-        requirement_level: recommended
-      - ref: gen_ai.response.reasoning_time
         requirement_level: recommended
       - ref: error.type
         requirement_level:

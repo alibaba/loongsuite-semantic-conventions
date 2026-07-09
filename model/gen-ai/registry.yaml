@@ -1211,16 +1211,6 @@ groups:
                   ]
                 }
               ]
-      - id: gen_ai.response.time_to_first_token
-        stability: development
-        type: int
-        brief: Time to receive the first token in a streaming GenAI response, in milliseconds.
-        examples: [120]
-      - id: gen_ai.response.reasoning_time
-        stability: development
-        type: int
-        brief: Time spent by a reasoning model before producing the final response, in milliseconds.
-        examples: [1248]
       - id: gen_ai.usage.total_tokens
         stability: development
         type: int
@@ -1237,6 +1227,6 @@ groups:
         examples: ['exec_9f3a2b1c4d5e6f70']
       - id: gen_ai.tool.call.duration
         stability: development
-        type: int
-        brief: The duration of the tool execution, in milliseconds.
-        examples: [843]
+        type: double
+        brief: The duration of the tool execution, in seconds.
+        examples: [0.843]
