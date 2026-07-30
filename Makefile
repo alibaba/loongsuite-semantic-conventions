@@ -1,5 +1,7 @@
 PWD := $(shell pwd)
 
+include versions.env
+
 # Determine OS & Arch for specific OS only tools on Unix based systems
 OS := $(shell uname | tr '[:upper:]' '[:lower:]')
 ifeq ($(OS),darwin)
@@ -269,20 +271,6 @@ generate-gh-issue-templates:
 		/home/weaver/target
 	$(TOOLS_DIR)/scripts/update-issue-template-areas.sh $(PWD)/internal/tools/bin/areas.txt
 
-# A previous iteration of calculating "LATEST_RELEASED_SEMCONV_VERSION"
-# relied on "git describe". However, that approach does not work with
-# light-weight developer forks/branches that haven't synced tags. Hence the
-# more complex implementation of this using "git ls-remote".
-#
-# The output of "git ls-remote" looks something like this:
-#
-#    e531541025992b68177a68b87628c5dc75c4f7d9        refs/tags/v1.21.0
-#    cadfe53949266d33476b15ca52c92f682600a29c        refs/tags/v1.22.0
-#    ...
-#
-# .. which is why some additional processing is required to extract the
-# latest version number and strip off the "v" prefix.
-LATEST_RELEASED_SEMCONV_VERSION := $(shell git ls-remote --tags https://github.com/open-telemetry/semantic-conventions.git | cut -f 2 | sort --reverse | head -n 1 | tr '/' ' ' | cut -d ' ' -f 3 | $(SED) 's/v//g')
 .PHONY: check-policies
 check-policies:
 	$(DOCKER_RUN) --rm \
@@ -322,26 +310,14 @@ check-dead-yaml:
 		/home/weaver/target
 	$(TOOLS_DIR)/scripts/find-dead-yaml.sh $(PWD)/internal/tools/bin/signal-groups.txt $(PWD)/docs
 
-NEXT_SEMCONV_VERSION ?= next
+OTEL_SCHEMA_BASE_URL ?= https://raw.githubusercontent.com/open-telemetry/semantic-conventions/$(OTEL_SEMCONV_COMMIT)/schemas
+NEXT_SEMCONV_VERSION ?= $(OTEL_SEMCONV_VERSION)
 .PHONY: generate-schema-next
 generate-schema-next:
-	mkdir -p $(TOOLS_DIR)/bin
-	$(DOCKER_RUN) --rm \
-	$(DOCKER_USER_IS_HOST_USER_ARG) \
-	--env USER=weaver \
-	--env HOME=/home/weaver \
-	-v $(shell mktemp -d):/home/weaver/.weaver \
-	--mount 'type=bind,source=$(PWD)/internal/tools/scripts,target=/home/weaver/templates,readonly' \
-	--mount 'type=bind,source=$(PWD)/model,target=/home/weaver/source,readonly' \
-	--mount 'type=bind,source=$(TOOLS_DIR)/bin,target=/home/weaver/target' \
-	$(WEAVER_CONTAINER) registry diff \
-		--registry=/home/weaver/source \
-		--baseline-registry=https://github.com/open-telemetry/semantic-conventions/archive/refs/tags/v$(LATEST_RELEASED_SEMCONV_VERSION).zip[model] \
-		--diff-format yaml \
-		--diff-template /home/weaver/templates/schema-diff \
-		--output /home/weaver/target
-		# --param next_version=$(NEXT_SEMCONV_VERSION)
-	$(TOOLS_DIR)/scripts/generate-schema-next.sh $(NEXT_SEMCONV_VERSION) $(LATEST_RELEASED_SEMCONV_VERSION) $(TOOLS_DIR)/bin/schema-diff.yaml
+	test "$(NEXT_SEMCONV_VERSION)" = "$(OTEL_SEMCONV_VERSION)"
+	curl --fail --location --show-error \
+		"$(OTEL_SCHEMA_BASE_URL)/$(OTEL_SEMCONV_VERSION)" \
+		--output "$(PWD)/schemas/$(NEXT_SEMCONV_VERSION)"
 
 .PHONY: areas-table-generation
 areas-table-generation:
@@ -353,4 +329,3 @@ areas-table-check:
 
 .PHONY: generate-all
 generate-all: table-generation registry-generation areas-table-generation generate-gh-issue-templates
-

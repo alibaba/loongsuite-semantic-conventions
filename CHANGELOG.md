@@ -7,6 +7,28 @@
 
 <!-- next version -->
 
+## v1.40.0
+
+### 🚀 New components 🚀
+
+- `gen-ai`: Add `gen_ai.span.kind` and `gen_ai.span_kind_name` attributes to classify GenAI operations at a higher level ([#14](https://github.com/alibaba/loongsuite-semantic-conventions-genai/issues/14), [#15](https://github.com/alibaba/loongsuite-semantic-conventions-genai/issues/15))
+  Adds `gen_ai.span.kind` and `gen_ai.span_kind_name` for GenAI spans.
+  Instrumentations SHOULD implement a dialect switch controlled by `loongsuite.semconv.dialect.name`:
+  `alibaba_cloud` (default) uses `gen_ai.span.kind`, `alibaba_group` uses `gen_ai.span_kind_name`.
+
+- `gen-ai`: Add `gen_ai.react_step.internal` span for ReAct iteration loops and related attributes (`gen_ai.react.round`, `gen_ai.react.finish_reason`) ([#5](https://github.com/alibaba/loongsuite-semantic-conventions-genai/issues/5))
+  This is an Alibaba Cloud extension. The `STEP` span kind and `react` operation name
+  are used to identify individual ReAct steps within an agent loop. Span name is `react step`.
+
+### 💡 Enhancements 💡
+
+- `gen-ai`: Add GenAI rerank operation semantic conventions. ([#6](https://github.com/alibaba/loongsuite-semantic-conventions-genai/issues/6))
+- `gen-ai`: Add GenAI skill invoke span semantic conventions. ([#10](https://github.com/alibaba/loongsuite-semantic-conventions-genai/issues/10), [#12](https://github.com/alibaba/loongsuite-semantic-conventions-genai/issues/12))
+- `gen-ai`: Add token-level GenAI inference events and optional span attributes for per-token timing, iteration metadata, and candidate-token details. ([#17](https://github.com/alibaba/loongsuite-semantic-conventions-genai/issues/17))
+  Defines both event-based token telemetry and span-level per-token attributes for inference spans.
+
+- `gen-ai`: Synchronize the GenAI semantic convention baseline with OpenTelemetry Semantic Conventions v1.40.0. ([#9](https://github.com/alibaba/loongsuite-semantic-conventions-genai/issues/9))
+
 ## v1.39.0
 
 ### 🛑 Breaking changes 🛑

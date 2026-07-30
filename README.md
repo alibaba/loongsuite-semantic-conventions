@@ -13,6 +13,14 @@ LoongSuite GenAI Semantic Conventions is an **open-source GenAI semantic convent
 
 The human-readable version of the semantic conventions resides in the [docs](docs/README.md) folder. These Markdown documents are generated from the YAML definitions located in the [model](model/README.md) folder, following the OpenTelemetry Semantic Conventions toolchain approach.
 
+## Version Compatibility
+
+LoongSuite release `v1.40.0` is based on
+[OpenTelemetry Semantic Conventions v1.40.0](https://github.com/open-telemetry/semantic-conventions/releases/tag/v1.40.0)
+at commit [`7fe5373`](https://github.com/open-telemetry/semantic-conventions/commit/7fe537301d17919af7d7eb65b32e9be35da2c497).
+It includes additional LoongSuite GenAI conventions and is not identical to
+the OpenTelemetry release.
+
 ## Contributing
 
 We welcome contributions from the community! Whether you're adding new GenAI conventions, improving documentation, or fixing issues, your input is valuable.

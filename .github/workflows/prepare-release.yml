@@ -19,9 +19,15 @@ jobs:
 
       - name: Validate version
         run: |
+          set -euo pipefail
+          source versions.env
           version=${{ inputs.version }}
           if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "unexpected version: $version"
+            exit 1
+          fi
+          if [[ "$version" != "$OTEL_SEMCONV_VERSION" ]]; then
+            echo "version $version does not match pinned OTel version $OTEL_SEMCONV_VERSION"
             exit 1
           fi
 
@@ -31,7 +37,7 @@ jobs:
       - name: Update schema files
         run: |
           version=${{ inputs.version }}
-          make generate-schema-next NEXT_SEMCONV_VERSION=$version
+          make generate-schema-next
           git add "schemas/$version"
 
       - name: Update change log

@@ -1,26 +1,32 @@
 # Releasing
 
+Releases are cut from `main` and published as GitHub Releases.
+
 ## Preparing a new release
 
-- Close the [release milestone](https://github.com/open-telemetry/semantic-conventions/milestones)
-  if there is one.
-- Run [opentelemetry.io workflow](https://github.com/open-telemetry/opentelemetry.io/actions/workflows/build-dev.yml)
-  against `semantic-conventions` submodule as a smoke-test for docs. Fix broken links, if any.
-  - If there are failures you can't resolve, notify [#otel-comms](https://cloud-native.slack.com/archives/C02UN96HZH6)
-    and corrdinate fixing them.
-- Run the [prepare release workflow](https://github.com/open-telemetry/semantic-conventions/actions/workflows/prepare-release.yml).
-  - Review and merge the pull request that it creates.
-  - Note: the PR will need to be closed and the workflow re-run if any non-chore PRs are merged to `main` while the PR is open.
+1. Pin the OpenTelemetry release and commit in [`versions.env`](versions.env).
+2. Add changelog fragments for the upstream synchronization and all
+   LoongSuite-specific changes.
+3. Run the
+   [Prepare release](https://github.com/alibaba/loongsuite-semantic-conventions-genai/actions/workflows/prepare-release.yml)
+   workflow with the version pinned in `versions.env`.
+4. Review and merge the pull request created by the workflow. If non-chore
+   changes are merged while the release pull request is open, close it and
+   prepare the release again.
 
-## Making the release
+The release pull request must contain:
 
-- Create a [new release](https://github.com/open-telemetry/semantic-conventions/releases/new):
-  - Set title and tag to `v{version}`
-  - Set target to the commit of the merged release PR
-  - Copy changelog to the release notes
-    - First click the generate release notes button and keep only the bottom sections under "New Contributors"
-  - Verify that the release looks like expected
-  - Publish release
+- the OpenTelemetry schema copied from the pinned commit into
+  `schemas/{version}`;
+- the rendered changelog entry;
+- generated documentation matching the YAML model.
 
-New release is then auto-discovered by [opentelemetry.io](https://github.com/open-telemetry/opentelemetry.io) pipelines which (via bot-generated PR)
-eventually results in new version of schema file being published.
+## Publishing the release
+
+1. Create a
+   [new GitHub Release](https://github.com/alibaba/loongsuite-semantic-conventions-genai/releases/new).
+2. Set the title and tag to `v{version}`.
+3. Target the merge commit of the release preparation pull request.
+4. Copy the new changelog section into the release notes and include the
+   pinned OpenTelemetry tag and commit.
+5. Verify the tag, generated schema, and release notes, then publish.
