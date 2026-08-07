@@ -74,6 +74,9 @@ groups:
       - ref: gen_ai.request.seed
         requirement_level:
           conditionally_required: if applicable and if the request includes a seed
+      - ref: gen_ai.request.stream
+        requirement_level:
+          conditionally_required: If and only if the request is streaming. If unset, the request is assumed to be non-streaming.
       - ref: gen_ai.output.type
         requirement_level:
           conditionally_required: when applicable and if the request includes an output format.
@@ -87,6 +90,9 @@ groups:
           fine-tuned custom model, the value should have a more specific name than the base model that's been fine-tuned.
       - ref: gen_ai.response.finish_reasons
         requirement_level: recommended
+      - ref: gen_ai.response.time_to_first_chunk
+        requirement_level:
+          recommended: if the request was a streaming request
       - ref: gen_ai.usage.input_tokens
         requirement_level: recommended
       - ref: gen_ai.usage.cache_read.input_tokens
@@ -95,6 +101,11 @@ groups:
         requirement_level: recommended
       - ref: gen_ai.usage.output_tokens
         requirement_level: recommended
+      - ref: gen_ai.usage.reasoning.output_tokens
+        requirement_level:
+          recommended: when applicable
+        note: >
+          The value SHOULD be included in `gen_ai.usage.output_tokens`.
       - ref: gen_ai.response.per_token_time_to_generate
         requirement_level: opt_in
       - ref: gen_ai.response.per_token_time_to_schedule
@@ -124,7 +135,7 @@ groups:
           (see [LlamaIndex chat store](https://docs.llamaindex.ai/en/stable/module_guides/storing/chat_stores/))
           - when instrumenting GenAI client libraries that maintain conversation on the backend side
           (see [AWS Bedrock agent sessions](https://docs.aws.amazon.com/bedrock/latest/userguide/agents-session-state.html),
-          [OpenAI Assistant threads](https://developers.openai.com/docs/api-reference/threads))
+          [OpenAI Assistant threads](https://platform.openai.com/docs/api-reference/threads))
 
           Application developers that manage conversation history MAY add conversation id to GenAI and other
           spans or logs using custom span or log record processors or hooks provided by instrumentation
@@ -149,7 +160,7 @@ groups:
     note: |
       **Span name** SHOULD be `{gen_ai.operation.name} {gen_ai.request.model}`.
       Semantic conventions for individual GenAI systems and frameworks MAY specify different span name format
-      and MUST follow the overall [guidelines for span names](https://github.com/open-telemetry/opentelemetry-specification/blob/v1.55.0/specification/trace/api.md#span).
+      and MUST follow the overall [guidelines for span names](https://github.com/open-telemetry/opentelemetry-specification/blob/v1.56.0/specification/trace/api.md#span).
 
       **Span kind** SHOULD be `CLIENT` and MAY be set to `INTERNAL` on spans representing
       call to models running in the same process. It's RECOMMENDED to use `CLIENT` kind
@@ -328,7 +339,7 @@ groups:
           (see [LlamaIndex chat store](https://docs.llamaindex.ai/en/stable/module_guides/storing/chat_stores/))
           - when instrumenting GenAI client libraries that maintain conversation on the backend side
           (see [AWS Bedrock agent sessions](https://docs.aws.amazon.com/bedrock/latest/userguide/agents-session-state.html),
-          [OpenAI Assistant threads](https://developers.openai.com/docs/api-reference/threads))
+          [OpenAI Assistant threads](https://platform.openai.com/docs/api-reference/threads))
 
           Application developers that manage conversation history MAY add conversation id to GenAI and other
           spans or logs using custom span or log record processors or hooks provided by instrumentation
