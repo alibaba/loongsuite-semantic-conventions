@@ -1,0 +1,26 @@
+groups:
+  - id: registry.event
+    type: attribute_group
+    display_name: Event Attributes
+    brief: "Describes generic event attributes."
+    attributes:
+      - id: event.name
+        stability: development
+        type: string
+        brief: >
+          The semantic identifier of an event.
+        note: >
+          When recorded on log records, this value identifies the event
+          semantics and MUST match the event name defined by the applicable
+          semantic convention.
+        examples: ['gen_ai.model.request']
+      - id: event.id
+        stability: development
+        type: string
+        brief: >
+          The unique identifier of an event in the source runtime.
+        note: >
+          This attribute represents an identifier assigned by the originating
+          system, not by OpenTelemetry. It can be used to correlate events
+          across log records or to deduplicate events from the same source.
+        examples: ['evt_01J2K3M4N5P6Q7R8S9T0']

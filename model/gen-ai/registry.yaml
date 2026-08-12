@@ -164,6 +164,17 @@ groups:
         stability: development
         type: boolean
         brief: Indicates whether the GenAI request was made in streaming mode.
+      - id: gen_ai.request.reasoning.level
+        stability: development
+        type: string
+        brief: >
+          The reasoning or thinking effort level requested for a GenAI model.
+        note: >
+          The value SHOULD be the exact string value sent to the provider.
+
+          Semantic conventions for individual providers SHOULD document
+          which input parameter maps to this attribute.
+        examples: ['low', 'medium', 'high']
       - id: gen_ai.response.id
         stability: development
         type: string
@@ -401,6 +412,21 @@ groups:
         stability: development
         type: string
         brief: Human-readable name of the GenAI agent provided by the application.
+        examples: ["Math Tutor", "Fiction Writer"]
+      - id: gen_ai.agent.peer.id
+        stability: development
+        type: string
+        brief: The unique identifier of the peer GenAI agent in an agent-to-agent interaction.
+        note: >
+          This attribute describes the other agent in the immediate interaction,
+          such as the agent being invoked, addressed, or returning a result.
+          `gen_ai.agent.id` describes the agent performing the operation
+          represented by the telemetry item.
+        examples: ['asst_5j66UpCpwteGg4YSxUnt7lPY']
+      - id: gen_ai.agent.peer.name
+        stability: development
+        type: string
+        brief: Human-readable name of the peer GenAI agent in an agent-to-agent interaction.
         examples: ["Math Tutor", "Fiction Writer"]
       - id: gen_ai.agent.description
         stability: development
@@ -760,7 +786,7 @@ groups:
                   "parts": [
                     {
                       "type": "tool_call_response",
-                      "id": " call_VSPygqKTWdrhaFErNvMV18Yl",
+                      "id": "call_VSPygqKTWdrhaFErNvMV18Yl",
                       "result": "rainy, 57°F"
                     }
                   ]
@@ -1081,3 +1107,145 @@ groups:
         note: |
           Indicates why a ReAct step concluded. Common values include `stop`
           (model produced a final answer) and `tool_calls` (model invoked a tool).
+      - id: gen_ai.session.id
+        stability: development
+        type: string
+        brief: The unique identifier for a user session or conversation context managed by a GenAI agent or application.
+        examples: ['sess_7Kp3mXq2nR8tYvWz']
+      - id: gen_ai.turn.id
+        stability: development
+        type: string
+        brief: The unique identifier for one user input and the agent work needed to produce a final response or stop.
+        note: >
+          This attribute is the primary correlation key for reconstructing a
+          GenAI turn across model request and response, tool calls, context
+          changes, agent invocation, and final output events. If the
+          agent/runtime already emits a turn identifier, instrumentation SHOULD
+          use it directly. Otherwise, instrumentation SHOULD generate an opaque
+          UUID-like identifier at the user-input boundary. Generated turn
+          identifiers SHOULD NOT be derived from long-lived session ordinals,
+          such as `session.id:t1`.
+        examples: ['4f9b7d9e-1f65-4a6c-9c91-8f4e1a2b3c4d']
+      - id: gen_ai.step.id
+        stability: development
+        type: string
+        brief: The unique identifier for one step within a GenAI agent turn.
+        note: >
+          This attribute is the operation-level correlation key within a turn.
+          The request and response for one model operation SHOULD carry the same
+          `gen_ai.turn.id` and `gen_ai.step.id`. If the agent/runtime already
+          emits a step identifier, instrumentation SHOULD use it directly.
+          Otherwise, instrumentation SHOULD generate a turn-scoped identifier.
+          For ReAct-style agents, a step represents one model operation;
+          additional model operations should be modeled as additional steps.
+        examples: ['4f9b7d9e-1f65-4a6c-9c91-8f4e1a2b3c4d:s1']
+      - id: gen_ai.turn.start
+        stability: development
+        type: boolean
+        brief: Whether this event marks the logical start of a GenAI turn.
+        note: >
+          This attribute SHOULD be set to `true` only on the event that marks
+          the start of a turn. It SHOULD be omitted when false or unknown.
+        examples: [true]
+      - id: gen_ai.turn.end
+        stability: development
+        type: boolean
+        brief: Whether this event marks the logical end of a GenAI turn.
+        note: >
+          This attribute SHOULD be set to `true` only on the event that marks
+          the end of a turn. It SHOULD be omitted when false or unknown.
+        examples: [true]
+      - id: gen_ai.event.original_name
+        stability: development
+        type: string
+        brief: The original event name reported by the source GenAI runtime before semantic convention normalization.
+        examples: ['model.fallback_step', 'context.compiled']
+      - id: gen_ai.agent.type
+        stability: development
+        type: string
+        brief: The product or runtime type of the GenAI agent.
+        examples: ['qoder', 'cursor', 'cowork']
+      - id: gen_ai.agent.parent.id
+        stability: development
+        type: string
+        brief: The unique identifier of the parent GenAI agent that created or delegated work to this agent.
+        examples: ['agent_parent_01']
+      - id: gen_ai.agent.invocation.id
+        stability: development
+        type: string
+        brief: The unique identifier for the agent invocation represented by the telemetry item.
+        examples: ['agent_invocation_01J2K3M4N5']
+      - id: gen_ai.agent.parent.invocation.id
+        stability: development
+        type: string
+        brief: The unique identifier for the parent agent invocation that created or delegated work to this agent.
+        note: >
+          This attribute allows audit events emitted by a callee agent to correlate
+          with the parent-side agent invocation, even when the callee does not
+          know the caller's own invocation identifier.
+        examples: ['agent_invocation_01J2K3M4N5']
+      - id: gen_ai.input.messages_delta
+        stability: development
+        type: any
+        brief: >
+          New messages appended to the model input since the previous request's
+          input messages and output messages combined.
+        note: |
+          Instrumentations MUST follow [Input messages JSON schema](/docs/gen-ai/gen-ai-input-messages.json).
+          This attribute is intended for audit events where structured values can be recorded.
+
+          In typical agent loops the complete input context for request N is the
+          full accumulated conversation:
+          `input[N] = input[1] + output[1] + ... + input[N-1] + output[N-1] + new_context`.
+          Where `new_context` is the new user input or tool call result that
+          appeared after the last model response. When prior audit events for
+          the session are available to consumers, and all prior input and output
+          messages are recorded in those events,
+          `messages_delta` only needs to carry `new_context` — the truly new
+          portion. This avoids recording duplicate content across successive
+          requests.
+
+          Instrumentations SHOULD record `gen_ai.input.messages_delta` by default
+          and SHOULD prefer it over `gen_ai.input.messages` to reduce telemetry volume.
+          For the first request in a session, the delta carries the full initial
+          input — there is no need to use `gen_ai.input.messages` separately.
+          `gen_ai.input.messages` SHOULD be recorded when the context changes
+          in a non-append-only way, or when instrumentation cannot assume
+          consumers have the prior audit events needed to reconstruct the full
+          input context.
+
+          > [!WARNING]
+          > This attribute may contain sensitive information.
+        examples:
+          - |
+              [
+                {
+                  "role": "tool",
+                  "parts": [
+                    {
+                      "type": "tool_call_response",
+                      "id": "call_VSPygqKTWdrhaFErNvMV18Yl",
+                      "result": "rainy, 57°F"
+                    }
+                  ]
+                }
+              ]
+      - id: gen_ai.usage.total_tokens
+        stability: development
+        type: int
+        brief: >
+          The total number of tokens used by a GenAI operation.
+        note: >
+          When recorded on a single request/response, this represents the sum
+          of input and output tokens for that operation.
+        examples: [300]
+      - id: gen_ai.tool.call.exec.id
+        stability: development
+        type: string
+        brief: The unique identifier assigned by the tool execution system for a tool call attempt.
+        examples: ['exec_9f3a2b1c4d5e6f70']
+      - id: gen_ai.tool.call.duration
+        stability: development
+        type: double
+        brief: The duration of the tool execution, in seconds.
+        examples: [0.843]

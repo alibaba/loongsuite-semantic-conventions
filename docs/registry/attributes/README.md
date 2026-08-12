@@ -26,9 +26,11 @@ All registered attributes are listed by namespace in this registry.
 Currently, the following namespaces exist:
 
 - [Error](error.md)
+- [Event](event.md)
 - [Exception](exception.md)
 - [Gen AI](gen-ai.md)
 - [OpenAI](openai.md)
 - [Server](server.md)
+- [User](user.md)
 
 [developers recommendations]: ../../general/naming.md#recommendations-for-application-developers
